@@ -257,6 +257,7 @@ window.addEventListener('load', () => { //run fun when page is loaded
 								if (isFound === false) {
 									map.removeLayer(plane.icon);
 									planesObjects.splice(planesObjects.indexOf(plane), 1);
+									map.removeLayer(plane.popup);
 								}
 							})
 
