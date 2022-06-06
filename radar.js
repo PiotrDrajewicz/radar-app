@@ -1,6 +1,6 @@
 import { createMap, createUserPositionMarker } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
-import { Plane } from './plane-class.js';
+import { Plane, createObjects, createIconPopup } from './plane-class.js';
 // import { createPlaneIcon } from './planes-functions.js';
 
 window.addEventListener('load', () => { //run fun when page is loaded
@@ -232,59 +232,60 @@ window.addEventListener('load', () => { //run fun when page is loaded
 					// 	}
 					// }
 
-					function createObjects(allPlanes) {
-						return new Promise(resolve => {
-							console.log('creating objects');
-							//adding new objects
-							allPlanes.forEach(plane => {
-								let counter = 0;
-								const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
+					// function createObjects(allPlanes) {
+					// 	return new Promise(resolve => {
+					// 		console.log('creating objects');
+					// 		//adding new objects
+					// 		allPlanes.forEach(plane => {
+					// 			let counter = 0;
+					// 			const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
 
-								if (planesObjects.length === 0) {
-									planesObjects.push(planeObj);
-								} else {
-									for (let i = 0; i < planesObjects.length; i++) {
-										if (planesObjects[i].icao === planeObj.icao) {
-											counter++;
-										}
-									}
-									if (counter === 0) {
-										planesObjects.push(planeObj);
-									}
-								}
+					// 			if (planesObjects.length === 0) {
+					// 				planesObjects.push(planeObj);
+					// 			} else {
+					// 				for (let i = 0; i < planesObjects.length; i++) {
+					// 					if (planesObjects[i].icao === planeObj.icao) {
+					// 						counter++;
+					// 					}
+					// 				}
+					// 				if (counter === 0) {
+					// 					planesObjects.push(planeObj);
+					// 				}
+					// 			}
 
-							})
+					// 		})
 
-							//deleting missing objects
-							planesObjects.forEach(plane => {
-								let isFound = false;
-								for (let j = 0; j < allPlanes.length; j++) {
-									if (plane.icao === allPlanes[j][0]) {
-										isFound = true;
-									}
-								}
-								if (isFound === false) {
-									map.removeLayer(plane.icon);
-									planesObjects.splice(planesObjects.indexOf(plane), 1);
-								}
-							})
+					// 		//deleting missing objects
+					// 		planesObjects.forEach(plane => {
+					// 			let isFound = false;
+					// 			for (let j = 0; j < allPlanes.length; j++) {
+					// 				if (plane.icao === allPlanes[j][0]) {
+					// 					isFound = true;
+					// 				}
+					// 			}
+					// 			if (isFound === false) {
+					// 				map.removeLayer(plane.icon);
+					// 				planesObjects.splice(planesObjects.indexOf(plane), 1);
+					// 				map.removeLayer(plane.popup);
+					// 			}
+					// 		})
 
-							resolve(allPlanes);
-							console.log('all po usuwaniu: ', allPlanes);
-							console.log('objects po usuwaniu: ', planesObjects);
-						})
-					}
+					// 		resolve(allPlanes);
+					// 		console.log('all po usuwaniu: ', allPlanes);
+					// 		console.log('objects po usuwaniu: ', planesObjects);
+					// 	})
+					// }
 
-					function createIconPopup(allPlanes) {
-						planesObjects.forEach(plane => {
-							//updating plane info
-							plane.updatePlaneInfo(plane, allPlanes);
-							//creating plane icons
-							plane.createPlaneIcon(plane, allPlanes);
-							//creating plane popups
-							plane.createPlanePopup(plane);
-						})
-					}
+					// function createIconPopup(allPlanes) {
+					// 	planesObjects.forEach(plane => {
+					// 		//updating plane info
+					// 		plane.updatePlaneInfo(plane, allPlanes);
+					// 		//creating plane icons
+					// 		plane.createPlaneIcon(plane, allPlanes);
+					// 		//creating plane popups
+					// 		plane.createPlanePopup(plane);
+					// 	})
+					// }
 
 					function work() {
 						fetchData(api)
@@ -292,10 +293,10 @@ window.addEventListener('load', () => { //run fun when page is loaded
 								return extractData(res);
 							})
 							.then(res => {
-								return createObjects(res);
+								return createObjects(res, planesObjects);
 							})
 							.then(res => {
-								createIconPopup(res);
+								createIconPopup(res, planesObjects);
 							});
 					}
 					workButton.addEventListener('click', work);
