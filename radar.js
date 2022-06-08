@@ -1,7 +1,7 @@
 import { createMap, createUserPositionMarker } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
-import { Plane, createObjects, createIconPopup } from './plane-class.js';
-// import { createPlaneIcon } from './planes-functions.js';
+// import { Plane } from './plane-class.js';
+import { createIconPopup, createObjects } from './planes-functions.js';
 
 window.addEventListener('load', () => { //run fun when page is loaded
 	let long; //declaring variable here so we can move it out
