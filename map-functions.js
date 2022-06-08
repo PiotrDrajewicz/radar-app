@@ -16,6 +16,4 @@ function createMap(lat, long) {
 
 function createUserPositionMarker(lat, long, map) {
     L.marker([lat, long]).addTo(map).openPopup();
-
-    // return userPositionMarker;
 }

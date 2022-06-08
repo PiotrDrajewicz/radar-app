@@ -1,15 +1,11 @@
 import { createMap, createUserPositionMarker } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
-// import { Plane } from './plane-class.js';
-import { createIconPopup, createObjects } from './planes-functions.js';
+import { Plane, createIconPopup } from './plane-class.js';
 
-window.addEventListener('load', () => { //run fun when page is loaded
+window.addEventListener('load', () => { //run function when page is loaded
 	let long; //declaring variable here so we can move it out
 	let lat;
-	// let map;
-	// let userPositionMarker;
 	const areaPoints = [];
-
 	const workButton = document.getElementById('work-btn');
 
 	//selectors
@@ -19,20 +15,7 @@ window.addEventListener('load', () => { //run fun when page is loaded
 			lat = position.coords.latitude;
 			long = position.coords.longitude;
 
-			//creating map
-			// map = L.map('map').setView([lat, long], 8);
-			// L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-			// 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			// 	maxZoom: 18,
-			// 	id: 'mapbox/streets-v11',
-			// 	tileSize: 512,
-			// 	zoomOffset: -1,
-			// 	accessToken: 'pk.eyJ1Ijoic2VyZWt3aWVqc2tpIiwiYSI6ImNsMmdhMXRmNzAxdnkzaXBoc2J0aXRoeWcifQ.P5SBaZpNYNfq1Pfk1Pw9FA'
-			// }).addTo(map);
 			let map = createMap(lat, long);
-
-			//adding marker with user's position
-			// userPositionMarker = L.marker([lat, long]).addTo(map).openPopup();
 			createUserPositionMarker(lat, long, map);
 
 			class point {
@@ -83,209 +66,52 @@ window.addEventListener('load', () => { //run fun when page is loaded
 					const lngMax = areaPoints[1].lng;
 					api = `https://opensky-network.org/api/states/all?lamin=${latMin}&lomin=${lngMin}&lamax=${latMax}&lomax=${lngMax}`;
 
-					// const allPlanes = [];
-					// const planesObjects = [];
-
-					//fetching data
-					// function fetchData(api) {
-					// 	return new Promise(resolve => {
-					// 		console.log('fetching data');
-					// 		resolve(fetch(api)
-					// 			.then(response => {
-					// 				return response.json();
-					// 			})
-					// 			// .then(data => {
-					// 			// 	// const allPlanes = [];
-					// 			// 	data.states.forEach(plane => {
-					// 			// 		allPlanes.push(plane);
-					// 			// 	})
-					// 			// 	console.log('api done');
-					// 			// 	// console.log(allPlanes);
-					// 			// 	return allPlanes;
-					// 			// })
-					// 		)
-					// 	})
-					// }
-
-					//extracting data
-					// function extractData(data) {
-					// 	const allPlanes = [];
-					// 	return new Promise(resolve => {
-					// 		console.log('extracting data');
-
-					// 		data.states.forEach(plane => {
-					// 			allPlanes.push(plane);
-					// 		})
-
-					// 		resolve(allPlanes);
-					// 	})
-					// }
-
 					const planesObjects = [];
-					// construcor for planes
-					// class Plane {
-					// 	constructor(icao, lat, lng, track, groundSpeed, baroAltitude) {
-					// 		this.icao = icao;
-					// 		this.lat = lat;
-					// 		this.lng = lng;
-					// 		this.track = track;
-					// 		this.groundSpeed = groundSpeed;
-					// 		this.baroAltitude = baroAltitude;
-					// 	}
 
-					// 	createPlaneIcon(plane, planesUpdated) {
-					// 		const planeIcon = L.icon({
-					// 			iconUrl: 'plane-icon.svg',
-					// 			iconSize: [20, 20]
-					// 		});
+					function createObjects(allPlanes) {
+						return new Promise(resolve => {
+							console.log('creating objects');
+							//adding new objects
+							allPlanes.forEach(plane => {
+								let counter = 0;
+								const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
 
-					// 		let planeMarker = L.marker([this.lat, this.lng], { icon: planeIcon, rotationAngle: this.track });
-					// 		if (!plane.hasOwnProperty('icon')) {
-					// 			//creating plane icon
-					// 			plane.icon = planeMarker;
-					// 			planeMarker.addTo(map);
-					// 		} else {
-					// 			for (let n = 0; n < planesUpdated.length; n++) {
-					// 				if (plane.icao === planesUpdated[n][0]) {
-					// 					//updating plane icon position
-					// 					const newLatLng = new L.LatLng(plane.lat, plane.lng);
-					// 					plane.icon.setLatLng(newLatLng);
-					// 					plane.icon.options.rotationAngle = plane.track;
-					// 				}
-					// 			}
-					// 		}
-					// 	}
-					// 	// createPlaneIcon(plane, planesUpdated);
+								if (planesObjects.length === 0) {
+									planesObjects.push(planeObj);
+								} else {
+									for (let i = 0; i < planesObjects.length; i++) {
+										if (planesObjects[i].icao === planeObj.icao) {
+											counter++;
+										}
+									}
+									if (counter === 0) {
+										planesObjects.push(planeObj);
+									}
+								}
 
-					// 	createPlanePopup(plane) {
-					// 		let popup;
-					// 		const trackDeg = plane.track;
-					// 		const planeLat = plane.lat;
-					// 		const planeLng = plane.lng;
-					// 		const planeIcao = plane.icao;
-					// 		const groundSpeed = plane.groundSpeed;
-					// 		const baroAltitude = plane.baroAltitude;
+							})
 
-					// 		if (!plane.hasOwnProperty('popup')) {
-					// 			//creating plane popup
-					// 			if (trackDeg > 1 && trackDeg < 180) {
-					// 				//right course
-					// 				popup = new L.popup({ className: 'custom', offset: [73, 77], closeOnClick: false, autoClose: false });
-					// 			} else {
-					// 				//left course
-					// 				popup = new L.popup({ className: 'custom', offset: [65, 72], closeOnClick: false, autoClose: false });
-					// 			}
-					// 			popup.setLatLng(new L.LatLng(planeLat, planeLng));
+							//deleting missing objects
+							planesObjects.forEach(plane => {
+								let isFound = false;
+								for (let j = 0; j < allPlanes.length; j++) {
+									if (plane.icao === allPlanes[j][0]) {
+										isFound = true;
+									}
+								}
+								if (isFound === false) {
+									map.removeLayer(plane.icon);
+									planesObjects.splice(planesObjects.indexOf(plane), 1);
+									map.removeLayer(plane.popup);
+								}
+							})
 
-					// 			const apiDetailed = `https://api.joshdouch.me/api/aircraft/${planeIcao}`;
-					// 			fetch(apiDetailed)
-					// 				.then(response => {
-					// 					return response.json();
-					// 				})
-					// 				.then(data => {
-					// 					const icaoTypeCode = data.ICAOTypeCode;
-					// 					const operatorFlagCode = data.OperatorFlagCode;
+							resolve(allPlanes);
+							console.log('all po usuwaniu: ', allPlanes);
+							console.log('objects po usuwaniu: ', planesObjects);
+						})
+					}
 
-					// 					if (data.status) {
-					// 						popup.setContent(`<ul><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
-					// 					} else {
-					// 						popup.setContent(`<ul><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
-					// 					}
-					// 				})
-
-					// 			plane.popup = popup;
-					// 			map.addLayer(popup);
-					// 		} else {
-					// 			//updating plane popup
-					// 			plane.popup.setLatLng(new L.LatLng(planeLat, planeLng));
-
-					// 			const apiDetailed = `https://api.joshdouch.me/api/aircraft/${planeIcao}`;
-					// 			fetch(apiDetailed)
-					// 				.then(response => {
-					// 					return response.json();
-					// 				})
-					// 				.then(data => {
-					// 					const icaoTypeCode = data.ICAOTypeCode;
-					// 					const operatorFlagCode = data.OperatorFlagCode;
-
-					// 					if (data.status) {
-					// 						plane.popup.setContent(`<ul><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
-					// 					} else {
-					// 						plane.popup.setContent(`<ul><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
-					// 					}
-					// 				})
-
-					// 		}
-
-					// 	}
-
-					// 	updatePlaneInfo(plane, planesUpdated) {
-					// 		for (let n = 0; n < planesUpdated.length; n++) {
-					// 			if (plane.icao === planesUpdated[n][0]) {
-					// 				plane.lat = planesUpdated[n][6];
-					// 				plane.lng = planesUpdated[n][5];
-					// 				plane.track = planesUpdated[n][10];
-					// 				plane.groundSpeed = Math.round(planesUpdated[n][9] * 1.94);
-					// 				plane.baroAltitude = Math.round(planesUpdated[n][7] * 3.28084);
-					// 			}
-					// 		}
-					// 	}
-					// }
-
-					// function createObjects(allPlanes) {
-					// 	return new Promise(resolve => {
-					// 		console.log('creating objects');
-					// 		//adding new objects
-					// 		allPlanes.forEach(plane => {
-					// 			let counter = 0;
-					// 			const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
-
-					// 			if (planesObjects.length === 0) {
-					// 				planesObjects.push(planeObj);
-					// 			} else {
-					// 				for (let i = 0; i < planesObjects.length; i++) {
-					// 					if (planesObjects[i].icao === planeObj.icao) {
-					// 						counter++;
-					// 					}
-					// 				}
-					// 				if (counter === 0) {
-					// 					planesObjects.push(planeObj);
-					// 				}
-					// 			}
-
-					// 		})
-
-					// 		//deleting missing objects
-					// 		planesObjects.forEach(plane => {
-					// 			let isFound = false;
-					// 			for (let j = 0; j < allPlanes.length; j++) {
-					// 				if (plane.icao === allPlanes[j][0]) {
-					// 					isFound = true;
-					// 				}
-					// 			}
-					// 			if (isFound === false) {
-					// 				map.removeLayer(plane.icon);
-					// 				planesObjects.splice(planesObjects.indexOf(plane), 1);
-					// 				map.removeLayer(plane.popup);
-					// 			}
-					// 		})
-
-					// 		resolve(allPlanes);
-					// 		console.log('all po usuwaniu: ', allPlanes);
-					// 		console.log('objects po usuwaniu: ', planesObjects);
-					// 	})
-					// }
-
-					// function createIconPopup(allPlanes) {
-					// 	planesObjects.forEach(plane => {
-					// 		//updating plane info
-					// 		plane.updatePlaneInfo(plane, allPlanes);
-					// 		//creating plane icons
-					// 		plane.createPlaneIcon(plane, allPlanes);
-					// 		//creating plane popups
-					// 		plane.createPlanePopup(plane);
-					// 	})
-					// }
 
 					function work() {
 						fetchData(api)

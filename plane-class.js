@@ -1,4 +1,4 @@
-export { Plane, createObjects, createIconPopup };
+export { Plane, createIconPopup };
 
 class Plane {
     constructor(icao, lat, lng, track, groundSpeed, baroAltitude, map) {
@@ -34,7 +34,6 @@ class Plane {
             }
         }
     }
-
 
     createPlanePopup(plane) {
         let popup;
@@ -110,50 +109,6 @@ class Plane {
             }
         }
     }
-}
-
-function createObjects(allPlanes, planesObjects) {
-    return new Promise(resolve => {
-        console.log('creating objects');
-        //adding new objects
-        allPlanes.forEach(plane => {
-            let counter = 0;
-            const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
-
-            if (planesObjects.length === 0) {
-                planesObjects.push(planeObj);
-            } else {
-                for (let i = 0; i < planesObjects.length; i++) {
-                    if (planesObjects[i].icao === planeObj.icao) {
-                        counter++;
-                    }
-                }
-                if (counter === 0) {
-                    planesObjects.push(planeObj);
-                }
-            }
-
-        })
-
-        //deleting missing objects
-        planesObjects.forEach(plane => {
-            let isFound = false;
-            for (let j = 0; j < allPlanes.length; j++) {
-                if (plane.icao === allPlanes[j][0]) {
-                    isFound = true;
-                }
-            }
-            if (isFound === false) {
-                map.removeLayer(plane.icon);
-                planesObjects.splice(planesObjects.indexOf(plane), 1);
-                map.removeLayer(plane.popup);
-            }
-        })
-
-        resolve(allPlanes);
-        console.log('all po usuwaniu: ', allPlanes);
-        console.log('objects po usuwaniu: ', planesObjects);
-    })
 }
 
 function createIconPopup(allPlanes, planesObjects) {
