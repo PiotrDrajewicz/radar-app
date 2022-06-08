@@ -1,4 +1,4 @@
-import { createMap, createUserPositionMarker } from './map-functions.js';
+import { createMap, createUserPositionMarker, createCircle, createWatchedArea, Point } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 
@@ -8,24 +8,15 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const areaPoints = [];
 	const workButton = document.getElementById('work-btn');
 
-	//selectors
-
-	if (navigator.geolocation) { //built in function
+	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(position => {
 			lat = position.coords.latitude;
 			long = position.coords.longitude;
+			let api;
 
+			//creating map and markers
 			let map = createMap(lat, long);
 			createUserPositionMarker(lat, long, map);
-
-			class point {
-				constructor(pointNumber, lat, lng) {
-					this.pointNumber = pointNumber;
-					this.lat = lat;
-					this.lng = lng;
-				}
-			}
-			let api;
 
 			//adding area points
 			let i = 0;
@@ -37,28 +28,18 @@ window.addEventListener('load', () => { //run function when page is loaded
 				} else {
 					const clickLat = e.latlng.lat;
 					const clickLng = e.latlng.lng;
-					const pointObj = new point(i, clickLat, clickLng);
+					const pointObj = new Point(i, clickLat, clickLng);
 					areaPoints.push(pointObj);
 					console.log(areaPoints);
 					// localStorage.setItem(`p${i}`, JSON.stringify(clickCoordinates));
 
 					//adding circle
-					const circle = L.circle([clickLat, clickLng], {
-						color: 'red',
-						fillColor: '#f03',
-						fillOpacity: 0.5,
-						radius: 50
-					}).addTo(map);
+					createCircle(clickLat, clickLng, map);
 				}
 
 				if (i == 4) {
 					//adding watched area
-					const polygon = L.polygon([
-						[areaPoints[0].lat, areaPoints[0].lng],
-						[areaPoints[1].lat, areaPoints[1].lng],
-						[areaPoints[2].lat, areaPoints[2].lng],
-						[areaPoints[3].lat, areaPoints[3].lng]
-					]).addTo(map);
+					createWatchedArea(areaPoints, map);
 
 					const latMin = areaPoints[2].lat;
 					const lngMin = areaPoints[0].lng;
@@ -112,7 +93,6 @@ window.addEventListener('load', () => { //run function when page is loaded
 						})
 					}
 
-
 					function work() {
 						fetchData(api)
 							.then(res => {
@@ -142,8 +122,12 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 				}
 			}
-			map.on('click', onMapClick);
 
+			function sendNotification() {
+
+			}
+
+			map.on('click', onMapClick);
 		});
 	}
 })
