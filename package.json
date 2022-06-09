@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.16.6"
+  },
+  "name": "radar-app",
+  "version": "1.0.0",
+  "main": "data-functions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PiotrDrajewicz/radar-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PiotrDrajewicz/radar-app/issues"
+  },
+  "homepage": "https://github.com/PiotrDrajewicz/radar-app#readme",
+  "description": ""
+}
