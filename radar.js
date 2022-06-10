@@ -1,11 +1,13 @@
 import { createMap, createUserPositionMarker, createCircle, createWatchedArea, Point } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
+// import { sendNotification } from './notifications';
 
 window.addEventListener('load', () => { //run function when page is loaded
 	let long; //declaring variable here so we can move it out
 	let lat;
 	const areaPoints = [];
+	const boundariesPoints = [];
 	const workButton = document.getElementById('work-btn');
 
 	if (navigator.geolocation) {
@@ -42,9 +44,14 @@ window.addEventListener('load', () => { //run function when page is loaded
 					createWatchedArea(areaPoints, map);
 
 					const latMin = areaPoints[2].lat;
+					boundariesPoints.push(areaPoints[2].lat);
 					const lngMin = areaPoints[0].lng;
+					boundariesPoints.push(areaPoints[0].lng);
 					const latMax = areaPoints[0].lat;
+					boundariesPoints.push(areaPoints[0].lat);
 					const lngMax = areaPoints[1].lng;
+					boundariesPoints.push(areaPoints[1].lng);
+					console.log('boundaries: ', boundariesPoints);
 					api = `https://opensky-network.org/api/states/all?lamin=${latMin}&lomin=${lngMin}&lamax=${latMax}&lomax=${lngMax}`;
 
 					const planesObjects = [];
@@ -123,9 +130,11 @@ window.addEventListener('load', () => { //run function when page is loaded
 				}
 			}
 
-			function sendNotification() {
-
+			function pp() {
+				console.log('pp');
 			}
+
+			// sendNotification();
 
 			map.on('click', onMapClick);
 		});

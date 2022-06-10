@@ -1,24 +1,29 @@
-const qrcode = require('qrcode-terminal');
-const { Client } = require('whatsapp-web.js');
-const client = new Client();
+export { sendNotification };
 
-client.initialize();
+function sendNotification() {
+    const qrcode = require('qrcode-terminal');
 
-//connecting
-client.on('qr', (qr) => {
-    // console.log('qr received: ', qr);
-    qrcode.generate(qr, { small: true });
-});
+    const { Client } = require('whatsapp-web.js');
+    const client = new Client();
 
-client.on('ready', () => {
-    console.log('client is ready');
-})
+    client.on('qr', qr => {
+        qrcode.generate(qr, { small: true });
+        console.log('qr code received');
+    });
 
-client.on('message', message => {
-    console.log(message.body);
-    if (message.body === '!ping') {
-        client.sendMessage(message.from, 'pong');
-    }
-});
+    client.on('ready', () => {
+        console.log('Client is ready!');
+    });
 
+    // client.on('message', message => {
+    //     console.log(message.body);
+    // });
 
+    // client.on('message', message => {
+    //     if (message.body === 'halo') {
+    //         client.sendMessage(message.from, 'spadaj');
+    //     }
+    // });
+
+    client.initialize();
+}

@@ -9,6 +9,7 @@ class Plane {
         this.groundSpeed = groundSpeed;
         this.baroAltitude = baroAltitude;
         this.map = map;
+        this.notificationSent = false;
     }
 
     createPlaneIcon(plane, planesUpdated) {
@@ -109,6 +110,15 @@ class Plane {
             }
         }
     }
+
+    trackPlane(plane, latMin, lngMin, latMax, lngMax) {
+        // console.log(`plane: ${plane.icao}, speed: ${plane.groundSpeed}`);
+        // if (plane.lat >= latMin && plane.lat <= latMax && plane.lng >= lngMin && plane.lng <= lngMax) 
+        if (plane.icao) {
+            plane.notificationSent = true;
+            console.log(latMin, lngMin, latMax, lngMax);
+        }
+    }
 }
 
 function createIconPopup(allPlanes, planesObjects) {
@@ -119,5 +129,7 @@ function createIconPopup(allPlanes, planesObjects) {
         plane.createPlaneIcon(plane, allPlanes);
         //creating plane popups
         plane.createPlanePopup(plane);
+        //tracking plane for notification
+        plane.trackPlane(plane);
     })
 }
