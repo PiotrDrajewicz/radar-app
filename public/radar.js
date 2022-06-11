@@ -109,7 +109,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 								return createObjects(res, planesObjects);
 							})
 							.then(res => {
-								createIconPopup(res, planesObjects);
+								createIconPopup(res, planesObjects, boundariesPoints);
 							});
 					}
 					workButton.addEventListener('click', work);

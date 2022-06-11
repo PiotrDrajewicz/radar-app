@@ -111,17 +111,21 @@ class Plane {
         }
     }
 
-    trackPlane(plane, latMin, lngMin, latMax, lngMax) {
+    trackPlane(plane, boundariesPoints) {
         // console.log(`plane: ${plane.icao}, speed: ${plane.groundSpeed}`);
         // if (plane.lat >= latMin && plane.lat <= latMax && plane.lng >= lngMin && plane.lng <= lngMax) 
         if (plane.icao) {
             plane.notificationSent = true;
+            const latMin = boundariesPoints[0];
+            const lngMin = boundariesPoints[1];
+            const latMax = boundariesPoints[2];
+            const lngMax = boundariesPoints[3];
             console.log(latMin, lngMin, latMax, lngMax);
         }
     }
 }
 
-function createIconPopup(allPlanes, planesObjects) {
+function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
     planesObjects.forEach(plane => {
         //updating plane info
         plane.updatePlaneInfo(plane, allPlanes);
@@ -130,6 +134,6 @@ function createIconPopup(allPlanes, planesObjects) {
         //creating plane popups
         plane.createPlanePopup(plane);
         //tracking plane for notification
-        plane.trackPlane(plane);
+        plane.trackPlane(plane, boundariesPoints);
     })
 }
