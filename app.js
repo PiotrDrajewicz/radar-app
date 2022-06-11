@@ -1,4 +1,5 @@
 const express = require('express');
+// const qrcode = require('qrcode-terminal');
 const app = express();
 
 app.use(express.static('./public'));
