@@ -123,7 +123,7 @@ class Plane {
             const lngMax = boundariesPoints[3];
             console.log(latMin, lngMin, latMax, lngMax);
 
-            sendNotification();
+            // sendNotification();
 
         }
     }
