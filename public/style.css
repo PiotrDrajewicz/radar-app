@@ -41,3 +41,28 @@
 .custom .leaflet-popup-close-button {
     display: none;
 }
+
+#main-container {
+    display: flex;
+    background: yellow;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    text-align: center;
+}
+
+table {
+    width: 200%;
+    background: red;
+}
+
+th {
+    padding: 5px 5px;
+}

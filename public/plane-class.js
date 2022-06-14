@@ -127,7 +127,24 @@ class Plane {
 
         }
     }
+
+    assignIcaoTypeAndAirline(plane) {
+        const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
+        fetch(apiDetailed)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                const icaoTypeCode = data.ICAOTypeCode;
+                const operatorFlagCode = data.OperatorFlagCode;
+                plane.planeType = icaoTypeCode;
+                plane.airlineCode = operatorFlagCode;
+            })
+    }
 }
+
+// function assignIcaoType(planeIcaoCode) {
+// }
 
 function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
     planesObjects.forEach(plane => {
@@ -139,5 +156,7 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
         plane.createPlanePopup(plane);
         //tracking plane for notification
         plane.trackPlane(plane, boundariesPoints);
+        //assigning plane type
+        plane.assignIcaoTypeAndAirline(plane);
     })
 }

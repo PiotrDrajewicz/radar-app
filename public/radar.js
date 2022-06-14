@@ -64,6 +64,12 @@ window.addEventListener('load', () => { //run function when page is loaded
 								let counter = 0;
 								const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
 
+								//adding icao type
+								// console.log('icaooo: ', planeObj.icao);
+								// const icaoType = assignIcaoType(planeObj.icao);
+								// console.log('typ po funkcji', icaoType);
+								// planeObj.planeType = icaoType;
+
 								if (planesObjects.length === 0) {
 									planesObjects.push(planeObj);
 								} else {
@@ -128,10 +134,6 @@ window.addEventListener('load', () => { //run function when page is loaded
 					// }, 3000);
 
 				}
-			}
-
-			function pp() {
-				console.log('pp');
 			}
 
 			// sendNotification();
