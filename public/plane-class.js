@@ -1,5 +1,5 @@
 export { Plane, createIconPopup };
-import { sendNotification } from './notifications.js';
+// import { sendNotification } from './notifications.js';
 
 class Plane {
     constructor(icao, lat, lng, track, groundSpeed, baroAltitude, map) {
@@ -121,7 +121,7 @@ class Plane {
             const lngMin = boundariesPoints[1];
             const latMax = boundariesPoints[2];
             const lngMax = boundariesPoints[3];
-            console.log(latMin, lngMin, latMax, lngMax);
+            // console.log(latMin, lngMin, latMax, lngMax);
 
             // sendNotification();
 
