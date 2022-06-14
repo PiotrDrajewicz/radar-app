@@ -66,3 +66,25 @@ table {
 th {
     padding: 5px 5px;
 }
+
+.table-headers {
+    display: grid;
+    grid-template-columns: repeat(4, 5rem);
+    /* border-top: ;
+    border-left: ;
+    border-right: ; */
+    /* padding: 0;
+    margin: 0; */
+}
+
+.top {
+    border-bottom: none;
+}
+
+.table-header {
+    border: 1px solid black;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    background: rgb(157, 173, 157);
+}

@@ -143,9 +143,6 @@ class Plane {
     }
 }
 
-// function assignIcaoType(planeIcaoCode) {
-// }
-
 function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
     planesObjects.forEach(plane => {
         //updating plane info
