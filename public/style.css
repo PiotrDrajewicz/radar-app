@@ -1,6 +1,7 @@
 #map {
     height: 650px;
     width: 70%;
+    /* width: 700px; */
 }
 
 .custom .leaflet-popup-content-wrapper {
@@ -44,47 +45,22 @@
 
 #main-container {
     display: flex;
-    background: yellow;
+    /* background: yellow; */
 }
 
-table,
-th,
-td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-td {
-    text-align: center;
-}
-
-table {
-    width: 200%;
-    background: red;
-}
-
-th {
-    padding: 5px 5px;
-}
-
-.table-headers {
+.table-grid {
     display: grid;
-    grid-template-columns: repeat(4, 5rem);
-    /* border-top: ;
-    border-left: ;
-    border-right: ; */
-    /* padding: 0;
-    margin: 0; */
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    margin-right: 10rem;
+    /* margin-right: min(5rem, 300%); */
 }
 
-.top {
-    border-bottom: none;
-}
-
-.table-header {
+.table-header,
+.table-cell {
     border: 1px solid black;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    background: rgb(157, 173, 157);
+    border-bottom: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
 }

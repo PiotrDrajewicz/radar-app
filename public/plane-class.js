@@ -140,20 +140,78 @@ class Plane {
                 plane.planeType = icaoTypeCode;
                 plane.airlineCode = operatorFlagCode;
             })
+            .then(() => {
+                //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
+                let tableCellAltitude;
+                let tableCellSpeed;
+
+                if (!plane.inTable) {
+                    const tableDiv = document.getElementById('table-div');
+                    const tableRow = document.createElement('div');
+                    tableRow.classList.add('table-row');
+                    tableRow.classList.add('table-grid');
+                    tableRow.classList.add(plane.icao);
+
+                    const tableCellType = document.createElement('p');
+                    tableCellType.textContent = plane.planeType;
+                    tableCellType.classList.add('table-cell');
+
+                    const tableCellAirline = document.createElement('p');
+                    tableCellAirline.textContent = plane.airlineCode;
+                    tableCellAirline.classList.add('table-cell');
+
+                    tableCellAltitude = document.createElement('p');
+                    tableCellAltitude.textContent = plane.baroAltitude;
+                    tableCellAltitude.classList.add('table-cell');
+
+                    tableCellSpeed = document.createElement('p');
+                    tableCellSpeed.textContent = plane.groundSpeed;
+                    tableCellSpeed.classList.add('table-cell');
+
+                    tableRow.appendChild(tableCellType);
+                    tableRow.appendChild(tableCellAirline);
+                    tableRow.appendChild(tableCellAltitude);
+                    tableRow.appendChild(tableCellSpeed);
+                    tableDiv.appendChild(tableRow);
+
+                    plane.inTable = true;
+                } else {
+                    tableCellAltitude.textContent = plane.baroAltitude;
+                    tableCellSpeed.textContent = plane.groundSpeed;
+                }
+
+                const foundPlane = tableDiv.childNodes.find(tablePlane => tablePlane.className === plane.icao);
+                if (foundPlane) {
+                    console.log(plane.icao, 'jest');
+                } else {
+                    console.log(plane.icao, 'nie ma');
+                }
+
+            }
+            )
+    }
+
+    putPlaneInTable(plane) {
+        // console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed);
     }
 }
 
 function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
     planesObjects.forEach(plane => {
-        //updating plane info
-        plane.updatePlaneInfo(plane, allPlanes);
-        //creating plane icons
-        plane.createPlaneIcon(plane, allPlanes);
-        //creating plane popups
-        plane.createPlanePopup(plane);
-        //tracking plane for notification
-        plane.trackPlane(plane, boundariesPoints);
-        //assigning plane type
-        plane.assignIcaoTypeAndAirline(plane);
+        (async function () {
+            //updating plane info
+            await plane.updatePlaneInfo(plane, allPlanes);
+            //creating plane icons
+            await plane.createPlaneIcon(plane, allPlanes);
+            //creating plane popups
+            await plane.createPlanePopup(plane);
+            //tracking plane for notification
+            await plane.trackPlane(plane, boundariesPoints);
+            //assigning plane type and airline
+            await plane.assignIcaoTypeAndAirline(plane);
+            //putting plane into table
+            await plane.putPlaneInTable(plane);
+
+        })();
     })
 }
