@@ -144,13 +144,14 @@ class Plane {
                 //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
                 let tableCellAltitude;
                 let tableCellSpeed;
+                let tableDiv;
 
                 if (!plane.inTable) {
-                    const tableDiv = document.getElementById('table-div');
+                    tableDiv = document.getElementById('table-div');
                     const tableRow = document.createElement('div');
                     tableRow.classList.add('table-row');
                     tableRow.classList.add('table-grid');
-                    tableRow.classList.add(plane.icao);
+                    tableRow.setAttribute('id', plane.icao);
 
                     const tableCellType = document.createElement('p');
                     tableCellType.textContent = plane.planeType;
@@ -180,12 +181,27 @@ class Plane {
                     tableCellSpeed.textContent = plane.groundSpeed;
                 }
 
-                const foundPlane = tableDiv.childNodes.find(tablePlane => tablePlane.className === plane.icao);
-                if (foundPlane) {
-                    console.log(plane.icao, 'jest');
-                } else {
-                    console.log(plane.icao, 'nie ma');
-                }
+                // console.log(tableDiv.childNodes.nodeType === 1);
+                // tableDiv.childNodes.forEach(child => {
+                //     if (child.nodeType === 1) {
+                //         console.log(child);
+                //     }
+                // })
+
+                tableDiv.childNodes.forEach(child => {
+                    if (child.nodeType === 1) {
+                        if (plane.icao === child.className) {
+                            console.log(plane.icao, 'jest');
+                        }
+                    }
+                })
+
+                // const foundPlane = tableDiv.childNodes.find(tablePlane => tablePlane.className === plane.icao);
+                // if (foundPlane) {
+                //     console.log(plane.icao, 'jest');
+                // } else {
+                //     console.log(plane.icao, 'nie ma');
+                // }
 
             }
             )
