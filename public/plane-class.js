@@ -141,13 +141,17 @@ class Plane {
                 plane.airlineCode = operatorFlagCode;
             })
             .then(() => {
+                //it would be better if this was in separete function but its here for now 
                 //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
                 let tableCellAltitude;
                 let tableCellSpeed;
                 let tableDiv;
+                let tableRows;
 
                 if (!plane.inTable) {
+                    //creating table position for plane
                     tableDiv = document.getElementById('table-div');
+                    tableRows = document.querySelector('.table-rows');
                     const tableRow = document.createElement('div');
                     tableRow.classList.add('table-row');
                     tableRow.classList.add('table-grid');
@@ -173,35 +177,28 @@ class Plane {
                     tableRow.appendChild(tableCellAirline);
                     tableRow.appendChild(tableCellAltitude);
                     tableRow.appendChild(tableCellSpeed);
-                    tableDiv.appendChild(tableRow);
+                    tableRows.appendChild(tableRow);
+                    tableDiv.appendChild(tableRows);
 
                     plane.inTable = true;
                 } else {
-                    tableCellAltitude.textContent = plane.baroAltitude;
-                    tableCellSpeed.textContent = plane.groundSpeed;
+                    console.log('w tabeli');
+                    //updating plane's alt and spd in table
+                    // tableCellAltitude.textContent = plane.baroAltitude;
+                    // tableCellSpeed.textContent = plane.groundSpeed;
                 }
 
-                // console.log(tableDiv.childNodes.nodeType === 1);
-                // tableDiv.childNodes.forEach(child => {
-                //     if (child.nodeType === 1) {
-                //         console.log(child);
-                //     }
-                // })
+                const rowsHtmlCollection = tableRows.children;
+                const rows = [...rowsHtmlCollection];
+                const planeDiv = document.getElementById(plane.icao);
+                const found = rows.find(div => div === planeDiv);
+                if (found) {
+                    console.log('jest', plane.icao);
+                } else {
+                    //deleting row from table
+                    planeDiv.remove();
+                }
 
-                tableDiv.childNodes.forEach(child => {
-                    if (child.nodeType === 1) {
-                        if (plane.icao === child.className) {
-                            console.log(plane.icao, 'jest');
-                        }
-                    }
-                })
-
-                // const foundPlane = tableDiv.childNodes.find(tablePlane => tablePlane.className === plane.icao);
-                // if (foundPlane) {
-                //     console.log(plane.icao, 'jest');
-                // } else {
-                //     console.log(plane.icao, 'nie ma');
-                // }
 
             }
             )
