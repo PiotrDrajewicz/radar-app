@@ -1,5 +1,8 @@
 export { Plane, createIconPopup };
 // import { sendNotification } from './notifications.js';
+let tableRowsArr = [];
+let tableDiv = document.getElementById('table-div');
+let tableRows = document.querySelector('.table-rows')
 
 class Plane {
     constructor(icao, lat, lng, track, groundSpeed, baroAltitude, map) {
@@ -128,7 +131,7 @@ class Plane {
         }
     }
 
-    assignIcaoTypeAndAirline(plane) {
+    assignIcaoTypeAndAirline(plane, planesObjects) {
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
         fetch(apiDetailed)
             .then(response => {
@@ -145,14 +148,15 @@ class Plane {
                 //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
                 let tableCellAltitude;
                 let tableCellSpeed;
-                let tableDiv;
-                let tableRows;
+                let tableRow;
+                // let tableDiv;
+                // let tableRows;
 
                 if (!plane.inTable) {
                     //creating table position for plane
-                    tableDiv = document.getElementById('table-div');
-                    tableRows = document.querySelector('.table-rows');
-                    const tableRow = document.createElement('div');
+                    // tableDiv = document.getElementById('table-div');
+                    // tableRows = document.querySelector('.table-rows');
+                    tableRow = document.createElement('div');
                     tableRow.classList.add('table-row');
                     tableRow.classList.add('table-grid');
                     tableRow.setAttribute('id', plane.icao);
@@ -160,18 +164,22 @@ class Plane {
                     const tableCellType = document.createElement('p');
                     tableCellType.textContent = plane.planeType;
                     tableCellType.classList.add('table-cell');
+                    tableCellType.classList.add('type-cell');
 
                     const tableCellAirline = document.createElement('p');
                     tableCellAirline.textContent = plane.airlineCode;
                     tableCellAirline.classList.add('table-cell');
+                    tableCellAirline.classList.add('airline-cell');
 
                     tableCellAltitude = document.createElement('p');
                     tableCellAltitude.textContent = plane.baroAltitude;
                     tableCellAltitude.classList.add('table-cell');
+                    tableCellAltitude.classList.add('altitude-cell');
 
                     tableCellSpeed = document.createElement('p');
                     tableCellSpeed.textContent = plane.groundSpeed;
                     tableCellSpeed.classList.add('table-cell');
+                    tableCellSpeed.classList.add('speed-cell');
 
                     tableRow.appendChild(tableCellType);
                     tableRow.appendChild(tableCellAirline);
@@ -180,24 +188,32 @@ class Plane {
                     tableRows.appendChild(tableRow);
                     tableDiv.appendChild(tableRows);
 
+                    tableRowsArr.push(tableRow);
+                    console.log(tableRowsArr);
                     plane.inTable = true;
                 } else {
-                    console.log('w tabeli');
+                    // console.log('w tabeli'); dochodzi tutaj
+                    const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
+                    planeToUpdate.children[3].textContent = plane.groundSpeed;
+                    // console.log('to update', planeToUpdate.children[3]);
+
                     //updating plane's alt and spd in table
                     // tableCellAltitude.textContent = plane.baroAltitude;
                     // tableCellSpeed.textContent = plane.groundSpeed;
                 }
 
-                const rowsHtmlCollection = tableRows.children;
-                const rows = [...rowsHtmlCollection];
-                const planeDiv = document.getElementById(plane.icao);
-                const found = rows.find(div => div === planeDiv);
-                if (found) {
-                    console.log('jest', plane.icao);
-                } else {
-                    //deleting row from table
-                    planeDiv.remove();
-                }
+                tableRowsArr.map(row => {
+                    const icaoFromTable = row.getAttribute('id');
+                    const planeFound = planesObjects.find(plane => plane.icao === icaoFromTable);
+
+                    if (!planeFound) {
+                        console.log('nie ma', icaoFromTable);
+                        row.remove();
+                    } else {
+                        console.log('jest', icaoFromTable);
+                    }
+                })
+                console.log('nowy');
 
 
             }
@@ -221,7 +237,7 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
             //tracking plane for notification
             await plane.trackPlane(plane, boundariesPoints);
             //assigning plane type and airline
-            await plane.assignIcaoTypeAndAirline(plane);
+            await plane.assignIcaoTypeAndAirline(plane, planesObjects);
             //putting plane into table
             await plane.putPlaneInTable(plane);
 
