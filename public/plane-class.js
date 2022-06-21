@@ -164,22 +164,18 @@ class Plane {
                     const tableCellType = document.createElement('p');
                     tableCellType.textContent = plane.planeType;
                     tableCellType.classList.add('table-cell');
-                    tableCellType.classList.add('type-cell');
 
                     const tableCellAirline = document.createElement('p');
                     tableCellAirline.textContent = plane.airlineCode;
                     tableCellAirline.classList.add('table-cell');
-                    tableCellAirline.classList.add('airline-cell');
 
                     tableCellAltitude = document.createElement('p');
                     tableCellAltitude.textContent = plane.baroAltitude;
                     tableCellAltitude.classList.add('table-cell');
-                    tableCellAltitude.classList.add('altitude-cell');
 
                     tableCellSpeed = document.createElement('p');
                     tableCellSpeed.textContent = plane.groundSpeed;
                     tableCellSpeed.classList.add('table-cell');
-                    tableCellSpeed.classList.add('speed-cell');
 
                     tableRow.appendChild(tableCellType);
                     tableRow.appendChild(tableCellAirline);
