@@ -1,6 +1,6 @@
 #map {
     height: 650px;
-    width: 70%;
+    width: 65%;
     /* width: 700px; */
 }
 
@@ -48,9 +48,13 @@
     /* background: yellow; */
 }
 
+#table-div {
+    background-color: pink;
+}
+
 .table-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     width: 100%;
     margin-right: 10rem;
     /* margin-right: min(5rem, 300%); */
@@ -59,8 +63,16 @@
 .table-header,
 .table-cell {
     border: 1px solid black;
-    border-bottom: none;
+    border-right: none;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
+}
+
+.table-cell {
+    border-top: none;
+}
+
+.speed-cell {
+    border-right: 1px solid black;
 }

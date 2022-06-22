@@ -133,6 +133,7 @@ class Plane {
 
     assignIcaoTypeAndAirline(plane, planesObjects) {
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
+        // const apiReg = `https://api.joshdouch.me/hex-reg.php?hex=${plane.icao}`;
         fetch(apiDetailed)
             .then(response => {
                 return response.json();
@@ -144,6 +145,15 @@ class Plane {
                 plane.airlineCode = operatorFlagCode;
             })
             .then(() => {
+                //place to fetch data from plane reg api
+                // fetch(apiReg)
+                //     .then(response => {
+                //         return response.json();
+                //     })
+                //     .then(data => {
+                //         console.log('data', data);
+                //     })
+
                 //it would be better if this was in separete function but its here for now 
                 //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
                 let tableCellAltitude;
@@ -169,6 +179,11 @@ class Plane {
                     tableCellAirline.textContent = plane.airlineCode;
                     tableCellAirline.classList.add('table-cell');
 
+                    const tableCellRegistration = document.createElement('p');
+                    // tableCellRegistration.textContent = plane.airlineCode;
+                    tableCellRegistration.textContent = plane.icao; //placeholder
+                    tableCellRegistration.classList.add('table-cell');
+
                     tableCellAltitude = document.createElement('p');
                     tableCellAltitude.textContent = plane.baroAltitude;
                     tableCellAltitude.classList.add('table-cell');
@@ -176,9 +191,11 @@ class Plane {
                     tableCellSpeed = document.createElement('p');
                     tableCellSpeed.textContent = plane.groundSpeed;
                     tableCellSpeed.classList.add('table-cell');
+                    tableCellSpeed.classList.add('speed-cell');
 
                     tableRow.appendChild(tableCellType);
                     tableRow.appendChild(tableCellAirline);
+                    tableRow.appendChild(tableCellRegistration);
                     tableRow.appendChild(tableCellAltitude);
                     tableRow.appendChild(tableCellSpeed);
                     tableRows.appendChild(tableRow);
@@ -190,7 +207,8 @@ class Plane {
                 } else {
                     // console.log('w tabeli'); dochodzi tutaj
                     const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
-                    planeToUpdate.children[3].textContent = plane.groundSpeed;
+                    planeToUpdate.children[3].textContent = plane.baroAltitude;
+                    planeToUpdate.children[4].textContent = plane.groundSpeed;
                     // console.log('to update', planeToUpdate.children[3]);
 
                     //updating plane's alt and spd in table
