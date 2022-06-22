@@ -80,6 +80,12 @@
     margin-bottom: 5rem;
     vertical-align: middle;
     /* background-color: aqua; */
+    border-radius: 5px 5px 0 0;
+    user-select: none;
+}
+
+.nav-link-active {
+    background-color: purple;
 }
 
 #table-div {
