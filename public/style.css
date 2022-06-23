@@ -85,7 +85,14 @@
 }
 
 .nav-link-active {
-    background-color: purple;
+    background-color: rgb(197, 13, 197);
+}
+
+#filters-div {
+    background-color: rgb(241, 175, 51);
+    position: absolute;
+    transform: translateY(41px);
+    width: 100%;
 }
 
 #table-div {
