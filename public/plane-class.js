@@ -205,6 +205,7 @@ class Plane {
                     console.log(tableRowsArr);
                     plane.inTable = true;
                 } else {
+                    //updating plane's alt and spd in table
                     // console.log('w tabeli'); dochodzi tutaj
                     const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
                     planeToUpdate.children[3].textContent = plane.baroAltitude;
