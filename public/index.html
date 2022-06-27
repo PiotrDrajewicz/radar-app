@@ -32,9 +32,11 @@
             <div id="filters-div">
                 <h3 id="filters-title"></h3>
                 <label for="type-dropdown" id="type-dropdown-label">Type</label>
-                <select name="type-dropdown" class="input-field"></select>
+                <select name="type-dropdown" class="input-field" id="type-dropdown-field">
+                    <option value="" disabled selected hidden>Choose plane type</option>
+                </select>
                 <label for="airline-dropdown" id="airline-dropdown-label">Airline</label>
-                <select name="airline-dropdown" class="input-field"></select>
+                <select name="airline-dropdown" class="input-field" id="airline-dropdown-field"></select>
             </div>
             <div id="table-div">
                 <div class="table-headers table-grid">

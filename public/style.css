@@ -95,6 +95,10 @@
     width: 100%;
 }
 
+.dropdown-option-type-active {
+    color: red;
+}
+
 #table-div {
     /* background-color: pink; */
 }

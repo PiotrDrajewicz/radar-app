@@ -9,6 +9,38 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const areaPoints = [];
 	const boundariesPoints = [];
 	const workButton = document.getElementById('work-btn');
+	const typeDropdownField = document.getElementById('type-dropdown-field');
+	const airplanesTypes = [];
+
+	fetchData('./aircraftIcaoIata.json')
+		.then(data => {
+			async function asd() {
+				await data.forEach(plane => {
+					airplanesTypes.push(plane.icaoCode);
+					const optionType = document.createElement('option');
+					optionType.classList.add('dropdown-option-type');
+					optionType.setAttribute('value', plane.icaoCode);
+					optionType.textContent = plane.icaoCode;
+					typeDropdownField.appendChild(optionType);
+				})
+
+				const optionTypeArr = [...typeDropdownField.children];
+				await optionTypeArr.forEach(element => {
+					element.addEventListener('click', (e) => {
+						console.log(e.target);
+					})
+				})
+
+				// const optionTypeAll = document.querySelectorAll('.dropdown-option-type');
+				// await optionTypeAll.addEventListener('click', (e) => {
+				// 	console.log(e);
+				// })
+			}
+
+			asd();
+
+			// console.log(airplanesTypes);
+		});
 
 	//navlinks
 	const tableLink = document.querySelector('.table-link');
