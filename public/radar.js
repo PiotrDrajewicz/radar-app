@@ -10,13 +10,24 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const boundariesPoints = [];
 	const workButton = document.getElementById('work-btn');
 	const typeDropdownField = document.getElementById('type-dropdown-field');
+	const typesDropdownMenu = document.querySelector('.dropdown-menu');
 	const airplanesTypes = [];
 
 	fetchData('./aircraftIcaoIata.json')
 		.then(data => {
 			(function asd() {
-				data.forEach(plane => {
-					airplanesTypes.push(plane.icaoCode);
+				data.forEach(planeType => {
+					const typeIcaoCode = planeType.icaoCode;
+					airplanesTypes.push(typeIcaoCode);
+					const typeElement = document.createElement('p');
+					typeElement.setAttribute('id', typeIcaoCode);
+					typeElement.classList.add('type-element');
+					typeElement.textContent = typeIcaoCode;
+					typeElement.addEventListener('click', e => {
+						console.log(e.target.id);
+					})
+					typesDropdownMenu.appendChild(typeElement);
+
 					// const optionType = document.createElement('option');
 					// optionType.classList.add('dropdown-option-type');
 					// optionType.setAttribute('value', plane.icaoCode);
@@ -29,7 +40,25 @@ window.addEventListener('load', () => { //run function when page is loaded
 				// 	console.log(element);
 				// })
 
+				//opening and closing dropdown menu
+				document.addEventListener('click', e => {
+					const isDropdownButton = e.target.matches('.dropdown-button');
+					//if we're not clicking on dropdown button and we're clicking inside dropdown (closest will give us here closest parent dropdown) ignore it
+					if (!isDropdownButton && e.target.closest('.dropdown') != null) return
 
+					//opening and closing dropdown menu (we're giving dropdown element class 'active' and due to that, our dropdown menu in css is being activated (.dropdown.active>.dropdown-button+.dropdown-menu) and it's getting opacity: 1)
+					let currentDropdown;
+					if (isDropdownButton) {
+						currentDropdown = e.target.closest('.dropdown');
+						currentDropdown.classList.toggle('active');
+					}
+
+					//closing all other active dropdowns
+					document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+						if (dropdown === currentDropdown) return
+						dropdown.classList.remove('active');
+					})
+				})
 
 			})();
 
