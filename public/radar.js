@@ -17,32 +17,22 @@ window.addEventListener('load', () => { //run function when page is loaded
 			(function asd() {
 				data.forEach(plane => {
 					airplanesTypes.push(plane.icaoCode);
-					const optionType = document.createElement('option');
-					optionType.classList.add('dropdown-option-type');
-					optionType.setAttribute('value', plane.icaoCode);
-					optionType.textContent = plane.icaoCode;
-					typeDropdownField.appendChild(optionType);
+					// const optionType = document.createElement('option');
+					// optionType.classList.add('dropdown-option-type');
+					// optionType.setAttribute('value', plane.icaoCode);
+					// optionType.textContent = plane.icaoCode;
+					// typeDropdownField.appendChild(optionType);
 				})
 
-				typeDropdownField.addEventListener('change', (e) => {
-					// console.log(e.target.children[1].value);
-					const element = [...e.target.children].find(ele => ele.value === e.target.value);
-					console.log(element);
-					// element.classList.add('dropdown-option-type-active');
-					// element.innerHTML += '<i class="icon-camera-retro"></i>';
-					// e.target.value.classList.add('dropdown-option-type-active');
-					// e.stopPropagation();
-				})
-
-				// typeDropdownField.addEventListener('click', (e) => {
-				// 	e.stopPropagation();
+				// typeDropdownField.addEventListener('change', (e) => {
+				// 	const element = [...e.target.children].find(ele => ele.value === e.target.value);
+				// 	console.log(element);
 				// })
+
+
 
 			})();
 
-			// asd();
-
-			// console.log(airplanesTypes);
 		});
 
 	//navlinks

@@ -95,7 +95,23 @@
     width: 100%;
 }
 
-option::after {
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    /* top: calc(100% + 0.25rem); */
+    background-color: white;
+    padding: .75rem;
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(69, 69, 69, .5);
+    opacity: 0;
+}
+
+/* option::after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f057";
@@ -104,7 +120,7 @@ option::after {
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
-}
+} */
 
 .dropdown-option-type-active {
     color: red;
