@@ -14,8 +14,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 	fetchData('./aircraftIcaoIata.json')
 		.then(data => {
-			async function asd() {
-				await data.forEach(plane => {
+			(function asd() {
+				data.forEach(plane => {
 					airplanesTypes.push(plane.icaoCode);
 					const optionType = document.createElement('option');
 					optionType.classList.add('dropdown-option-type');
@@ -24,20 +24,23 @@ window.addEventListener('load', () => { //run function when page is loaded
 					typeDropdownField.appendChild(optionType);
 				})
 
-				const optionTypeArr = [...typeDropdownField.children];
-				await optionTypeArr.forEach(element => {
-					element.addEventListener('click', (e) => {
-						console.log(e.target);
-					})
+				typeDropdownField.addEventListener('change', (e) => {
+					// console.log(e.target.children[1].value);
+					const element = [...e.target.children].find(ele => ele.value === e.target.value);
+					console.log(element);
+					// element.classList.add('dropdown-option-type-active');
+					// element.innerHTML += '<i class="icon-camera-retro"></i>';
+					// e.target.value.classList.add('dropdown-option-type-active');
+					// e.stopPropagation();
 				})
 
-				// const optionTypeAll = document.querySelectorAll('.dropdown-option-type');
-				// await optionTypeAll.addEventListener('click', (e) => {
-				// 	console.log(e);
+				// typeDropdownField.addEventListener('click', (e) => {
+				// 	e.stopPropagation();
 				// })
-			}
 
-			asd();
+			})();
+
+			// asd();
 
 			// console.log(airplanesTypes);
 		});
