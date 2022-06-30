@@ -11,6 +11,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const workButton = document.getElementById('work-btn');
 	const typeDropdownField = document.getElementById('type-dropdown-field');
 	const typesDropdownMenu = document.querySelector('.dropdown-menu');
+	const dropdownButton = document.querySelector('.dropdown-button');
+	const arrowAfter = window.getComputedStyle(dropdownButton, '::after');
 	const airplanesTypes = [];
 
 	fetchData('./aircraftIcaoIata.json')
@@ -25,6 +27,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 					typeElement.textContent = typeIcaoCode;
 					typeElement.addEventListener('click', e => {
 						console.log(e.target.id);
+						//adding ban sign to the plane type
+						typeElement.innerHTML += '<i class="fa-solid fa-ban ban-sign"></i>';
 					})
 					typesDropdownMenu.appendChild(typeElement);
 
@@ -51,6 +55,10 @@ window.addEventListener('load', () => { //run function when page is loaded
 					if (isDropdownButton) {
 						currentDropdown = e.target.closest('.dropdown');
 						currentDropdown.classList.toggle('active');
+						// arrowAfter.classList.toggle('ppp');
+						// console.log(arrowAfter);
+						// arrowAfter.content = '\f077';
+						// arrowAfter.setProperty('content', '\f077');
 					}
 
 					//closing all other active dropdowns
