@@ -176,10 +176,15 @@ body {
     padding-left: .3rem;
     padding-right: 2rem;
     margin: 0;
+    user-select: none;
 }
 
 .type-element:hover {
     background-color: rgb(163, 163, 163);
+}
+
+.type-element.banned {
+    background-color: rgb(255, 176, 176);
 }
 
 .ban-sign {
@@ -187,6 +192,7 @@ body {
     padding-top: .3rem;
     padding-left: 4.25rem;
     position: absolute;
+    pointer-events: none;
     /* margin: 0; */
 }
 

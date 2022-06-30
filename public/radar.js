@@ -28,7 +28,13 @@ window.addEventListener('load', () => { //run function when page is loaded
 					typeElement.addEventListener('click', e => {
 						console.log(e.target.id);
 						//adding ban sign to the plane type
-						typeElement.innerHTML += '<i class="fa-solid fa-ban ban-sign"></i>';
+						if (!typeElement.querySelector('#ban-sign')) {
+							typeElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
+						} else {
+							const banSign = typeElement.querySelector('#ban-sign');
+							banSign.remove();
+						}
+						typeElement.classList.toggle('banned');
 					})
 					typesDropdownMenu.appendChild(typeElement);
 
