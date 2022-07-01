@@ -9,11 +9,9 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const areaPoints = [];
 	const boundariesPoints = [];
 	const workButton = document.getElementById('work-btn');
-	const typeDropdownField = document.getElementById('type-dropdown-field');
 	const typesDropdownMenu = document.querySelector('.dropdown-menu');
-	const dropdownButton = document.querySelector('.dropdown-button');
-	const arrowAfter = window.getComputedStyle(dropdownButton, '::after');
 	const airplanesTypes = [];
+	const typeDropdown = document.querySelector('#type-dropdown');
 
 	fetchData('./aircraftIcaoIata.json')
 		.then(data => {
@@ -27,7 +25,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 					typeElement.textContent = typeIcaoCode;
 					typeElement.addEventListener('click', e => {
 						console.log(e.target.id);
-						//adding ban sign to the plane type
+						//adding and removing ban sign and color to the plane type if chosen
 						if (!typeElement.querySelector('#ban-sign')) {
 							typeElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
 						} else {
@@ -38,17 +36,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 					})
 					typesDropdownMenu.appendChild(typeElement);
 
-					// const optionType = document.createElement('option');
-					// optionType.classList.add('dropdown-option-type');
-					// optionType.setAttribute('value', plane.icaoCode);
-					// optionType.textContent = plane.icaoCode;
-					// typeDropdownField.appendChild(optionType);
 				})
-
-				// typeDropdownField.addEventListener('change', (e) => {
-				// 	const element = [...e.target.children].find(ele => ele.value === e.target.value);
-				// 	console.log(element);
-				// })
 
 				//opening and closing dropdown menu
 				document.addEventListener('click', e => {
@@ -61,10 +49,18 @@ window.addEventListener('load', () => { //run function when page is loaded
 					if (isDropdownButton) {
 						currentDropdown = e.target.closest('.dropdown');
 						currentDropdown.classList.toggle('active');
-						// arrowAfter.classList.toggle('ppp');
-						// console.log(arrowAfter);
-						// arrowAfter.content = '\f077';
-						// arrowAfter.setProperty('content', '\f077');
+					}
+
+					//rotating button arrow
+					let currentDropdownButton;
+					if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
+						currentDropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-button');
+						currentDropdownButton.classList.toggle('active');
+					}
+					if (!e.target.closest('.dropdown')) {
+						document.querySelectorAll('.dropdown-button').forEach(button => {
+							button.classList.remove('active');
+						})
 					}
 
 					//closing all other active dropdowns

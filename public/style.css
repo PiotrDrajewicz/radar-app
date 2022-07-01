@@ -132,6 +132,7 @@ body {
 
 .dropdown-button {
     padding: .3rem .7rem;
+    padding-right: 1rem;
     margin: 0;
 }
 
@@ -205,12 +206,12 @@ body {
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
-    padding-left: .3rem;
     transition: transform 150ms ease-in-out;
+    transform: translateX(.4rem);
 }
 
-.ppp {
-    transform: rotate(180deg);
+.dropdown-button.active::after {
+    transform: rotate(180deg) translateY(-.1rem) translateX(-.4rem);
 }
 
 .dropdown-option-type-active {
@@ -218,7 +219,6 @@ body {
 }
 
 #table-div {
-    /* background-color: pink; */
     transform: translateY(3px);
     opacity: 0;
 }
