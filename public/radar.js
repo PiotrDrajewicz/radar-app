@@ -1,6 +1,9 @@
 import { createMap, createUserPositionMarker, createCircle, createWatchedArea, Point } from './map-functions.js';
 import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
+// import { manageDropdownMenu } from './dropdown.js';
+import { manageNavbar } from './navbar.js';
+import { createPlaneTypeElements } from './filters.js'
 // import { sendNotification } from './notifications.js';
 
 window.addEventListener('load', () => { //run function when page is loaded
@@ -9,7 +12,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const areaPoints = [];
 	const boundariesPoints = [];
 	const workButton = document.getElementById('work-btn');
-	const typesDropdownMenu = document.querySelector('.dropdown-menu');
+	// const typesDropdownMenu = document.querySelector('.dropdown-menu');
 	const airplanesTypes = [];
 	const typeDropdown = document.querySelector('#type-dropdown');
 
@@ -18,86 +21,10 @@ window.addEventListener('load', () => { //run function when page is loaded
 			console.log(data);
 		})
 
+	createPlaneTypeElements(airplanesTypes);
 
-	fetchData('./aircraftIcaoIata.json')
-		.then(data => {
-			(function asd() {
-				data.forEach(planeType => {
-					const typeIcaoCode = planeType.icaoCode;
-					airplanesTypes.push(typeIcaoCode);
-					const typeElement = document.createElement('p');
-					typeElement.setAttribute('id', typeIcaoCode);
-					typeElement.classList.add('type-element');
-					typeElement.textContent = typeIcaoCode;
-					typeElement.addEventListener('click', e => {
-						console.log(e.target.id);
-						//adding and removing ban sign and color to the plane type if chosen
-						if (!typeElement.querySelector('#ban-sign')) {
-							typeElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
-						} else {
-							const banSign = typeElement.querySelector('#ban-sign');
-							banSign.remove();
-						}
-						typeElement.classList.toggle('banned');
-					})
-					typesDropdownMenu.appendChild(typeElement);
+	manageNavbar();
 
-				})
-
-				//opening and closing dropdown menu
-				document.addEventListener('click', e => {
-					const isDropdownButton = e.target.matches('.dropdown-button');
-					//if we're not clicking on dropdown button and we're clicking inside dropdown (closest will give us here closest parent dropdown) ignore it
-					if (!isDropdownButton && e.target.closest('.dropdown') != null) return
-
-					//opening and closing dropdown menu (we're giving dropdown element class 'active' and due to that, our dropdown menu in css is being activated (.dropdown.active>.dropdown-button+.dropdown-menu) and it's getting opacity: 1)
-					let currentDropdown;
-					if (isDropdownButton) {
-						currentDropdown = e.target.closest('.dropdown');
-						currentDropdown.classList.toggle('active');
-					}
-
-					//rotating button arrow
-					let currentDropdownButton;
-					if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
-						currentDropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-button');
-						currentDropdownButton.classList.toggle('active');
-					}
-					if (!e.target.closest('.dropdown')) {
-						document.querySelectorAll('.dropdown-button').forEach(button => {
-							button.classList.remove('active');
-						})
-					}
-
-					//closing all other active dropdowns
-					document.querySelectorAll('.dropdown.active').forEach(dropdown => {
-						if (dropdown === currentDropdown) return
-						dropdown.classList.remove('active');
-					})
-				})
-
-			})();
-
-		});
-
-	//navlinks
-	const tableLink = document.querySelector('.table-link');
-	const filtersLink = document.querySelector('.filters-link');
-
-	filtersLink.addEventListener('click', () => {
-		//show filters window
-		if (!filtersLink.classList.contains('nav-link-active')) {
-			filtersLink.classList.add('nav-link-active');
-			tableLink.classList.remove('nav-link-active');
-		}
-	});
-	tableLink.addEventListener('click', () => {
-		//show table window
-		if (!tableLink.classList.contains('nav-link-active')) {
-			tableLink.classList.add('nav-link-active');
-			filtersLink.classList.remove('nav-link-active');
-		}
-	});
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(position => {
