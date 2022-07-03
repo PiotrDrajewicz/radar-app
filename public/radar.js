@@ -13,6 +13,12 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const airplanesTypes = [];
 	const typeDropdown = document.querySelector('#type-dropdown');
 
+	fetchData('./airlineIcao.json')
+		.then(data => {
+			console.log(data);
+		})
+
+
 	fetchData('./aircraftIcaoIata.json')
 		.then(data => {
 			(function asd() {

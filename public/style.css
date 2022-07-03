@@ -206,8 +206,8 @@ body {
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
-    transition: transform 150ms ease-in-out;
     transform: translateX(.4rem);
+    transition: transform 150ms ease-in-out;
 }
 
 .dropdown-button.active::after {
