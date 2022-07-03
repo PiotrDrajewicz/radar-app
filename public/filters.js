@@ -3,7 +3,7 @@
 
 import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
-export { createPlaneTypeElements };
+export { createPlaneTypeElements, createAirlineElements };
 
 function createPlaneTypeElements(airplanesTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
@@ -35,4 +35,32 @@ function createPlaneTypeElements(airplanesTypes) {
             manageDropdownMenu();
 
         });
+}
+
+function createAirlineElements(airlines) {
+    const airlinesDropdownMenu = document.getElementById('airline-dropdown-menu');
+    fetchData('./airlineIcao.json')
+        .then(data => {
+            data.forEach(airline => {
+                //creating airline element in dropdown menu
+                const airlineIcaoCode = airline.icaoCode;
+                airlines.push(airlineIcaoCode);
+                const airlineElement = document.createElement('p');
+                airlineElement.setAttribute('id', airlineIcaoCode);
+                airlineElement.classList.add('airline-element');
+                airlineElement.textContent = airlineIcaoCode;
+                airlineElement.addEventListener('click', e => {
+                    console.log(e.target.id);
+                    //adding and removing ban sign and color to the airline if chosen
+                    if (!airlineElement.querySelector('#ban-sign')) {
+                        airlineElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
+                    } else {
+                        const banSign = airlineElement.querySelector('#ban-sign');
+                        banSign.remove();
+                    }
+                    airlineElement.classList.toggle('banned');
+                })
+                airlinesDropdownMenu.appendChild(airlineElement);
+            })
+        })
 }

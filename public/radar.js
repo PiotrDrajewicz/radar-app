@@ -3,7 +3,7 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements } from './filters.js'
 // import { sendNotification } from './notifications.js';
 
 window.addEventListener('load', () => { //run function when page is loaded
@@ -14,14 +14,11 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const workButton = document.getElementById('work-btn');
 	// const typesDropdownMenu = document.querySelector('.dropdown-menu');
 	const airplanesTypes = [];
-	const typeDropdown = document.querySelector('#type-dropdown');
-
-	fetchData('./airlineIcao.json')
-		.then(data => {
-			console.log(data);
-		})
+	const airlines = [];
+	// const typeDropdown = document.querySelector('#type-dropdown');
 
 	createPlaneTypeElements(airplanesTypes);
+	createAirlineElements(airlines);
 
 	manageNavbar();
 

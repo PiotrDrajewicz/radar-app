@@ -164,7 +164,8 @@ body {
     pointer-events: auto;
 }
 
-.type-element {
+.type-element,
+.airline-element {
     /* margin-top: .5rem;
     margin-bottom: .5rem;
     margin-left: 1rem;
@@ -180,11 +181,13 @@ body {
     user-select: none;
 }
 
-.type-element:hover {
+.type-element:hover,
+.airline-element:hover {
     background-color: rgb(163, 163, 163);
 }
 
-.type-element.banned {
+.type-element.banned,
+.airline-element.banned {
     background-color: rgb(255, 176, 176);
 }
 

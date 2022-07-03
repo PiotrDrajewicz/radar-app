@@ -33,7 +33,7 @@
                     <li><a class="nav-link filters-link">Filters</a></li>
                 </ul>
             </nav>
-            <div id="filters-div">
+            <section id="filters-div">
                 <h3 id="filters-title">Choose plane type and airline to block</h3>
                 <!-- <label for="type-dropdown" id="type-dropdown-label">Type</label>
                 <select name="type-dropdown" class="input-field" id="type-dropdown-field"
@@ -43,14 +43,20 @@
 
                 <div id="type-dropdown" class="dropdown">
                     <button id="type-dropdown-button" class="dropdown-button">Plane type</button>
-                    <div class="dropdown-menu">
+                    <div id="type-dropdown-menu" class="dropdown-menu">
+                    </div>
+                </div>
+
+                <div id="type-dropdown" class="dropdown">
+                    <button id="airline-dropdown-button" class="dropdown-button">Airline</button>
+                    <div id="airline-dropdown-menu" class="dropdown-menu">
                     </div>
                 </div>
 
                 <!-- <label for="airline-dropdown" id="airline-dropdown-label">Airline</label>
                 <select name="airline-dropdown" class="input-field" id="airline-dropdown-field"></select> -->
-            </div>
-            <div id="table-div">
+            </section>
+            <section id="table-div">
                 <div class="table-headers table-grid">
                     <p class="table-header">Type</p>
                     <p class="table-header">Airline</p>
@@ -60,7 +66,7 @@
                 </div>
                 <div class="table-rows">
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 
