@@ -43,7 +43,6 @@ function manageDropdownMenu() {
             if (currentBannedWindow.id === 'banned-airlines-display') {
                 currentBannedWindow.classList.toggle('active-left');
             }
-
         }
         if (!e.target.closest('.dropdown')) {
             // const className = /active-(left|right)/g;

@@ -103,25 +103,27 @@ body {
 }
 
 #filters-div {
-    /* background-color: rgb(241, 175, 51); */
+    background-color: white;
     border: 1px solid black;
     position: absolute;
-    transform: translateY(52px);
+    transform: translateY(51px);
     /* width: 1fr; */
     /* box-sizing: content-box; */
     /* flex-grow: 1; */
     align-items: stretch;
     height: 79.5%;
     margin-left: 2rem;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+}
+
+#filters-div.shown {
+    opacity: 1;
 }
 
 .filters-title {
     padding: .5rem 1rem;
     padding-right: 10rem;
-}
-
-#altitude-title {
-    margin-top: 13rem;
 }
 
 #dropdowns-div {
@@ -252,11 +254,11 @@ body {
 }
 
 .banned-display.active-right {
-    transform: translateX(100px);
+    transform: translateX(125px);
 }
 
 .banned-display.active-left {
-    transform: translateX(-100px);
+    transform: translateX(-125px);
 }
 
 #banned-airlines-display {
@@ -269,19 +271,39 @@ body {
     padding-left: .25rem;
 }
 
+#altitude-title {
+    margin-top: 14rem;
+}
+
 #altitude-filter {
     display: flex;
+    align-items: center;
+}
+
+.input-window {
+    margin: .75rem 1rem;
+    min-width: 10px;
+}
+
+#altitude-description {
+    padding-left: 1rem;
 }
 
 #table-div {
     transform: translateY(3px);
+    opacity: 1;
+    transition: opacity 150ms ease-in-out;
+    margin-left: 2rem;
+}
+
+#table-div.hidden {
     opacity: 0;
 }
 
 .table-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    width: 100%;
+    width: 97.3%;
     margin-right: 10rem;
     /* margin-right: min(5rem, 300%); */
 }
