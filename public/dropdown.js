@@ -31,5 +31,31 @@ function manageDropdownMenu() {
             if (dropdown === currentDropdown) return
             dropdown.classList.remove('active');
         })
+
+        //moving display window
+        // const displayBannedWindow = document.querySelector('.banned-display');
+        let currentBannedWindow;
+        if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
+            currentBannedWindow = e.target.closest('.dropdown').querySelector('.banned-display');
+            if (currentBannedWindow.id === 'banned-types-display') {
+                currentBannedWindow.classList.toggle('active-right');
+            }
+            if (currentBannedWindow.id === 'banned-airlines-display') {
+                currentBannedWindow.classList.toggle('active-left');
+            }
+
+        }
+        if (!e.target.closest('.dropdown')) {
+            // const className = /active-(left|right)/g;
+            document.querySelectorAll('.banned-display').forEach(window => {
+                if (window.classList.contains('active-right')) {
+                    window.classList.remove('active-right');
+                }
+                if (window.classList.contains('active-left')) {
+                    window.classList.remove('active-left');
+                }
+            })
+        }
+
     })
 }

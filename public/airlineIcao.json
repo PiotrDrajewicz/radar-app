@@ -16,5 +16,14 @@
     },
     {
         "icaoCode": "RYS"
+    },
+    {
+        "icaoCode": "THY"
+    },
+    {
+        "icaoCode": "UAE"
+    },
+    {
+        "icaoCode": "QTR"
     }
 ]

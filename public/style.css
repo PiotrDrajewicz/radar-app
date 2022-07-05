@@ -79,16 +79,13 @@ body {
     margin-bottom: 1.3rem;
     /* background-color: lightsalmon; */
     transform: translateY(11px);
+    margin-left: 2rem;
 }
 
 .nav-link {
     border: .5px solid black;
     border-bottom: none;
     padding: .8rem 1rem;
-    /* padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0rem;
-    padding-bottom: 3rem; */
     margin-bottom: 5rem;
     vertical-align: middle;
     /* background-color: aqua; */
@@ -97,8 +94,7 @@ body {
 }
 
 .table-link {
-    border-radius: 0 5px 0 0;
-    border-left: none;
+    border-radius: 5px 5px 0 0;
     border-right: none;
 }
 
@@ -107,17 +103,31 @@ body {
 }
 
 #filters-div {
-    background-color: rgb(241, 175, 51);
+    /* background-color: rgb(241, 175, 51); */
+    border: 1px solid black;
     position: absolute;
     transform: translateY(52px);
-    /* width: 100%; */
+    /* width: 1fr; */
+    /* box-sizing: content-box; */
     /* flex-grow: 1; */
     align-items: stretch;
+    height: 79.5%;
+    margin-left: 2rem;
 }
 
-#filters-title {
+.filters-title {
     padding: .5rem 1rem;
     padding-right: 10rem;
+}
+
+#altitude-title {
+    margin-top: 13rem;
+}
+
+#dropdowns-div {
+    display: flex;
+    gap: 9rem;
+    /* justify-content: space-around; */
 }
 
 .dropdown.active>.dropdown-button,
@@ -127,20 +137,24 @@ body {
 
 .dropdown {
     position: relative;
-    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
 }
 
 .dropdown-button {
-    padding: .3rem .7rem;
-    padding-right: 1rem;
-    margin: 0;
+    min-width: 106px;
+    min-height: 26px;
+}
+
+#type-dropdown-button {
+    margin-left: 1rem;
 }
 
 .dropdown-menu {
     position: absolute;
-    left: 0;
+    margin: auto;
     top: 100%;
-    /* top: calc(100% + 0.25rem); */
     background-color: white;
     padding: .75rem;
     border-radius: 0 0 .25rem .25rem;
@@ -148,14 +162,22 @@ body {
     opacity: 0;
     pointer-events: none;
     cursor: pointer;
-    /* box-sizing: content-box; */
     overflow-y: auto;
     overflow-x: hidden;
     height: 0vh;
-    margin: 0;
     padding: 0;
-    margin-left: 1.2rem;
     transition: opacity 150ms ease-in-out, height 150ms ease-in-out;
+    min-width: 100px;
+    z-index: 100;
+}
+
+#type-dropdown-menu {
+    margin-left: 1.17rem;
+}
+
+#airline-dropdown-menu {
+    margin-left: .2rem;
+    overflow-y: scroll;
 }
 
 .dropdown.active>.dropdown-button+.dropdown-menu {
@@ -166,10 +188,6 @@ body {
 
 .type-element,
 .airline-element {
-    /* margin-top: .5rem;
-    margin-bottom: .5rem;
-    margin-left: 1rem;
-    margin-right: 2rem; */
     display: flex;
     position: relative;
     justify-content: center;
@@ -219,6 +237,40 @@ body {
 
 .dropdown-option-type-active {
     color: red;
+}
+
+.banned-display {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid black;
+    margin-top: 3rem;
+    margin-left: 1.1rem;
+    /* min-width: 7.4rem; */
+    min-width: 100px;
+    min-height: 10rem;
+    transition: transform 150ms ease-in-out;
+}
+
+.banned-display.active-right {
+    transform: translateX(100px);
+}
+
+.banned-display.active-left {
+    transform: translateX(-100px);
+}
+
+#banned-airlines-display {
+    margin-left: .12rem;
+}
+
+.banned-placeholder {
+    font-size: .75rem;
+    color: grey;
+    padding-left: .25rem;
+}
+
+#altitude-filter {
+    display: flex;
 }
 
 #table-div {

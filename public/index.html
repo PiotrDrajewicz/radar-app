@@ -34,23 +34,37 @@
                 </ul>
             </nav>
             <section id="filters-div">
-                <h3 id="filters-title">Choose plane type and airline to block</h3>
+                <h3 class="filters-title">Choose plane type and airline to block</h3>
                 <!-- <label for="type-dropdown" id="type-dropdown-label">Type</label>
                 <select name="type-dropdown" class="input-field" id="type-dropdown-field"
                     placeholder="Choose plane type">
                     <option value="" disabled selected hidden>Choose plane type</option>
                 </select> -->
 
-                <div id="type-dropdown" class="dropdown">
-                    <button id="type-dropdown-button" class="dropdown-button">Plane type</button>
-                    <div id="type-dropdown-menu" class="dropdown-menu">
+                <div id="dropdowns-div">
+                    <div id="type-dropdown" class="dropdown">
+                        <button id="type-dropdown-button" class="dropdown-button">Plane type</button>
+                        <div id="type-dropdown-menu" class="dropdown-menu">
+                        </div>
+                        <div id="banned-types-display" class="banned-display">
+                            <p class="banned-placeholder">Banned types</p>
+                        </div>
+                    </div>
+
+                    <div id="airline-dropdown" class="dropdown">
+                        <button id="airline-dropdown-button" class="dropdown-button">Airline</button>
+                        <div id="airline-dropdown-menu" class="dropdown-menu">
+                        </div>
+                        <div id="banned-airlines-display" class="banned-display">
+                            <p class="banned-placeholder">Banned airlines</p>
+                        </div>
                     </div>
                 </div>
 
-                <div id="type-dropdown" class="dropdown">
-                    <button id="airline-dropdown-button" class="dropdown-button">Airline</button>
-                    <div id="airline-dropdown-menu" class="dropdown-menu">
-                    </div>
+                <h3 id="altitude-title" class="filters-title">Choose altitude range to display</h3>
+                <div id="altitude-filter">
+                    <input type="text" id="min-height" name="min-height" class="input-window" placeholder="min-height">
+                    <input type="text" id="max-height" name="max-height" class="input-window" placeholder="max-height">
                 </div>
 
                 <!-- <label for="airline-dropdown" id="airline-dropdown-label">Airline</label>
