@@ -19,7 +19,9 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const bannedAirlines = [];
 	// const typeDropdown = document.querySelector('#type-dropdown');
 
-	createPlaneTypeElements(airplanesTypes);
+	createPlaneTypeElements(airplanesTypes, bannedTypes);
+	// console.log(airplanesTypes);
+
 	createAirlineElements(airlines);
 
 	manageNavbar();

@@ -5,7 +5,7 @@ import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
 export { createPlaneTypeElements, createAirlineElements, updateHeightText };
 
-function createPlaneTypeElements(airplanesTypes) {
+function createPlaneTypeElements(airplanesTypes, bannedTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
     fetchData('./aircraftIcaoIata.json')
         .then(data => {
@@ -27,6 +27,15 @@ function createPlaneTypeElements(airplanesTypes) {
                         banSign.remove();
                     }
                     typeElement.classList.toggle('banned');
+
+                    //adding type to banned window
+                    if (typeElement.classList.contains('banned')) {
+                        bannedTypes.push(typeElement.id);
+                    }
+                    if (!typeElement.classList.contains('banned')) {
+                        bannedTypes.splice(bannedTypes.indexOf(typeElement.id), 1);
+                    }
+                    console.log(bannedTypes);
                 })
                 typesDropdownMenu.appendChild(typeElement);
 
