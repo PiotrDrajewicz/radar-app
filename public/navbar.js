@@ -13,7 +13,9 @@ function manageNavbar() {
             filtersLink.classList.add('nav-link-active');
             tableLink.classList.remove('nav-link-active');
             filtersDiv.classList.add('shown');
+            tableDiv.classList.remove('default');
             tableDiv.classList.add('hidden');
+            tableDiv.classList.remove('shown');
         }
     });
     tableLink.addEventListener('click', () => {
@@ -23,6 +25,7 @@ function manageNavbar() {
             filtersLink.classList.remove('nav-link-active');
             tableDiv.classList.remove('hidden');
             filtersDiv.classList.remove('shown');
+            tableDiv.classList.add('shown');
         }
     });
 }

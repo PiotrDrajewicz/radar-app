@@ -3,7 +3,7 @@
 
 import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
-export { createPlaneTypeElements, createAirlineElements };
+export { createPlaneTypeElements, createAirlineElements, updateHeightText };
 
 function createPlaneTypeElements(airplanesTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
@@ -63,4 +63,16 @@ function createAirlineElements(airlines) {
                 airlinesDropdownMenu.appendChild(airlineElement);
             })
         })
+}
+
+function updateHeightText() {
+    const applyHeightButton = document.getElementById('apply-height-button');
+    const minHeightInput = document.getElementById('min-height');
+    const maxHeightInput = document.getElementById('max-height');
+    const minHeightText = document.getElementById('min-height-value');
+    const maxHeightText = document.getElementById('max-height-value');
+    applyHeightButton.addEventListener('click', () => {
+        minHeightText.textContent = minHeightInput.value;
+        maxHeightText.textContent = maxHeightInput.value;
+    })
 }

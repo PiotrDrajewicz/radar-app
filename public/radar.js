@@ -3,7 +3,7 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements, createAirlineElements } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements, updateHeightText } from './filters.js'
 // import { sendNotification } from './notifications.js';
 
 window.addEventListener('load', () => { //run function when page is loaded
@@ -15,12 +15,16 @@ window.addEventListener('load', () => { //run function when page is loaded
 	// const typesDropdownMenu = document.querySelector('.dropdown-menu');
 	const airplanesTypes = [];
 	const airlines = [];
+	const bannedTypes = [];
+	const bannedAirlines = [];
 	// const typeDropdown = document.querySelector('#type-dropdown');
 
 	createPlaneTypeElements(airplanesTypes);
 	createAirlineElements(airlines);
 
 	manageNavbar();
+
+	updateHeightText();
 
 
 	if (navigator.geolocation) {

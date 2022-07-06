@@ -88,7 +88,7 @@ body {
     padding: .8rem 1rem;
     margin-bottom: 5rem;
     vertical-align: middle;
-    /* background-color: aqua; */
+    background-color: rgb(212, 207, 207);
     border-radius: 5px 5px 0 0;
     user-select: none;
 }
@@ -99,7 +99,7 @@ body {
 }
 
 .nav-link-active {
-    background-color: rgb(197, 13, 197);
+    background-color: grey;
 }
 
 #filters-div {
@@ -114,11 +114,26 @@ body {
     height: 79.5%;
     margin-left: 2rem;
     opacity: 0;
-    transition: opacity 150ms ease-in-out;
+    /* transition: opacity 150ms ease-in-out; */
 }
 
 #filters-div.shown {
-    opacity: 1;
+    /* opacity: 1; */
+    animation: showWindow 200ms forwards;
+}
+
+@keyframes showWindow {
+    50% {
+        opacity: 1;
+        /* transform: scale(1.05) translateY(51px); */
+        transform: translateY(61px);
+    }
+
+    100% {
+        /* transform: scale(1) translateY(51px); */
+        transform: translateY(51px);
+        opacity: 1;
+    }
 }
 
 .filters-title {
@@ -282,22 +297,50 @@ body {
 
 .input-window {
     margin: .75rem 1rem;
-    min-width: 10px;
+    width: 154px;
+}
+
+#apply-height-button {
+    min-width: 90px;
+    min-height: 24px;
+    margin-left: 1rem;
 }
 
 #altitude-description {
     padding-left: 1rem;
+    padding-top: .75rem;
 }
 
-#table-div {
+#table-div.default {
     transform: translateY(3px);
     opacity: 1;
-    transition: opacity 150ms ease-in-out;
+    /* transition: opacity 150ms ease-in-out; */
     margin-left: 2rem;
 }
 
 #table-div.hidden {
     opacity: 0;
+    pointer-events: none;
+}
+
+#table-div.shown {
+    transform: translateY(3px);
+    opacity: 1;
+    /* transition: opacity 150ms ease-in-out; */
+    margin-left: 2rem;
+    animation: showTable 200ms forwards;
+}
+
+@keyframes showTable {
+    50% {
+        opacity: 1;
+        transform: translateY(13px);
+    }
+
+    100% {
+        transform: translateY(3px);
+        opacity: 1;
+    }
 }
 
 .table-grid {
