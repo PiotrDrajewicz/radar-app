@@ -34,7 +34,16 @@
                 </ul>
             </nav>
             <section id="filters-div">
-                <h3 class="filters-title">Choose plane type and airline to block</h3>
+                <div class="filter-header">
+                    <h3 class="filters-title">Choose plane type and airline to block</h3>
+                    <label class="checkbox-label"><input type="checkbox" name="on-off" class="filter-switch"
+                            value="on-off">
+                        <span id="type-airline-filter-switch" class="checkbox-custom"></span>on/off</label>
+                </div>
+
+                <!-- <span><label><input type="checkbox" name="on-off" class="filter-switch"
+                            value="on-off">on/off</label></span> -->
+
                 <!-- <label for="type-dropdown" id="type-dropdown-label">Type</label>
                 <select name="type-dropdown" class="input-field" id="type-dropdown-field"
                     placeholder="Choose plane type">
@@ -63,7 +72,12 @@
                     </div>
                 </div>
 
-                <h3 id="altitude-title" class="filters-title">Choose altitude range to display [ft]</h3>
+                <div class="filter-header">
+                    <h3 id="altitude-title" class="filters-title">Choose altitude range to display [ft]</h3>
+                    <label id="altitude-checkbox-label" class="checkbox-label"><input type="checkbox" name="on-off"
+                            class="filter-switch" value="on-off">
+                        <span id="altitude-filter-switch" class="checkbox-custom"></span>on/off</label>
+                </div>
                 <div id="altitude-filter">
                     <input type="text" id="min-height" name="min-height" class="input-window"
                         placeholder="min-altitude">
