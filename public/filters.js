@@ -11,6 +11,8 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
         .then(data => {
             data.forEach(planeType => {
                 //creating plane type element in dropdown menu
+                const bannedTypesDisplay = document.getElementById('banned-types-display');
+                const bannedTypesPlaceholder = document.getElementById('banned-types-placeholder');
                 const typeIcaoCode = planeType.icaoCode;
                 airplanesTypes.push(typeIcaoCode);
                 const typeElement = document.createElement('p');
@@ -18,7 +20,7 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
                 typeElement.classList.add('type-element');
                 typeElement.textContent = typeIcaoCode;
                 typeElement.addEventListener('click', e => {
-                    console.log(e.target.id);
+                    // console.log(e.target.id); //logging clicked element 
                     //adding and removing ban sign and color to the plane type if chosen
                     if (!typeElement.querySelector('#ban-sign')) {
                         typeElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
@@ -28,14 +30,8 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
                     }
                     typeElement.classList.toggle('banned');
 
-                    //adding type to banned window
-                    if (typeElement.classList.contains('banned')) {
-                        bannedTypes.push(typeElement.id);
-                    }
-                    if (!typeElement.classList.contains('banned')) {
-                        bannedTypes.splice(bannedTypes.indexOf(typeElement.id), 1);
-                    }
-                    console.log(bannedTypes);
+                    displayBannedWindow(typeElement, bannedTypes, bannedTypesDisplay, bannedTypesPlaceholder);
+
                 })
                 typesDropdownMenu.appendChild(typeElement);
 
@@ -46,12 +42,14 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
         });
 }
 
-function createAirlineElements(airlines) {
+function createAirlineElements(airlines, bannedAirlines) {
     const airlinesDropdownMenu = document.getElementById('airline-dropdown-menu');
     fetchData('./airlineIcao.json')
         .then(data => {
             data.forEach(airline => {
                 //creating airline element in dropdown menu
+                const bannedAirlinesDisplay = document.getElementById('banned-airlines-display');
+                const bannedAirlinesPlaceholder = document.getElementById('banned-airlines-placeholder');
                 const airlineIcaoCode = airline.icaoCode;
                 airlines.push(airlineIcaoCode);
                 const airlineElement = document.createElement('p');
@@ -68,6 +66,9 @@ function createAirlineElements(airlines) {
                         banSign.remove();
                     }
                     airlineElement.classList.toggle('banned');
+
+                    displayBannedWindow(airlineElement, bannedAirlines, bannedAirlinesDisplay, bannedAirlinesPlaceholder);
+
                 })
                 airlinesDropdownMenu.appendChild(airlineElement);
             })
@@ -84,4 +85,31 @@ function updateHeightText() {
         minHeightText.textContent = minHeightInput.value;
         maxHeightText.textContent = maxHeightInput.value;
     })
+}
+
+function displayBannedWindow(bannedElement, bannedArr, bannedDisplay, bannedPlaceholder) {
+    //adding element to banned window
+    if (bannedElement.classList.contains('banned')) {
+        bannedArr.push(bannedElement.id);
+
+        //displaying banned element
+        const spanElement = document.createElement('span');
+        spanElement.setAttribute('id', bannedElement.id + '-span');
+        spanElement.classList.add('banned-span');
+        spanElement.textContent = bannedElement.id;
+        bannedDisplay.appendChild(spanElement);
+    }
+    if (!bannedElement.classList.contains('banned')) {
+        bannedArr.splice(bannedArr.indexOf(bannedElement.id), 1);
+
+        //removing element from banned display window
+        const spanToDelete = document.getElementById(bannedElement.id + '-span');
+        spanToDelete.remove();
+    }
+
+    if (bannedArr.length !== 0) {
+        bannedPlaceholder.classList.add('hide');
+    } else {
+        bannedPlaceholder.classList.remove('hide');
+    }
 }

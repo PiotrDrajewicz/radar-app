@@ -22,7 +22,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 	createPlaneTypeElements(airplanesTypes, bannedTypes);
 	// console.log(airplanesTypes);
 
-	createAirlineElements(airlines);
+	createAirlineElements(airlines, bannedAirlines);
 
 	manageNavbar();
 
