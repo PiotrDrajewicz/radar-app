@@ -244,6 +244,26 @@ body {
     margin-left: 1rem;
 }
 
+.filter-buttons {
+    display: flex;
+    position: relative;
+}
+
+#reset-type-button {
+    position: absolute;
+    min-height: 26px;
+    min-width: 26px;
+    margin-left: 8rem;
+}
+
+#reset-airline-button {
+    position: absolute;
+    min-height: 26px;
+    min-width: 26px;
+    /* transform: translateX(-2.8rem); */
+    margin-left: 7rem;
+}
+
 .dropdown-menu {
     position: absolute;
     margin: auto;
@@ -273,7 +293,12 @@ body {
     overflow-y: scroll;
 }
 
-.dropdown.active>.dropdown-button+.dropdown-menu {
+/* .dropdown.active>.dropdown-button+.dropdown-menu {
+    opacity: 1;
+    height: 60vh;
+    pointer-events: auto;
+} */
+.dropdown.active>.dropdown-menu {
     opacity: 1;
     height: 60vh;
     pointer-events: auto;
