@@ -45,13 +45,13 @@ window.addEventListener('load', () => { //run function when page is loaded
 				i++;
 				if (i > 4) {
 					console.log('you already have 4 points');
-					console.log(areaPoints);
+					// console.log(areaPoints);
 				} else {
 					const clickLat = e.latlng.lat;
 					const clickLng = e.latlng.lng;
 					const pointObj = new Point(i, clickLat, clickLng);
 					areaPoints.push(pointObj);
-					console.log(areaPoints);
+					// console.log(areaPoints);
 					// localStorage.setItem(`p${i}`, JSON.stringify(clickCoordinates));
 
 					//adding circle
@@ -70,7 +70,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 					boundariesPoints.push(areaPoints[0].lat);
 					const lngMax = areaPoints[1].lng;
 					boundariesPoints.push(areaPoints[1].lng);
-					console.log('boundaries: ', boundariesPoints);
+					// console.log('boundaries: ', boundariesPoints);
 					api = `https://opensky-network.org/api/states/all?lamin=${latMin}&lomin=${lngMin}&lamax=${latMax}&lomax=${lngMax}`;
 
 					const planesObjects = [];
@@ -122,6 +122,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 							resolve(allPlanes);
 							console.log('all po usuwaniu: ', allPlanes);
 							console.log('objects po usuwaniu: ', planesObjects);
+
 						})
 					}
 
@@ -134,7 +135,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 								return createObjects(res, planesObjects);
 							})
 							.then(res => {
-								createIconPopup(res, planesObjects, boundariesPoints);
+								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes);
 							});
 					}
 					workButton.addEventListener('click', work);

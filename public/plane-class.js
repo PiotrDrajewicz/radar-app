@@ -14,6 +14,7 @@ class Plane {
         this.baroAltitude = baroAltitude;
         this.map = map;
         this.notificationSent = false;
+        this.banned = false;
     }
 
     createPlaneIcon(plane, planesUpdated) {
@@ -131,7 +132,7 @@ class Plane {
         }
     }
 
-    assignIcaoTypeAndAirline(plane, planesObjects) {
+    assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes) {
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
         // const apiReg = `https://api.joshdouch.me/hex-reg.php?hex=${plane.icao}`;
         fetch(apiDetailed)
@@ -202,7 +203,7 @@ class Plane {
                     tableDiv.appendChild(tableRows);
 
                     tableRowsArr.push(tableRow);
-                    console.log(tableRowsArr);
+                    // console.log(tableRowsArr);
                     plane.inTable = true;
                 } else {
                     //updating plane's alt and spd in table
@@ -222,17 +223,28 @@ class Plane {
                     const planeFound = planesObjects.find(plane => plane.icao === icaoFromTable);
 
                     if (!planeFound) {
-                        console.log('nie ma', icaoFromTable);
+                        // console.log('nie ma', icaoFromTable);
                         row.remove();
                     } else {
-                        console.log('jest', icaoFromTable);
+                        // console.log('jest', icaoFromTable);
                     }
                 })
-                console.log('nowy');
+                // console.log('nowy');
 
 
             }
             )
+            .then(() => {
+                // console.log('bannnn', bannedTypes);
+                // console.log('obj type', plane.planeType);
+
+                //banning planes objects
+                // const isBanned = bannedTypes.find(type => {
+                //     plane.planeType == type;
+                // })
+                // console.log('is banned', isBanned);
+                console.log('plane', bannedTypes[0]);
+            })
     }
 
     putPlaneInTable(plane) {
@@ -240,7 +252,7 @@ class Plane {
     }
 }
 
-function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
+function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes) {
     planesObjects.forEach(plane => {
         (async function () {
             //updating plane info
@@ -252,7 +264,7 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints) {
             //tracking plane for notification
             await plane.trackPlane(plane, boundariesPoints);
             //assigning plane type and airline
-            await plane.assignIcaoTypeAndAirline(plane, planesObjects);
+            await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes);
             //putting plane into table
             await plane.putPlaneInTable(plane);
 
