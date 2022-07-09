@@ -3,8 +3,13 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements, createAirlineElements, updateHeightText, turnOnOffFilters } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements, updateHeightText } from './filters.js'
 // import { sendNotification } from './notifications.js';
+// export { planeFilterOn };
+
+// console.log('gowno');
+// const planeFilterOn = turnOnOffFilters();
+// console.log('F radar', planeFilterOn);
 
 window.addEventListener('load', () => { //run function when page is loaded
 	let long; //declaring variable here so we can move it out
@@ -28,7 +33,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 	updateHeightText();
 
-	turnOnOffFilters();
+	// turnOnOffFilters();
+
 
 
 	if (navigator.geolocation) {

@@ -123,8 +123,10 @@ function turnOnOffFilters() {
 
             if (filterSwitch.classList.contains('active')) {
                 console.log('activated');
+                return true;
             } else {
                 console.log('deactivated');
+                return false;
             }
         })
     })

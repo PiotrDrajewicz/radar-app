@@ -1,3 +1,5 @@
+import { turnOnOffFilters } from './filters.js';
+// import { planeFilterOn } from "./radar.js";
 export { Plane, createIconPopup };
 // import { sendNotification } from './notifications.js';
 let tableRowsArr = [];
@@ -133,6 +135,7 @@ class Plane {
     }
 
     assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes) {
+        const isPlaneFilterOn = turnOnOffFilters();
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
         // const apiReg = `https://api.joshdouch.me/hex-reg.php?hex=${plane.icao}`;
         fetch(apiDetailed)
@@ -233,22 +236,34 @@ class Plane {
             )
             .then(() => {
                 //would be better if this was in separete function but its here for now
-                bannedTypes.push('A320');
-                bannedTypes.push('A321');
-                bannedTypes.push('B738');
 
-                // banning planes objects
-                for (let i = 0; i < bannedTypes.length; i++) {
-                    if (bannedTypes[i] == plane.planeType) {
-                        plane.banned = true;
-                        const tableRow = document.getElementById(plane.icao);
-                        tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
-                        plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
-                        // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
-                    } else {
-                        // console.log('nie zbanowany', plane.planeType);
+                // console.log('popo', turnOnOffFilters);
+                // console.log('F plane-class', planeFilterOn);
+                if (isPlaneFilterOn) {
+                    console.log('plane filter is active');
+                    bannedTypes.push('A320');
+                    bannedTypes.push('A321');
+                    bannedTypes.push('B738');
+
+                    // banning planes objects
+                    for (let i = 0; i < bannedTypes.length; i++) {
+                        if (bannedTypes[i] == plane.planeType) {
+                            plane.banned = true;
+                            const tableRow = document.getElementById(plane.icao);
+                            tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
+                            plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
+                            // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
+                        } else {
+                            // console.log('nie zbanowany', plane.planeType);
+                        }
                     }
+                } else {
+                    console.log('plane filter is not active');
+                    return;
                 }
+
+
+
 
             })
     }
