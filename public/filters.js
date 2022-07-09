@@ -3,7 +3,7 @@
 
 import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
-export { createPlaneTypeElements, createAirlineElements, updateHeightText };
+export { createPlaneTypeElements, createAirlineElements, updateHeightText, turnOnOffFilters };
 
 function createPlaneTypeElements(airplanesTypes, bannedTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
@@ -112,4 +112,21 @@ function displayBannedWindow(bannedElement, bannedArr, bannedDisplay, bannedPlac
     } else {
         bannedPlaceholder.classList.remove('hide');
     }
+}
+
+function turnOnOffFilters() {
+    let currentSwitch;
+    const filterSwitches = document.querySelectorAll('.filter-switch');
+    filterSwitches.forEach(filterSwitch => {
+        filterSwitch.addEventListener('click', () => {
+            filterSwitch.classList.toggle('active');
+
+            if (filterSwitch.classList.contains('active')) {
+                console.log('activated');
+            } else {
+                console.log('deactivated');
+            }
+        })
+    })
+
 }

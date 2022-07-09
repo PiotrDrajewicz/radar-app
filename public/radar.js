@@ -3,7 +3,7 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements, createAirlineElements, updateHeightText } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements, updateHeightText, turnOnOffFilters } from './filters.js'
 // import { sendNotification } from './notifications.js';
 
 window.addEventListener('load', () => { //run function when page is loaded
@@ -27,6 +27,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 	manageNavbar();
 
 	updateHeightText();
+
+	turnOnOffFilters();
 
 
 	if (navigator.geolocation) {

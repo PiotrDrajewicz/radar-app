@@ -155,7 +155,7 @@ class Plane {
                 //         console.log('data', data);
                 //     })
 
-                //it would be better if this was in separete function but its here for now 
+                //would be better if this was in separete function but its here for now 
                 //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
                 let tableCellAltitude;
                 let tableCellSpeed;
@@ -222,33 +222,43 @@ class Plane {
                     const icaoFromTable = row.getAttribute('id');
                     const planeFound = planesObjects.find(plane => plane.icao === icaoFromTable);
 
+                    //removing row from table if plane is gone
                     if (!planeFound) {
-                        // console.log('nie ma', icaoFromTable);
                         row.remove();
-                    } else {
-                        // console.log('jest', icaoFromTable);
                     }
                 })
-                // console.log('nowy');
 
 
             }
             )
             .then(() => {
-                // console.log('bannnn', bannedTypes);
-                // console.log('obj type', plane.planeType);
+                //would be better if this was in separete function but its here for now
+                bannedTypes.push('A320');
+                bannedTypes.push('A321');
+                bannedTypes.push('B738');
 
-                //banning planes objects
-                // const isBanned = bannedTypes.find(type => {
-                //     plane.planeType == type;
-                // })
-                // console.log('is banned', isBanned);
-                console.log('plane', bannedTypes[0]);
+                // banning planes objects
+                for (let i = 0; i < bannedTypes.length; i++) {
+                    if (bannedTypes[i] == plane.planeType) {
+                        plane.banned = true;
+                        const tableRow = document.getElementById(plane.icao);
+                        tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
+                        plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
+                        // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
+                    } else {
+                        // console.log('nie zbanowany', plane.planeType);
+                    }
+                }
+
             })
     }
 
-    putPlaneInTable(plane) {
-        // console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed);
+    putPlaneIntoTable(plane) {
+        // console.log('nowa', plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed);
+    }
+
+    banPlane(plane) {
+        // console.log();
     }
 }
 
@@ -265,8 +275,10 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             await plane.trackPlane(plane, boundariesPoints);
             //assigning plane type and airline
             await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes);
-            //putting plane into table
-            await plane.putPlaneInTable(plane);
+            //putting plane into table - not in use
+            await plane.putPlaneIntoTable(plane);
+            //banning plane - not in use
+            await plane.banPlane(plane);
 
         })();
     })
