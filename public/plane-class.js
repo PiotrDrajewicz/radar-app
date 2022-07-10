@@ -1,4 +1,4 @@
-import { turnOnOffFilters } from './filters.js';
+// import { turnOnOffFilters } from './filters.js';
 // import { planeFilterOn } from "./radar.js";
 export { Plane, createIconPopup };
 // import { sendNotification } from './notifications.js';
@@ -134,8 +134,7 @@ class Plane {
         }
     }
 
-    assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes) {
-        const isPlaneFilterOn = turnOnOffFilters();
+    assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, typeAirlineFilterState, altitudeFilterState) { //this function runs for every plane already
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
         // const apiReg = `https://api.joshdouch.me/hex-reg.php?hex=${plane.icao}`;
         fetch(apiDetailed)
@@ -237,9 +236,7 @@ class Plane {
             .then(() => {
                 //would be better if this was in separete function but its here for now
 
-                // console.log('popo', turnOnOffFilters);
-                // console.log('F plane-class', planeFilterOn);
-                if (isPlaneFilterOn) {
+                if (typeAirlineFilterState) {
                     console.log('plane filter is active');
                     bannedTypes.push('A320');
                     bannedTypes.push('A321');
@@ -249,19 +246,33 @@ class Plane {
                     for (let i = 0; i < bannedTypes.length; i++) {
                         if (bannedTypes[i] == plane.planeType) {
                             plane.banned = true;
-                            const tableRow = document.getElementById(plane.icao);
-                            tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
+                            let tableRow = document.getElementById(plane.icao);
+                            tableRow.classList.add('banned-plane');
+                            // tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
                             plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
                             // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
                         } else {
+                            //default state or back to default state
                             // console.log('nie zbanowany', plane.planeType);
+
+                            //this causes that only one type of plane is being picked by the filter
+                            // let tableRow = document.getElementById(plane.icao);
+                            // tableRow.classList.remove('banned-plane');
                         }
                     }
                 } else {
-                    console.log('plane filter is not active');
-                    return;
+                    console.log('type-airline filter is not active');
+
+                    let tableRow = document.getElementById(plane.icao);
+                    tableRow.classList.remove('banned-plane');
                 }
 
+
+                if (altitudeFilterState) {
+                    console.log('PLANE - altitude filter is active');
+                } else {
+                    console.log('PLANE - altitude filter is not active');
+                }
 
 
 
@@ -277,7 +288,7 @@ class Plane {
     }
 }
 
-function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes) {
+function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, typeAirlineFilterState, altitudeFilterState) {
     planesObjects.forEach(plane => {
         (async function () {
             //updating plane info
@@ -289,7 +300,7 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             //tracking plane for notification
             await plane.trackPlane(plane, boundariesPoints);
             //assigning plane type and airline
-            await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes);
+            await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, typeAirlineFilterState, altitudeFilterState);
             //putting plane into table - not in use
             await plane.putPlaneIntoTable(plane);
             //banning plane - not in use

@@ -402,6 +402,10 @@ body {
     position: absolute;
 }
 
+.banned-plane {
+    background-color: rgb(255, 176, 176);
+}
+
 #altitude-title {
     margin-top: 14rem;
 }

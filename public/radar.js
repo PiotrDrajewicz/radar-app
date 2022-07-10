@@ -3,7 +3,7 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements, createAirlineElements, updateHeightText } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState } from './filters.js'
 // import { sendNotification } from './notifications.js';
 // export { planeFilterOn };
 
@@ -33,7 +33,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 	updateHeightText();
 
-	// turnOnOffFilters();
+	switchCheckboxes();
 
 
 
@@ -81,6 +81,8 @@ window.addEventListener('load', () => { //run function when page is loaded
 					// console.log('boundaries: ', boundariesPoints);
 					api = `https://opensky-network.org/api/states/all?lamin=${latMin}&lomin=${lngMin}&lamax=${latMax}&lomax=${lngMax}`;
 
+					let isTypeAirlineFilterOn;
+					let isAltitudeFilterOn;
 					const planesObjects = [];
 
 					function createObjects(allPlanes) {
@@ -137,15 +139,41 @@ window.addEventListener('load', () => { //run function when page is loaded
 					function work() {
 						fetchData(api)
 							.then(res => {
+								console.log('work - extraction');
 								return extractData(res);
 							})
 							.then(res => {
-								return createObjects(res, planesObjects);
+								//checking the state of the checkbox
+								const typeAirlineSwitch = document.getElementById('type-airline-input-switch');
+								const altitudeSwitch = document.getElementById('altitude-input-switch');
+								isTypeAirlineFilterOn = checkCheckboxState(typeAirlineSwitch);
+								isAltitudeFilterOn = checkCheckboxState(altitudeSwitch);
+
+								console.log('work - creating objs');
+								return createObjects(res, planesObjects); //inside creating all objs (this running once)
 							})
 							.then(res => {
-								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes);
+								console.log(isTypeAirlineFilterOn);
+								console.log(isAltitudeFilterOn);
+
+								console.log('work - funs for objs');
+								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes, isTypeAirlineFilterOn, isAltitudeFilterOn); //inside functions for each obj (this running once)
 							});
 					}
+
+					// function work() {
+					// 	fetchData(api)
+					// 		.then(res => {
+					// 			return extractData(res);
+					// 		})
+					// 		.then(res => {
+					// 			return createObjects(res, planesObjects);
+					// 		})
+					// 		.then(res => {
+					// 			createIconPopup(res, planesObjects, boundariesPoints, bannedTypes); //running functions for each obj
+					// 		});
+					// }
+
 					workButton.addEventListener('click', work);
 
 					// setInterval(() => {

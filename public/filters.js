@@ -3,7 +3,7 @@
 
 import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
-export { createPlaneTypeElements, createAirlineElements, updateHeightText, turnOnOffFilters };
+export { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState };
 
 function createPlaneTypeElements(airplanesTypes, bannedTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
@@ -114,21 +114,25 @@ function displayBannedWindow(bannedElement, bannedArr, bannedDisplay, bannedPlac
     }
 }
 
-function turnOnOffFilters() {
-    let currentSwitch;
+function switchCheckboxes() {
     const filterSwitches = document.querySelectorAll('.filter-switch');
     filterSwitches.forEach(filterSwitch => {
         filterSwitch.addEventListener('click', () => {
             filterSwitch.classList.toggle('active');
-
-            if (filterSwitch.classList.contains('active')) {
-                console.log('activated');
-                return true;
-            } else {
-                console.log('deactivated');
-                return false;
-            }
         })
     })
+}
+
+function checkCheckboxState(checkbox) { //trying inside radar.js
+    // const typeAirlineSwitch = document.getElementById('type-airline-input-switch');
+    // const altitudeSwitch = document.getElementById('altitude-input-switch');
+
+    if (checkbox.classList.contains('active')) {
+        console.log(checkbox.id, 'is active');
+        return true;
+    } else {
+        console.log(checkbox.id, 'is not active');
+        return false;
+    }
 
 }
