@@ -134,7 +134,7 @@ class Plane {
         }
     }
 
-    assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, typeAirlineFilterState, altitudeFilterState) { //this function runs for every plane already
+    assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) { //this function runs for every plane already
         const apiDetailed = `https://api.joshdouch.me/api/aircraft/${plane.icao}`;
         // const apiReg = `https://api.joshdouch.me/hex-reg.php?hex=${plane.icao}`;
         fetch(apiDetailed)
@@ -237,31 +237,44 @@ class Plane {
                 //would be better if this was in separete function but its here for now
 
                 if (typeAirlineFilterState) {
+                    //filter is active
                     console.log('plane filter is active');
-                    bannedTypes.push('A320');
-                    bannedTypes.push('A321');
-                    bannedTypes.push('B738');
+                    // bannedTypes.push('A320');
+                    // bannedTypes.push('A321');
+                    // bannedTypes.push('B738');
 
                     let tableRow = document.getElementById(plane.icao);
-                    let typesMatch;
-                    typesMatch = bannedTypes.map(type => {
+
+                    //checking if plane (type) is banned
+                    const typesMatch = bannedTypes.map(type => {
                         if (type == plane.planeType) {
                             return true;
                         }
                     })
-                    if (typesMatch.includes(true)) {
+
+                    //checking if plane (airline) is banned
+                    const airlinesMatch = bannedAirlines.map(airline => {
+                        if (airline == plane.airlineCode) {
+                            return true;
+                        }
+                    })
+
+                    if (typesMatch.includes(true) || airlinesMatch.includes(true)) {
+                        //plane is banned
                         console.log('zbanowany', plane.planeType);
                         plane.banned = true;
                         tableRow.classList.add('banned-plane');
                         // plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
                         // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
                     } else {
+                        //plane is not banned
                         console.log('nie zbanowany', plane.planeType);
                         plane.banned = false;
                         tableRow.classList.remove('banned-plane');
                     }
 
                 } else {
+                    //filter is not active
                     console.log('type-airline filter is not active');
 
                     let tableRow = document.getElementById(plane.icao);
@@ -289,7 +302,7 @@ class Plane {
     }
 }
 
-function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, typeAirlineFilterState, altitudeFilterState) {
+function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) {
     planesObjects.forEach(plane => {
         (async function () {
             //updating plane info
@@ -301,7 +314,7 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             //tracking plane for notification
             await plane.trackPlane(plane, boundariesPoints);
             //assigning plane type and airline
-            await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, typeAirlineFilterState, altitudeFilterState);
+            await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState);
             //putting plane into table - not in use
             await plane.putPlaneIntoTable(plane);
             //banning plane - not in use

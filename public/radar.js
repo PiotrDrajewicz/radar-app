@@ -139,40 +139,21 @@ window.addEventListener('load', () => { //run function when page is loaded
 					function work() {
 						fetchData(api)
 							.then(res => {
-								console.log('work - extraction');
 								return extractData(res);
 							})
 							.then(res => {
-								//checking the state of the checkbox
+								//checking state of the checkbox
 								const typeAirlineSwitch = document.getElementById('type-airline-input-switch');
 								const altitudeSwitch = document.getElementById('altitude-input-switch');
 								isTypeAirlineFilterOn = checkCheckboxState(typeAirlineSwitch);
 								isAltitudeFilterOn = checkCheckboxState(altitudeSwitch);
 
-								console.log('work - creating objs');
 								return createObjects(res, planesObjects); //inside creating all objs (this running once)
 							})
 							.then(res => {
-								console.log(isTypeAirlineFilterOn);
-								console.log(isAltitudeFilterOn);
-
-								console.log('work - funs for objs');
-								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes, isTypeAirlineFilterOn, isAltitudeFilterOn); //inside functions for each obj (this running once)
+								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, isTypeAirlineFilterOn, isAltitudeFilterOn); //inside functions for each obj (this running once)
 							});
 					}
-
-					// function work() {
-					// 	fetchData(api)
-					// 		.then(res => {
-					// 			return extractData(res);
-					// 		})
-					// 		.then(res => {
-					// 			return createObjects(res, planesObjects);
-					// 		})
-					// 		.then(res => {
-					// 			createIconPopup(res, planesObjects, boundariesPoints, bannedTypes); //running functions for each obj
-					// 		});
-					// }
 
 					workButton.addEventListener('click', work);
 

@@ -123,10 +123,7 @@ function switchCheckboxes() {
     })
 }
 
-function checkCheckboxState(checkbox) { //trying inside radar.js
-    // const typeAirlineSwitch = document.getElementById('type-airline-input-switch');
-    // const altitudeSwitch = document.getElementById('altitude-input-switch');
-
+function checkCheckboxState(checkbox) {
     if (checkbox.classList.contains('active')) {
         console.log(checkbox.id, 'is active');
         return true;
@@ -134,5 +131,4 @@ function checkCheckboxState(checkbox) { //trying inside radar.js
         console.log(checkbox.id, 'is not active');
         return false;
     }
-
 }
