@@ -242,24 +242,25 @@ class Plane {
                     bannedTypes.push('A321');
                     bannedTypes.push('B738');
 
-                    // banning planes objects
-                    for (let i = 0; i < bannedTypes.length; i++) {
-                        if (bannedTypes[i] == plane.planeType) {
-                            plane.banned = true;
-                            let tableRow = document.getElementById(plane.icao);
-                            tableRow.classList.add('banned-plane');
-                            // tableRow.style.backgroundColor = 'rgb(255, 176, 176)';
-                            plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
-                            // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
-                        } else {
-                            //default state or back to default state
-                            // console.log('nie zbanowany', plane.planeType);
-
-                            //this causes that only one type of plane is being picked by the filter
-                            // let tableRow = document.getElementById(plane.icao);
-                            // tableRow.classList.remove('banned-plane');
+                    let tableRow = document.getElementById(plane.icao);
+                    let typesMatch;
+                    typesMatch = bannedTypes.map(type => {
+                        if (type == plane.planeType) {
+                            return true;
                         }
+                    })
+                    if (typesMatch.includes(true)) {
+                        console.log('zbanowany', plane.planeType);
+                        plane.banned = true;
+                        tableRow.classList.add('banned-plane');
+                        // plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
+                        // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
+                    } else {
+                        console.log('nie zbanowany', plane.planeType);
+                        plane.banned = false;
+                        tableRow.classList.remove('banned-plane');
                     }
+
                 } else {
                     console.log('type-airline filter is not active');
 
