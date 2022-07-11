@@ -3,7 +3,7 @@
 
 import { manageDropdownMenu } from './dropdown.js';
 import { fetchData } from './data-functions.js';
-export { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState };
+export { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState, switchShowHideButton };
 
 function createPlaneTypeElements(airplanesTypes, bannedTypes) {
     const typesDropdownMenu = document.querySelector('.dropdown-menu');
@@ -137,4 +137,19 @@ function checkCheckboxState(checkbox) {
         console.log(checkbox.id, 'is not active');
         return false;
     }
+}
+
+function switchShowHideButton() {
+    const showHideButton = document.getElementById('hide-show-button');
+    showHideButton.addEventListener('click', () => {
+        if (showHideButton.classList.contains('hide')) {
+            showHideButton.textContent = 'Show banned';
+            showHideButton.classList.remove('hide');
+            showHideButton.classList.add('show');
+        } else if (showHideButton.classList.contains('show')) {
+            showHideButton.textContent = 'Hide banned';
+            showHideButton.classList.remove('show');
+            showHideButton.classList.add('hide');
+        }
+    })
 }

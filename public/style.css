@@ -74,6 +74,7 @@ body {
 }
 
 #nav-list {
+    position: relative;
     list-style: none;
     display: flex;
     padding-left: 0;
@@ -104,6 +105,16 @@ body {
 
 .nav-link-active {
     background-color: grey;
+}
+
+#hide-show-button {
+    position: absolute;
+    margin-left: 22.9rem;
+    width: 105px;
+    height: 30px;
+    /* margin-bottom: 3rem; */
+    /* transform: translateY(-.5rem); */
+    padding: .3rem .6rem;
 }
 
 #filters-div {

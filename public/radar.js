@@ -3,7 +3,7 @@ import { fetchData, extractData } from './data-functions.js';
 import { Plane, createIconPopup } from './plane-class.js';
 // import { manageDropdownMenu } from './dropdown.js';
 import { manageNavbar } from './navbar.js';
-import { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState } from './filters.js'
+import { createPlaneTypeElements, createAirlineElements, updateHeightText, switchCheckboxes, checkCheckboxState, switchShowHideButton } from './filters.js'
 // import { sendNotification } from './notifications.js';
 // export { planeFilterOn };
 
@@ -35,6 +35,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 	switchCheckboxes();
 
+	switchShowHideButton();
 
 
 	if (navigator.geolocation) {
