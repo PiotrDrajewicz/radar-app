@@ -29,6 +29,14 @@ body {
     /* background: red; */
 }
 
+.banned-popup {
+    background: rgb(255, 176, 176) !important;
+}
+
+.banned-popup-altitude {
+    background: rgb(255, 176, 176) !important;
+}
+
 .custom .leaflet-popup-content {
     transform: translateY(-10px);
     margin-left: 0;

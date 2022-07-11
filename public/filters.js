@@ -84,6 +84,12 @@ function updateHeightText() {
     applyHeightButton.addEventListener('click', () => {
         minHeightText.textContent = minHeightInput.value;
         maxHeightText.textContent = maxHeightInput.value;
+        if (maxHeightInput.value === '') {
+            maxHeightText.textContent = 'ထ';
+        }
+        if (minHeightInput.value === '') {
+            minHeightText.textContent = 'ထ';
+        }
     })
 }
 

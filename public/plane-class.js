@@ -59,7 +59,7 @@ class Plane {
                 popup = new L.popup({ className: 'custom', offset: [73, 77], closeOnClick: false, autoClose: false });
             } else {
                 //left course
-                popup = new L.popup({ className: 'custom', offset: [65, 72], closeOnClick: false, autoClose: false });
+                popup = new L.popup({ className: 'custom', id: '', offset: [65, 72], closeOnClick: false, autoClose: false });
             }
             popup.setLatLng(new L.LatLng(planeLat, planeLng));
 
@@ -264,13 +264,14 @@ class Plane {
                         console.log('zbanowany', plane.planeType);
                         plane.banned = true;
                         tableRow.classList.add('banned-plane');
-                        // plane.popup._wrapper.style.backgroundColor = 'rgb(255, 176, 176)';
+                        plane.popup._wrapper.classList.add('banned-popup');
                         // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
                     } else {
                         //plane is not banned
                         console.log('nie zbanowany', plane.planeType);
                         plane.banned = false;
                         tableRow.classList.remove('banned-plane');
+                        plane.popup._wrapper.classList.remove('banned-popup');
                     }
 
                 } else {
@@ -279,8 +280,8 @@ class Plane {
 
                     let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('banned-plane');
+                    plane.popup._wrapper.classList.remove('banned-popup');
                 }
-
 
                 if (altitudeFilterState) {
                     //filter is active
@@ -291,40 +292,47 @@ class Plane {
                     let maxAlt = document.getElementById('max-height').value;
 
                     //min and max are provided
-                    if (typeof minAlt === 'number' && typeof maxAlt === 'number') {
-                        if (planeAlt >= minAlt && planeAlt <= maxAlt) {
+                    if (minAlt !== '' && maxAlt !== '') {
+                        if (planeAlt >= parseInt(minAlt, 10) && planeAlt <= parseInt(maxAlt, 10)) {
                             //plane is inside range
                             tableRow.classList.remove('banned-plane-altitude');
+                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
                             tableRow.classList.add('banned-plane-altitude');
+                            plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
                     }
 
                     //nothing is provided
-                    if (typeof minAlt !== 'number' && typeof maxAlt !== 'number') {
+                    if (minAlt === '' && maxAlt === '') {
                         tableRow.classList.remove('banned-plane-altitude');
+                        plane.popup._wrapper.classList.remove('banned-popup-altitude');
                     }
 
                     //only min is provided
-                    if (typeof minAlt === 'number' && typeof maxAlt !== 'number') {
-                        if (planeAlt >= minAlt) {
+                    if (minAlt !== '' && maxAlt === '') {
+                        if (planeAlt >= parseInt(minAlt, 10)) {
                             //plane is inside range
                             tableRow.classList.remove('banned-plane-altitude');
+                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
                             tableRow.classList.add('banned-plane-altitude');
+                            plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
                     }
 
                     //only max is provided
-                    if (typeof minAlt !== 'number' && typeof maxAlt === 'number') {
-                        if (planeAlt <= maxAlt) {
+                    if (minAlt === '' && maxAlt !== '') {
+                        if (planeAlt <= parseInt(maxAlt, 10)) {
                             //plane is inside range
                             tableRow.classList.remove('banned-plane-altitude');
+                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
                             tableRow.classList.add('banned-plane-altitude');
+                            plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
                     }
 
@@ -333,6 +341,7 @@ class Plane {
                     //filter is not active
                     console.log('altitude filter is not active');
 
+                    let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('banned-plane-altitude');
                 }
 
