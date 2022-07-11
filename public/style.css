@@ -406,6 +406,10 @@ body {
     background-color: rgb(255, 176, 176);
 }
 
+.banned-plane-altitude {
+    background-color: rgb(255, 176, 176);
+}
+
 #altitude-title {
     margin-top: 14rem;
 }

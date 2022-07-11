@@ -1,7 +1,7 @@
 export { fetchData, extractData };
 
 function fetchData(api) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         console.log('fetching data');
         resolve(fetch(api)
             .then(response => {
@@ -17,6 +17,7 @@ function fetchData(api) {
             // 	return allPlanes;
             // })
         )
+        // reject(console.log('nie udało się'));
     })
 }
 

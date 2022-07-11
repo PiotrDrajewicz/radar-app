@@ -142,7 +142,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 								return extractData(res);
 							})
 							.then(res => {
-								//checking state of the checkbox
+								//checking state of checkboxes
 								const typeAirlineSwitch = document.getElementById('type-airline-input-switch');
 								const altitudeSwitch = document.getElementById('altitude-input-switch');
 								isTypeAirlineFilterOn = checkCheckboxState(typeAirlineSwitch);
@@ -151,7 +151,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 								return createObjects(res, planesObjects); //inside creating all objs (this running once)
 							})
 							.then(res => {
-								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, isTypeAirlineFilterOn, isAltitudeFilterOn); //inside functions for each obj (this running once)
+								createIconPopup(res, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, isTypeAirlineFilterOn, isAltitudeFilterOn); //inside running functions for each obj (this running once)
 							});
 					}
 

@@ -283,9 +283,57 @@ class Plane {
 
 
                 if (altitudeFilterState) {
-                    console.log('PLANE - altitude filter is active');
+                    //filter is active
+                    console.log('altitude filter is active');
+                    let planeAlt = plane.baroAltitude;
+                    let tableRow = document.getElementById(plane.icao);
+                    let minAlt = document.getElementById('min-height').value;
+                    let maxAlt = document.getElementById('max-height').value;
+
+                    //min and max are provided
+                    if (typeof minAlt === 'number' && typeof maxAlt === 'number') {
+                        if (planeAlt >= minAlt && planeAlt <= maxAlt) {
+                            //plane is inside range
+                            tableRow.classList.remove('banned-plane-altitude');
+                        } else {
+                            //plane is outside range
+                            tableRow.classList.add('banned-plane-altitude');
+                        }
+                    }
+
+                    //nothing is provided
+                    if (typeof minAlt !== 'number' && typeof maxAlt !== 'number') {
+                        tableRow.classList.remove('banned-plane-altitude');
+                    }
+
+                    //only min is provided
+                    if (typeof minAlt === 'number' && typeof maxAlt !== 'number') {
+                        if (planeAlt >= minAlt) {
+                            //plane is inside range
+                            tableRow.classList.remove('banned-plane-altitude');
+                        } else {
+                            //plane is outside range
+                            tableRow.classList.add('banned-plane-altitude');
+                        }
+                    }
+
+                    //only max is provided
+                    if (typeof minAlt !== 'number' && typeof maxAlt === 'number') {
+                        if (planeAlt <= maxAlt) {
+                            //plane is inside range
+                            tableRow.classList.remove('banned-plane-altitude');
+                        } else {
+                            //plane is outside range
+                            tableRow.classList.add('banned-plane-altitude');
+                        }
+                    }
+
+
                 } else {
-                    console.log('PLANE - altitude filter is not active');
+                    //filter is not active
+                    console.log('altitude filter is not active');
+
+                    tableRow.classList.remove('banned-plane-altitude');
                 }
 
 
