@@ -359,20 +359,24 @@ class Plane {
                 //hiding or showing banned planes
                 const showHideButton = document.getElementById('hide-show-button');
                 let tableRow = document.getElementById(plane.icao);
-                // let planeIcon = document.querySelector('.leaflet-marker-icon');
                 if (showHideButton.classList.contains('hide')) {
                     //banned planes are shown
                     tableRow.classList.remove('hide-banned-row');
                     plane.popup._wrapper.style.opacity = 1;
+                    plane.icon._icon.style.opacity = 1;
                 }
                 if (showHideButton.classList.contains('show')) {
                     //banned planes are hidden
                     if (plane.banned || plane.bannedAlt) {
+                        //plane is banned
                         tableRow.classList.add('hide-banned-row');
                         plane.popup._wrapper.style.opacity = 0;
+                        plane.icon._icon.style.opacity = 0;
                     } else {
+                        //plane is not banned
                         tableRow.classList.remove('hide-banned-row');
                         plane.popup._wrapper.style.opacity = 1;
+                        plane.icon._icon.style.opacity = 1;
                     }
                 }
 
