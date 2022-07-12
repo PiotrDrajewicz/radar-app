@@ -237,6 +237,7 @@ class Plane {
             .then(() => {
                 //would be better if this was in separete function but its here for now
 
+                //type-airline filter
                 if (typeAirlineFilterState) {
                     //filter is active
                     console.log('plane filter is active');
@@ -285,6 +286,7 @@ class Plane {
                     plane.popup._wrapper.classList.remove('banned-popup');
                 }
 
+                //altitude filter
                 if (altitudeFilterState) {
                     //filter is active
                     console.log('altitude filter is active');
@@ -354,24 +356,25 @@ class Plane {
                     tableRow.classList.remove('banned-plane-altitude');
                 }
 
+                //hiding or showing banned planes
                 const showHideButton = document.getElementById('hide-show-button');
+                let tableRow = document.getElementById(plane.icao);
+                // let planeIcon = document.querySelector('.leaflet-marker-icon');
                 if (showHideButton.classList.contains('hide')) {
                     //banned planes are shown
-                    let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('hide-banned-row');
+                    plane.popup._wrapper.style.opacity = 1;
                 }
                 if (showHideButton.classList.contains('show')) {
                     //banned planes are hidden
                     if (plane.banned || plane.bannedAlt) {
-                        let tableRow = document.getElementById(plane.icao);
                         tableRow.classList.add('hide-banned-row');
+                        plane.popup._wrapper.style.opacity = 0;
                     } else {
-                        let tableRow = document.getElementById(plane.icao);
                         tableRow.classList.remove('hide-banned-row');
+                        plane.popup._wrapper.style.opacity = 1;
                     }
                 }
-
-
 
 
             })
