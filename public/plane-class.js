@@ -17,6 +17,7 @@ class Plane {
         this.map = map;
         this.notificationSent = false;
         this.banned = false;
+        this.bannedAlt = false;
     }
 
     createPlaneIcon(plane, planesUpdated) {
@@ -239,9 +240,9 @@ class Plane {
                 if (typeAirlineFilterState) {
                     //filter is active
                     console.log('plane filter is active');
-                    // bannedTypes.push('A320');
-                    // bannedTypes.push('A321');
-                    // bannedTypes.push('B738');
+                    bannedTypes.push('A320');
+                    bannedTypes.push('A321');
+                    bannedTypes.push('B738');
 
                     let tableRow = document.getElementById(plane.icao);
 
@@ -278,6 +279,7 @@ class Plane {
                     //filter is not active
                     console.log('type-airline filter is not active');
 
+                    plane.banned = false;
                     let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('banned-plane');
                     plane.popup._wrapper.classList.remove('banned-popup');
@@ -295,10 +297,12 @@ class Plane {
                     if (minAlt !== '' && maxAlt !== '') {
                         if (planeAlt >= parseInt(minAlt, 10) && planeAlt <= parseInt(maxAlt, 10)) {
                             //plane is inside range
+                            plane.bannedAlt = false;
                             tableRow.classList.remove('banned-plane-altitude');
                             plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
+                            plane.bannedAlt = true;
                             tableRow.classList.add('banned-plane-altitude');
                             plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
@@ -306,6 +310,7 @@ class Plane {
 
                     //nothing is provided
                     if (minAlt === '' && maxAlt === '') {
+                        plane.bannedAlt = false;
                         tableRow.classList.remove('banned-plane-altitude');
                         plane.popup._wrapper.classList.remove('banned-popup-altitude');
                     }
@@ -314,10 +319,12 @@ class Plane {
                     if (minAlt !== '' && maxAlt === '') {
                         if (planeAlt >= parseInt(minAlt, 10)) {
                             //plane is inside range
+                            plane.bannedAlt = false;
                             tableRow.classList.remove('banned-plane-altitude');
                             plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
+                            plane.bannedAlt = true;
                             tableRow.classList.add('banned-plane-altitude');
                             plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
@@ -327,10 +334,12 @@ class Plane {
                     if (minAlt === '' && maxAlt !== '') {
                         if (planeAlt <= parseInt(maxAlt, 10)) {
                             //plane is inside range
+                            plane.bannedAlt = false;
                             tableRow.classList.remove('banned-plane-altitude');
                             plane.popup._wrapper.classList.remove('banned-popup-altitude');
                         } else {
                             //plane is outside range
+                            plane.bannedAlt = true;
                             tableRow.classList.add('banned-plane-altitude');
                             plane.popup._wrapper.classList.add('banned-popup-altitude');
                         }
@@ -344,6 +353,24 @@ class Plane {
                     let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('banned-plane-altitude');
                 }
+
+                const showHideButton = document.getElementById('hide-show-button');
+                if (showHideButton.classList.contains('hide')) {
+                    //banned planes are shown
+                    let tableRow = document.getElementById(plane.icao);
+                    tableRow.classList.remove('hide-banned-row');
+                }
+                if (showHideButton.classList.contains('show')) {
+                    //banned planes are hidden
+                    if (plane.banned || plane.bannedAlt) {
+                        let tableRow = document.getElementById(plane.icao);
+                        tableRow.classList.add('hide-banned-row');
+                    } else {
+                        let tableRow = document.getElementById(plane.icao);
+                        tableRow.classList.remove('hide-banned-row');
+                    }
+                }
+
 
 
 
