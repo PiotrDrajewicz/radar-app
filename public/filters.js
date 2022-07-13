@@ -39,6 +39,11 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
 
             manageDropdownMenu();
 
+            //reset button functionality
+            const resetTypeButton = document.getElementById('reset-type-button');
+            const typeElements = document.querySelectorAll('.type-element');
+            manageResetButton(resetTypeButton, typeElements, bannedTypes);
+
         });
 }
 
@@ -72,6 +77,12 @@ function createAirlineElements(airlines, bannedAirlines) {
                 })
                 airlinesDropdownMenu.appendChild(airlineElement);
             })
+
+            //reset button functionality
+            const resetAirlineButton = document.getElementById('reset-airline-button');
+            const airlineElements = document.querySelectorAll('.airline-element');
+            manageResetButton(resetAirlineButton, airlineElements, bannedAirlines);
+
         })
 }
 
@@ -151,5 +162,27 @@ function switchShowHideButton() {
             showHideButton.classList.remove('show');
             showHideButton.classList.add('hide');
         }
+    })
+}
+
+function manageResetButton(resetButton, elementsArr, bannedArr) {
+    resetButton.addEventListener('click', () => {
+        //emptying arr with banned types 
+        bannedArr = [];
+
+        elementsArr.forEach(element => {
+            //deleting displayed banned types
+            const spanToDelete = document.getElementById(element.id + '-span');
+            if (spanToDelete) {
+                spanToDelete.remove();
+            }
+
+            //removing color and sign
+            element.classList.remove('banned');
+            const banSign = element.querySelector('#ban-sign');
+            if (banSign) {
+                banSign.remove();
+            }
+        })
     })
 }

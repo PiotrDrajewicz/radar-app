@@ -241,9 +241,9 @@ class Plane {
                 if (typeAirlineFilterState) {
                     //filter is active
                     console.log('plane filter is active');
-                    bannedTypes.push('A320');
-                    bannedTypes.push('A321');
-                    bannedTypes.push('B738');
+                    // bannedTypes.push('A320');
+                    // bannedTypes.push('A321');
+                    // bannedTypes.push('B738');
 
                     let tableRow = document.getElementById(plane.icao);
 
