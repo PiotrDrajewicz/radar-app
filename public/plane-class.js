@@ -382,6 +382,20 @@ class Plane {
 
 
             })
+            .then(() => {
+                //would be better if this was in separete function but its here for now
+
+                const planeRow = document.getElementById(plane.icao);
+                planeRow.addEventListener('click', () => {
+                    if (!plane.popup._wrapper.style.backgroundColor) {
+                        plane.popup._wrapper.style.backgroundColor = 'green';
+                    } else {
+                        // plane.popup._wrapper.style.backgroundColor = 'white';
+                        plane.popup._wrapper.removeAttribute('style');
+                    }
+                    // plane.popup._wrapper.style.backgroundColor = 'green';
+                })
+            })
     }
 
     putPlaneIntoTable(plane) {
@@ -390,6 +404,14 @@ class Plane {
 
     banPlane(plane) {
         // console.log();
+    }
+
+    highlightPlane(plane) {
+        // const planeRow = document.getElementById(plane.icao);
+        // console.log(planeRow);
+        // planeRow.addEventListener('click', () => {
+        //     plane.popup._wrapper.style.backgroundColor = 'green';
+        // })
     }
 }
 
@@ -410,6 +432,8 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             await plane.putPlaneIntoTable(plane);
             //banning plane - not in use
             await plane.banPlane(plane);
+            //highlighting plane when being clicked - not in use
+            await plane.highlightPlane(plane);
 
         })();
     })

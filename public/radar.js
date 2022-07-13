@@ -37,6 +37,10 @@ window.addEventListener('load', () => { //run function when page is loaded
 
 	switchShowHideButton();
 
+	// document.addEventListener('click', (e) => {
+	// 	console.log(e.target);
+	// })
+
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(position => {

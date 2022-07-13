@@ -62,7 +62,6 @@ function createAirlineElements(airlines, bannedAirlines) {
                 airlineElement.classList.add('airline-element');
                 airlineElement.textContent = airlineIcaoCode;
                 airlineElement.addEventListener('click', e => {
-                    console.log(e.target.id);
                     //adding and removing ban sign and color to the airline if chosen
                     if (!airlineElement.querySelector('#ban-sign')) {
                         airlineElement.innerHTML += '<i id="ban-sign" class="fa-solid fa-ban ban-sign"></i>';
