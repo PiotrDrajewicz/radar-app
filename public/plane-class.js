@@ -386,12 +386,22 @@ class Plane {
                 //would be better if this was in separete function but its here for now
 
                 const planeRow = document.getElementById(plane.icao);
+                const planeRows = document.querySelectorAll('.table-row');
                 planeRow.addEventListener('click', () => {
-                    if (!plane.popup._wrapper.style.backgroundColor) {
+                    //clearing all rows and popups before selecting specific one
+                    planesObjects.forEach(object => {
+                        object.popup._wrapper.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
+                    })
+                    planeRows.forEach(row => {
+                        row.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
+                    })
+
+                    //highlighting chosen specific plane
+                    if (!plane.popup._wrapper.style.backgroundColor == 'green') {
                         plane.popup._wrapper.style.backgroundColor = 'green';
                     } else {
-                        // plane.popup._wrapper.style.backgroundColor = 'white';
-                        plane.popup._wrapper.removeAttribute('style');
+                        plane.popup._wrapper.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
+                        // plane.popup._wrapper.removeAttribute('style');
                     }
                     // plane.popup._wrapper.style.backgroundColor = 'green';
                 })
