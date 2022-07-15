@@ -33,6 +33,10 @@ body {
     background: green;
 }
 
+.table-row {
+    background-color: rgba(189, 178, 162, 0.505);
+}
+
 .row-selected {
     background-color: green;
 }

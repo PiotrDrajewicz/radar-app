@@ -386,18 +386,29 @@ class Plane {
                 //would be better if this was in separete function but its here for now
 
                 const planeRow = document.getElementById(plane.icao);
-                const planeRows = document.querySelectorAll('.table-row');
-                planeRow.addEventListener('click', () => {
+                let currentRow;
+                planeRow.addEventListener('click', (e) => {
                     // //clearing all rows and popups before selecting specific one
-                    planesObjects.forEach(object => {
-                        object.popup._wrapper.style.backgroundColor = 'white';
-                    })
+                    // planesObjects.forEach(object => {
+                    //     object.popup._wrapper.style.backgroundColor = 'white';
+                    // })
+                    // console.log('target', e.target.parentElement.id);
+                    const planeRows = document.querySelectorAll('.table-row');
                     planeRows.forEach(row => {
-                        row.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
+                        row.classList.remove('row-selected');
                     })
 
-                    planeRow.classList.toggle('row-selected');
-                    plane.popup._wrapper.classList.toggle('popup-selected');
+                    console.log('current', currentRow);
+                    console.log('clicked', e.target.parentElement);
+
+
+                    if (e.target.parentElement == currentRow) {
+                        planeRow.classList.remove('row-selected');
+                    } else {
+                        planeRow.classList.toggle('row-selected');
+                    }
+                    currentRow = e.target.parentElement;
+                    // plane.popup._wrapper.classList.toggle('popup-selected');
 
                     //highlighting chosen specific plane
                     // if (!planeRow.classList.contains('row-selected')) {
