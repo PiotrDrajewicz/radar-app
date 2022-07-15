@@ -388,22 +388,25 @@ class Plane {
                 const planeRow = document.getElementById(plane.icao);
                 const planeRows = document.querySelectorAll('.table-row');
                 planeRow.addEventListener('click', () => {
-                    //clearing all rows and popups before selecting specific one
+                    // //clearing all rows and popups before selecting specific one
                     planesObjects.forEach(object => {
-                        object.popup._wrapper.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
+                        object.popup._wrapper.style.backgroundColor = 'white';
                     })
                     planeRows.forEach(row => {
                         row.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
                     })
 
+                    planeRow.classList.toggle('row-selected');
+                    plane.popup._wrapper.classList.toggle('popup-selected');
+
                     //highlighting chosen specific plane
-                    if (!plane.popup._wrapper.style.backgroundColor == 'green') {
-                        plane.popup._wrapper.style.backgroundColor = 'green';
-                    } else {
-                        plane.popup._wrapper.style.backgroundColor = 'rgba(189, 178, 162, 0.505)';
-                        // plane.popup._wrapper.removeAttribute('style');
-                    }
-                    // plane.popup._wrapper.style.backgroundColor = 'green';
+                    // if (!planeRow.classList.contains('row-selected')) {
+                    //     plane.popup._wrapper.style.backgroundColor = 'green';
+                    // } else {
+                    //     plane.popup._wrapper.style.backgroundColor = 'white';
+                    //     // plane.popup._wrapper.removeAttribute('style');
+                    // }
+                    // // plane.popup._wrapper.style.backgroundColor = 'green';
                 })
             })
     }

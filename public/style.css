@@ -29,6 +29,14 @@ body {
     /* background: red; */
 }
 
+.popup-selected {
+    background: green;
+}
+
+.row-selected {
+    background-color: green;
+}
+
 .banned-popup {
     background: rgb(255, 176, 176) !important;
 }
