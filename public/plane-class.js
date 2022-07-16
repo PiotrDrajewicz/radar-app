@@ -385,6 +385,7 @@ class Plane {
             .then(() => {
                 //would be better if this was in separete function but its here for now
 
+                //highlighting - clicking on a table row
                 const planeRow = document.getElementById(plane.icao);
                 planeRow.addEventListener('click', (e) => {
                     const planeRowsArr = [...document.querySelectorAll('.table-row')];
@@ -409,8 +410,35 @@ class Plane {
                     planePopupsArr.map(popup => {
                         popup.classList.remove('popup-selected');
                     })
-
                 })
+
+                //highlighting - clicking on a map popup
+                const planePopup = plane.popup._wrapper;
+                planePopup.addEventListener('click', (e) => {
+                    const planeRowsArr = [...document.querySelectorAll('.table-row')];
+                    const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
+                    const selectedPopup = e.target.closest('.leaflet-popup-content-wrapper');
+                    const connectedRow = document.getElementById(plane.icao);
+
+                    //selecting/deselecting specific row and popup
+                    selectedPopup.classList.toggle('popup-selected');
+                    connectedRow.classList.toggle('row-selected');
+
+                    //separating clicked row and popup
+                    const clickedPopupIndex = planePopupsArr.indexOf(selectedPopup);
+                    planePopupsArr.splice(clickedPopupIndex, 1);
+                    const connectedRowIndex = planeRowsArr.indexOf(connectedRow);
+                    planeRowsArr.splice(connectedRowIndex, 1);
+
+                    //clearing all other rows and popups
+                    planeRowsArr.map(row => {
+                        row.classList.remove('row-selected');
+                    })
+                    planePopupsArr.map(popup => {
+                        popup.classList.remove('popup-selected');
+                    })
+                })
+
             })
     }
 
@@ -430,12 +458,6 @@ class Plane {
         // })
     }
 }
-
-// function getClick() {
-//     document.addEventListener('click', (e) => {
-//         return e.target.parentElement;
-//     })
-// }
 
 function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) {
 
