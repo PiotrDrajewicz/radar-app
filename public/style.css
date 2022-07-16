@@ -29,24 +29,25 @@ body {
     /* background: red; */
 }
 
-.popup-selected {
-    background: green;
-}
-
 .table-row {
     background-color: rgba(189, 178, 162, 0.505);
 }
 
-.row-selected {
-    background-color: green;
-}
-
+/* removed !important from banned popups - seems to be working without this */
 .banned-popup {
-    background: rgb(255, 176, 176) !important;
+    background: rgb(255, 176, 176);
 }
 
 .banned-popup-altitude {
-    background: rgb(255, 176, 176) !important;
+    background: rgb(255, 176, 176);
+}
+
+.row-selected {
+    background-color: green !important;
+}
+
+.popup-selected {
+    background-color: green !important;
 }
 
 .custom .leaflet-popup-content {

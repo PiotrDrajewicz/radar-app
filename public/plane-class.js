@@ -240,7 +240,7 @@ class Plane {
                 //type-airline filter
                 if (typeAirlineFilterState) {
                     //filter is active
-                    console.log('plane filter is active');
+                    // console.log('plane filter is active');
                     // bannedTypes.push('A320');
                     // bannedTypes.push('A321');
                     // bannedTypes.push('B738');
@@ -263,14 +263,14 @@ class Plane {
 
                     if (typesMatch.includes(true) || airlinesMatch.includes(true)) {
                         //plane is banned
-                        console.log('zbanowany', plane.planeType);
+                        // console.log('zbanowany', plane.planeType);
                         plane.banned = true;
                         tableRow.classList.add('banned-plane');
                         plane.popup._wrapper.classList.add('banned-popup');
                         // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
                     } else {
                         //plane is not banned
-                        console.log('nie zbanowany', plane.planeType);
+                        // console.log('nie zbanowany', plane.planeType);
                         plane.banned = false;
                         tableRow.classList.remove('banned-plane');
                         plane.popup._wrapper.classList.remove('banned-popup');
@@ -278,7 +278,7 @@ class Plane {
 
                 } else {
                     //filter is not active
-                    console.log('type-airline filter is not active');
+                    // console.log('type-airline filter is not active');
 
                     plane.banned = false;
                     let tableRow = document.getElementById(plane.icao);
@@ -289,7 +289,7 @@ class Plane {
                 //altitude filter
                 if (altitudeFilterState) {
                     //filter is active
-                    console.log('altitude filter is active');
+                    // console.log('altitude filter is active');
                     let planeAlt = plane.baroAltitude;
                     let tableRow = document.getElementById(plane.icao);
                     let minAlt = document.getElementById('min-height').value;
@@ -350,7 +350,7 @@ class Plane {
 
                 } else {
                     //filter is not active
-                    console.log('altitude filter is not active');
+                    // console.log('altitude filter is not active');
 
                     let tableRow = document.getElementById(plane.icao);
                     tableRow.classList.remove('banned-plane-altitude');
@@ -386,38 +386,30 @@ class Plane {
                 //would be better if this was in separete function but its here for now
 
                 const planeRow = document.getElementById(plane.icao);
-                let currentRow;
                 planeRow.addEventListener('click', (e) => {
-                    // //clearing all rows and popups before selecting specific one
-                    // planesObjects.forEach(object => {
-                    //     object.popup._wrapper.style.backgroundColor = 'white';
-                    // })
-                    // console.log('target', e.target.parentElement.id);
-                    const planeRows = document.querySelectorAll('.table-row');
-                    planeRows.forEach(row => {
+                    const planeRowsArr = [...document.querySelectorAll('.table-row')];
+                    const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
+                    const selectedRow = e.target.parentElement;
+                    const connectedPopup = plane.popup._wrapper;
+
+                    //selecting/deselecting specific row and popup
+                    selectedRow.classList.toggle('row-selected');
+                    connectedPopup.classList.toggle('popup-selected');
+
+                    //separating clicked row and popup
+                    const clickedRowIndex = planeRowsArr.indexOf(selectedRow);
+                    planeRowsArr.splice(clickedRowIndex, 1);
+                    const connectedPopupIndex = planePopupsArr.indexOf(connectedPopup);
+                    planePopupsArr.splice(connectedPopupIndex, 1);
+
+                    //clearing all other rows and popups
+                    planeRowsArr.map(row => {
                         row.classList.remove('row-selected');
                     })
+                    planePopupsArr.map(popup => {
+                        popup.classList.remove('popup-selected');
+                    })
 
-                    console.log('current', currentRow);
-                    console.log('clicked', e.target.parentElement);
-
-
-                    if (e.target.parentElement == currentRow) {
-                        planeRow.classList.remove('row-selected');
-                    } else {
-                        planeRow.classList.toggle('row-selected');
-                    }
-                    currentRow = e.target.parentElement;
-                    // plane.popup._wrapper.classList.toggle('popup-selected');
-
-                    //highlighting chosen specific plane
-                    // if (!planeRow.classList.contains('row-selected')) {
-                    //     plane.popup._wrapper.style.backgroundColor = 'green';
-                    // } else {
-                    //     plane.popup._wrapper.style.backgroundColor = 'white';
-                    //     // plane.popup._wrapper.removeAttribute('style');
-                    // }
-                    // // plane.popup._wrapper.style.backgroundColor = 'green';
                 })
             })
     }
@@ -439,7 +431,14 @@ class Plane {
     }
 }
 
+// function getClick() {
+//     document.addEventListener('click', (e) => {
+//         return e.target.parentElement;
+//     })
+// }
+
 function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) {
+
     planesObjects.forEach(plane => {
         (async function () {
             //updating plane info
