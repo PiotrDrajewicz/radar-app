@@ -7,13 +7,14 @@ let tableDiv = document.getElementById('table-div');
 let tableRows = document.querySelector('.table-rows')
 
 class Plane {
-    constructor(icao, lat, lng, track, groundSpeed, baroAltitude, map) {
+    constructor(icao, lat, lng, track, groundSpeed, baroAltitude, map, verticalRate) {
         this.icao = icao;
         this.lat = lat;
         this.lng = lng;
         this.track = track;
         this.groundSpeed = groundSpeed;
         this.baroAltitude = baroAltitude;
+        this.verticalRate = verticalRate;
         this.map = map;
         this.notificationSent = false;
         this.banned = false;
@@ -115,6 +116,7 @@ class Plane {
                 plane.track = planesUpdated[n][10];
                 plane.groundSpeed = Math.round(planesUpdated[n][9] * 1.94);
                 plane.baroAltitude = Math.round(planesUpdated[n][7] * 3.28084);
+                plane.verticalRate = planesUpdated[n][11];
             }
         }
     }

@@ -94,7 +94,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 							//adding new objects
 							allPlanes.forEach(plane => {
 								let counter = 0;
-								const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map);
+								const planeObj = new Plane(plane[0], plane[6], plane[5], plane[10], plane[9], plane[7], map, plane[11]);
 
 								//adding icao type
 								// console.log('icaooo: ', planeObj.icao);

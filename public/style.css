@@ -18,7 +18,7 @@ body {
 }
 
 .custom .leaflet-popup-content-wrapper {
-    background: white;
+    background: rgba(255, 255, 255, 0.75);
     color: black;
     max-height: 40px;
     width: 100px;
@@ -27,6 +27,10 @@ body {
     padding-left: .5rem;
     padding-right: .5rem;
     /* background: red; */
+}
+
+.custom .leaflet-popup-content-wrapper:hover {
+    z-index: 100;
 }
 
 .table-row {

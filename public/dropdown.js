@@ -4,7 +4,7 @@ function manageDropdownMenu() {
     //opening and closing dropdown menu
     document.addEventListener('click', e => {
         const isDropdownButton = e.target.matches('.dropdown-button');
-        //if we're not clicking on dropdown button and we're clicking inside dropdown (closest will give us here closest parent dropdown) ignore it
+        //if we're not clicking on dropdown button and we're clicking inside dropdown (closest will give us here closest parent dropdown) - ignore it
         if (!isDropdownButton && e.target.closest('.dropdown') != null) return
 
         //opening and closing dropdown menu (we're giving dropdown element class 'active' and due to that, our dropdown menu in css is being activated (.dropdown.active>.dropdown-button+.dropdown-menu) and it's getting opacity: 1)
@@ -37,13 +37,21 @@ function manageDropdownMenu() {
         let currentBannedWindow;
         if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
             currentBannedWindow = e.target.closest('.dropdown').querySelector('.banned-display');
+            //toggling banned types window and closing other one
             if (currentBannedWindow.id === 'banned-types-display') {
                 currentBannedWindow.classList.toggle('active-right');
+                const otherWindow = document.getElementById('banned-airlines-display');
+                otherWindow.classList.remove('active-left');
             }
+            //toggling banned airlines window and closing other one
             if (currentBannedWindow.id === 'banned-airlines-display') {
                 currentBannedWindow.classList.toggle('active-left');
+                const otherWindow = document.getElementById('banned-types-display');
+                otherWindow.classList.remove('active-right');
             }
         }
+
+        //moving both windows to default position when clicked outside dropdowns
         if (!e.target.closest('.dropdown')) {
             // const className = /active-(left|right)/g;
             document.querySelectorAll('.banned-display').forEach(window => {
