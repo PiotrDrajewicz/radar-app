@@ -79,6 +79,7 @@ class Plane {
                     } else {
                         popup.setContent(`<ul><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
                     }
+
                 })
 
             plane.popup = popup;
@@ -193,6 +194,7 @@ class Plane {
                     tableCellAltitude = document.createElement('p');
                     tableCellAltitude.textContent = plane.baroAltitude;
                     tableCellAltitude.classList.add('table-cell');
+                    tableCellAltitude.classList.add('altitude-cell');
 
                     tableCellSpeed = document.createElement('p');
                     tableCellSpeed.textContent = plane.groundSpeed;
@@ -207,20 +209,29 @@ class Plane {
                     tableRows.appendChild(tableRow);
                     tableDiv.appendChild(tableRows);
 
+                    //adding vertical rate indicator if needed
+                    if (plane.verticalRate < 0) {
+                        tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
+                    }
+                    if (plane.verticalRate > 0) {
+                        tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
+                    }
+
                     tableRowsArr.push(tableRow);
-                    // console.log(tableRowsArr);
                     plane.inTable = true;
                 } else {
                     //updating plane's alt and spd in table
-                    // console.log('w tabeli'); dochodzi tutaj
                     const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
                     planeToUpdate.children[3].textContent = plane.baroAltitude;
                     planeToUpdate.children[4].textContent = plane.groundSpeed;
-                    // console.log('to update', planeToUpdate.children[3]);
 
-                    //updating plane's alt and spd in table
-                    // tableCellAltitude.textContent = plane.baroAltitude;
-                    // tableCellSpeed.textContent = plane.groundSpeed;
+                    //updating vertical rate indicator
+                    if (plane.verticalRate < 0) {
+                        planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
+                    }
+                    if (plane.verticalRate > 0) {
+                        planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
+                    }
                 }
 
                 tableRowsArr.map(row => {
@@ -232,7 +243,6 @@ class Plane {
                         row.remove();
                     }
                 })
-
 
             }
             )
@@ -442,6 +452,21 @@ class Plane {
                 })
 
             })
+            .then(() => {
+                //would be better if this was in separete function but its here for now
+
+                //adding vertical rate indicator to plane's popup
+                const altitudeLi = plane.popup._container.querySelector('ul').children[3];
+
+                if (plane.verticalRate < 0) {
+                    altitudeLi.innerHTML += '<i class="fa-solid fa-caret-down popup-vertical-icon"></i>';
+                }
+                if (plane.verticalRate > 0) {
+                    altitudeLi.innerHTML += '<i class="fa-solid fa-caret-up popup-vertical-icon"></i>'
+                }
+
+            })
+
     }
 
     putPlaneIntoTable(plane) {
@@ -459,6 +484,11 @@ class Plane {
         //     plane.popup._wrapper.style.backgroundColor = 'green';
         // })
     }
+
+    addVerticalRateIndToPopup(plane) {
+        // console.log();
+    }
+
 }
 
 function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) {
@@ -481,6 +511,8 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             await plane.banPlane(plane);
             //highlighting plane when being clicked - not in use
             await plane.highlightPlane(plane);
+            //adding vertical rate indicator to popup - not in use
+            await plane.addVerticalRateIndToPopup(plane);
 
         })();
     })

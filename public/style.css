@@ -29,9 +29,9 @@ body {
     /* background: red; */
 }
 
-.custom .leaflet-popup-content-wrapper:hover {
-    z-index: 100;
-}
+/* .leaflet-popup-content-wrapper:hover {
+    background-color: red;
+} */
 
 .table-row {
     background-color: rgba(189, 178, 162, 0.505);
@@ -532,4 +532,13 @@ body {
 
 .speed-cell {
     border-right: 1px solid black;
+}
+
+.vertical-icon {
+    font-size: .9rem;
+    margin-left: .2rem;
+}
+
+.popup-vertical-icon {
+    margin-left: 4px;
 }
