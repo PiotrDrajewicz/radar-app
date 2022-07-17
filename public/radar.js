@@ -136,10 +136,6 @@ window.addEventListener('load', () => { //run function when page is loaded
 							console.log('all po usuwaniu: ', allPlanes);
 							console.log('objects po usuwaniu: ', planesObjects);
 
-							// logging planes vertical rate
-							planesObjects.forEach(plane => {
-								console.log(plane.icao, plane.verticalRate);
-							})
 						})
 					}
 

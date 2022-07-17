@@ -9,6 +9,8 @@ class Point {
 }
 
 function createMap(lat, long) {
+    //zoom 8 for testing
+    //zoom 9 for final
     let map = L.map('map').setView([lat, long], 8);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',

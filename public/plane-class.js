@@ -465,6 +465,11 @@ class Plane {
                     altitudeLi.innerHTML += '<i class="fa-solid fa-caret-up popup-vertical-icon"></i>'
                 }
 
+                //testing
+                plane.popup.addEventListener('click', () => {
+                    plane.popup.bringToFront();
+                })
+
             })
 
     }
