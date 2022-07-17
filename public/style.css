@@ -402,11 +402,26 @@ body {
     color: red;
 }
 
+/*it was like that 
 .banned-display {
     display: flex;
     flex-wrap: wrap;
-    /* display: grid;
-    grid-template-columns: 20px 20px 20px; */
+    position: absolute;
+    z-index: 1;
+    border: 1px solid black;
+    margin-top: 3rem;
+    margin-left: 1.1rem;
+    width: 100px;
+    height: 10rem;
+    transition: transform 150ms ease-in-out;
+} */
+
+.banned-display {
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    display: grid;
+    grid-template-columns: 20px 20px 20px;
+    grid-template-rows: auto;
     position: absolute;
     z-index: 1;
     border: 1px solid black;
@@ -416,6 +431,7 @@ body {
     width: 100px;
     height: 10rem;
     transition: transform 150ms ease-in-out;
+    /* box-sizing: border-box; */
 }
 
 .banned-display.active-right {
@@ -430,7 +446,18 @@ body {
     font-size: .75rem;
     color: grey;
     padding-left: .25rem;
+    /* box-sizing: border-box; */
+    /* height: 10px; */
+    /* top: 0; */
+    /* margin-top: 0; */
 }
+
+/* it was like that
+.banned-span {
+    font-size: .75rem;
+    color: grey;
+    padding-left: .25rem;
+} */
 
 #banned-airlines-display {
     margin-left: .12rem;
