@@ -75,16 +75,16 @@ class Plane {
                     const operatorFlagCode = data.OperatorFlagCode;
 
                     if (data.status) {
-                        popup.setContent(`<ul><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
+                        popup.setContent(`<ul class="popup-list"><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
                     } else {
-                        popup.setContent(`<ul><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
+                        popup.setContent(`<ul class="popup-list"><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
                     }
-
                 })
 
             plane.popup = popup;
             //this
             this.map.addLayer(popup);
+
         } else {
             //updating plane popup
             plane.popup.setLatLng(new L.LatLng(planeLat, planeLng));
@@ -99,13 +99,18 @@ class Plane {
                     const operatorFlagCode = data.OperatorFlagCode;
 
                     if (data.status) {
-                        plane.popup.setContent(`<ul><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
+                        plane.popup.setContent(`<ul class="popup-list"><li>N/A</li><li>${groundSpeed} kt</li><li>N/A</li><li>${baroAltitude} ft</li></ul>`);
                     } else {
-                        plane.popup.setContent(`<ul><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
+                        plane.popup.setContent(`<ul class="popup-list"><li>${icaoTypeCode}</li><li>${groundSpeed} kt</li><li>${operatorFlagCode}</li><li>${baroAltitude} ft</li></ul>`);
                     }
                 })
 
         }
+
+        // plane.popup._container.addEventListener('mouseover', () => {
+        //     const airlineLogoBig = document.querySelector('.airline-logo-big');
+        //     airlineLogoBig.classList.add('show');
+        // })
 
     }
 
@@ -465,10 +470,30 @@ class Plane {
                     altitudeLi.innerHTML += '<i class="fa-solid fa-caret-up popup-vertical-icon"></i>'
                 }
 
-                //testing
-                plane.popup.addEventListener('click', () => {
-                    plane.popup.bringToFront();
-                })
+            })
+            .then(() => {
+                //would be better if this was in separete function but its here for now
+
+                if (!plane.airlineCode || (plane.airlineCode === plane.planeType)) {
+                    return;
+                } else {
+                    const popupUl = plane.popup._container.querySelector('ul');
+                    // plane.popup._container.querySelector('ul').children[5].style.pointerEvents = 'none';
+
+                    //adding small and big airline logo to popup
+                    popupUl.innerHTML += `<img class="airline-logo-small" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_50_15_s.png?proportions=keep">`;
+                    popupUl.innerHTML += `<img class="airline-logo-big" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_100_20_r.png?proportions=keep">`;
+
+                    const airlineLogoBig = plane.popup._container.querySelector('.airline-logo-big');
+
+                    //showing/hiding big airline logo
+                    plane.popup._container.addEventListener('mouseover', () => {
+                        airlineLogoBig.classList.add('show');
+                    })
+                    plane.popup._container.addEventListener('mouseout', () => {
+                        airlineLogoBig.classList.remove('show');
+                    })
+                }
 
             })
 
@@ -491,6 +516,10 @@ class Plane {
     }
 
     addVerticalRateIndToPopup(plane) {
+        // console.log();
+    }
+
+    addAirlineLogo(plane) {
         // console.log();
     }
 
@@ -518,6 +547,8 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             await plane.highlightPlane(plane);
             //adding vertical rate indicator to popup - not in use
             await plane.addVerticalRateIndToPopup(plane);
+            //adding small and big airline logo to popup - not in use
+            await plane.addAirlineLogo(plane);
 
         })();
     })
