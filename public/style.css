@@ -441,21 +441,21 @@ body {
 } */
 
 .banned-display {
-    /* display: flex; */
-    /* flex-wrap: wrap; */
     display: grid;
-    grid-template-columns: 20px 20px 20px;
-    grid-template-rows: auto;
+    grid-template-columns: repeat(3, 32px);
+    /* grid-template-columns: 20px 20px 20px; */
+    grid-template-rows: repeat(11, 13px);
     position: absolute;
     z-index: 1;
     border: 1px solid black;
     margin-top: 3rem;
-    margin-left: 1.1rem;
-    /* min-width: 7.4rem; */
-    width: 100px;
+    /* margin-left: 1.1rem; */
+    margin-left: 1rem;
+    /* width: 100px; */
+    width: 115px;
     height: 10rem;
     transition: transform 150ms ease-in-out;
-    /* box-sizing: border-box; */
+    overflow-y: auto;
 }
 
 .banned-display.active-right {
@@ -467,12 +467,17 @@ body {
 }
 
 .banned-span {
+    /* overflow: hidden; */
     font-size: .75rem;
     color: grey;
     padding-left: .25rem;
+    /* padding-top: 20px; */
+    /* min-height: 40px; */
+    /* display: inline-block; */
     /* box-sizing: border-box; */
-    /* height: 10px; */
+    /* height: 10%; */
     /* top: 0; */
+    /* bottom: 0; */
     /* margin-top: 0; */
 }
 
@@ -491,6 +496,7 @@ body {
     font-size: .75rem;
     color: grey;
     padding-left: .25rem;
+    width: 90px;
 }
 
 .banned-placeholder.hide {
