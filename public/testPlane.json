@@ -1,0 +1,20 @@
+{
+    "icao": "48ae20",
+    "callsign": "LOT",
+    "country": "PL",
+    "time": "12",
+    "contact": "12",
+    "lng": "20",
+    "lat": "50",
+    "alt": "4000",
+    "ground": "false",
+    "velocity": "200",
+    "track": "70",
+    "rate": "-1",
+    "sensors": "12",
+    "geoalt": "4000",
+    "squawk": "4312",
+    "spi": "false",
+    "position": "0",
+    "category": "1"
+}

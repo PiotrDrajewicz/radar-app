@@ -82,6 +82,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 					boundariesPoints.push(areaPoints[1].lng);
 					// console.log('boundaries: ', boundariesPoints);
 					api = `https://opensky-network.org/api/states/all?lamin=${latMin}&lomin=${lngMin}&lamax=${latMax}&lomax=${lngMax}`;
+					// api = './testPlane.json';
 
 					let isTypeAirlineFilterOn;
 					let isAltitudeFilterOn;
