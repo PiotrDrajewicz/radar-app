@@ -3,11 +3,20 @@
     padding: 0;
 }
 
+:root {
+    --button-background: rgb(230, 230, 230);
+    --button-background-hover: rgb(201, 201, 201);
+    --button-background-active: gray;
+    --map-background-selected: rgb(67, 182, 67);
+    --background-banned: rgb(255, 176, 176);
+}
+
 body {
     font-family: 'Libre Baskerville', serif;
     font-family: 'Titillium Web', sans-serif;
-    background-color: rgba(189, 178, 162, 0.505);
-    /* background-color: rgb(255, 0, 0); */
+    /* background-color: rgba(189, 178, 162, 0.505); */
+    /* background-color: rgb(121, 121, 121); */
+    background-image: linear-gradient(90deg, rgb(158, 158, 158) 10%, rgb(206, 206, 206));
 }
 
 #main-container {
@@ -69,24 +78,24 @@ body {
 }
 
 .table-row {
-    background-color: rgba(189, 178, 162, 0.505);
+    background-color: var(--button-background);
 }
 
 /* removed !important from banned popups - seems to be working without this */
 .banned-popup {
-    background: rgb(255, 176, 176);
+    background: var(--background-banned) !important;
 }
 
 .banned-popup-altitude {
-    background: rgb(255, 176, 176);
+    background: var(--background-banned) !important;
 }
 
 .row-selected {
-    background-color: green !important;
+    background-color: var(--map-background-selected) !important;
 }
 
 .popup-selected {
-    background-color: green !important;
+    background-color: var(--map-background-selected) !important;
 }
 
 .custom .leaflet-popup-content {
@@ -145,9 +154,11 @@ body {
     padding: .8rem 1rem;
     margin-bottom: 5rem;
     vertical-align: middle;
-    background-color: rgb(212, 207, 207);
+    /* background-color: rgb(212, 207, 207); */
+    background-color: var(--button-background);
     border-radius: 5px 5px 0 0;
     user-select: none;
+    font-weight: 600;
 }
 
 .table-link {
@@ -156,7 +167,7 @@ body {
 }
 
 .nav-link-active {
-    background-color: grey;
+    background-color: var(--button-background-active);
 }
 
 #hide-show-button {
@@ -166,7 +177,24 @@ body {
     height: 30px;
     /* margin-bottom: 3rem; */
     /* transform: translateY(-.5rem); */
-    padding: .3rem .6rem;
+    padding-bottom: 4px;
+    padding-top: 2px;
+    font-family: inherit;
+    font-weight: 600;
+    border: .5px solid black;
+    border-radius: 2px;
+    background-color: var(--button-background);
+    transition: all 200ms ease-in-out;
+}
+
+#hide-show-button:hover {
+    /* background-color: var(--button-background-hover); */
+    background-color: rgb(175, 175, 175);
+}
+
+#hide-show-button:active {
+    background-color: var(--button-background-active);
+    transition: none;
 }
 
 .hide-banned-row {
@@ -260,12 +288,12 @@ body {
 
 /* On mouse-over */
 .checkbox-label:hover input~.checkbox-custom {
-    background-color: rgba(189, 178, 162, 0.505);
+    background-color: var(--button-background-hover);
 }
 
 /* When the checkbox is checked */
 .checkbox-label input:checked~.checkbox-custom {
-    background-color: grey;
+    background-color: var(--button-background-active);
 }
 
 /* Create the checkmark (hidden when not checked) */
@@ -302,7 +330,16 @@ body {
 
 .dropdown.active>.dropdown-button,
 .dropdown-button:hover {
-    color: green;
+    background-color: var(--button-background-hover);
+}
+
+/* .dropdown.active>.dropdown-button,
+.dropdown-button:focus {
+    background-color: red;
+} */
+
+.dropdown-button.active {
+    background-color: var(--button-background-active);
 }
 
 .dropdown {
@@ -315,6 +352,14 @@ body {
 .dropdown-button {
     min-width: 106px;
     min-height: 26px;
+    padding-bottom: 2px;
+    font-family: inherit;
+    font-weight: 600;
+    background-color: var(--button-background);
+    color: black;
+    border: .5px solid black;
+    border-radius: 2px;
+    transition: background-color 200ms ease-in-out;
 }
 
 #type-dropdown-button {
@@ -326,11 +371,30 @@ body {
     position: relative;
 }
 
+
 #reset-type-button {
     position: absolute;
     min-height: 26px;
     min-width: 26px;
     margin-left: 8rem;
+    background-color: var(--button-background);
+    border: .5px solid black;
+    border-radius: 2px;
+    transition: all 200ms ease-in-out;
+}
+
+#reset-type-button:hover {
+    background-color: var(--button-background-hover);
+}
+
+#reset-type-button:active {
+    background-color: var(--button-background-active);
+    transition: none;
+}
+
+#reset-airline-button:active {
+    background-color: var(--button-background-active) !important;
+    transition: none;
 }
 
 #reset-airline-button {
@@ -339,6 +403,14 @@ body {
     min-width: 26px;
     /* transform: translateX(-2.8rem); */
     margin-left: 7rem;
+    background-color: var(--button-background);
+    border: .5px solid black;
+    border-radius: 2px;
+    transition: background-color 200ms ease-in-out;
+}
+
+#reset-airline-button:hover {
+    background-color: var(--button-background-hover);
 }
 
 .dropdown-menu {
@@ -396,12 +468,14 @@ body {
 
 .type-element:hover,
 .airline-element:hover {
-    background-color: rgb(163, 163, 163);
+    /* background-color: rgb(163, 163, 163); */
+    background-color: var(--button-background-hover);
+
 }
 
 .type-element.banned,
 .airline-element.banned {
-    background-color: rgb(255, 176, 176);
+    background-color: var(--background-banned);
 }
 
 .ban-sign {
@@ -477,7 +551,7 @@ body {
 .banned-span {
     /* overflow: hidden; */
     font-size: .75rem;
-    color: grey;
+    color: var(--button-background-active);
     padding-left: .25rem;
     /* padding-top: 20px; */
     /* min-height: 40px; */
@@ -513,11 +587,11 @@ body {
 }
 
 .banned-plane {
-    background-color: rgb(255, 176, 176);
+    background-color: var(--background-banned);
 }
 
 .banned-plane-altitude {
-    background-color: rgb(255, 176, 176);
+    background-color: var(--background-banned);
 }
 
 #altitude-title {
@@ -535,9 +609,25 @@ body {
 }
 
 #apply-height-button {
+    font-family: inherit;
+    font-weight: 600;
+    padding-bottom: 2px;
     min-width: 90px;
     min-height: 24px;
     margin-left: 1rem;
+    background-color: var(--button-background);
+    border: .5px solid black;
+    border-radius: 2px;
+    transition: all 200ms ease-in;
+}
+
+#apply-height-button:hover {
+    background-color: var(--button-background-hover);
+}
+
+#apply-height-button:active {
+    background-color: var(--button-background-active);
+    transition: none;
 }
 
 #altitude-description {
@@ -587,6 +677,11 @@ body {
     width: 97.3%;
     margin-right: 10rem;
     /* margin-right: min(5rem, 300%); */
+}
+
+.table-header {
+    background-color: var(--button-background);
+    font-weight: 600;
 }
 
 .table-header,

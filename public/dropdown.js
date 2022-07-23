@@ -15,10 +15,31 @@ function manageDropdownMenu() {
         }
 
         //rotating button arrow
+        // let currentDropdownButton;
+        // if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
+        //     currentDropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-button');
+        //     currentDropdownButton.classList.toggle('active');
+        //     currentDropdownButton.classList.toggle('opened');
+        // }
+        // if (!e.target.closest('.dropdown')) {
+        //     document.querySelectorAll('.dropdown-button').forEach(button => {
+        //         button.classList.remove('active');
+        //         button.classList.remove('opened');
+        //     })
+        // }
+
         let currentDropdownButton;
-        if (e.target.closest('.dropdown') || (e.target.closest('.dropdown') && !e.target.closest('.dropdown').classList.contains('active'))) {
-            currentDropdownButton = e.target.closest('.dropdown').querySelector('.dropdown-button');
+        if (e.target.matches('#type-dropdown-button')) {
+            currentDropdownButton = e.target;
             currentDropdownButton.classList.toggle('active');
+            const otherButton = document.querySelector('#airline-dropdown-button');
+            otherButton.classList.remove('active');
+        }
+        if (e.target.matches('#airline-dropdown-button')) {
+            currentDropdownButton = e.target;
+            currentDropdownButton.classList.toggle('active');
+            const otherButton = document.querySelector('#type-dropdown-button');
+            otherButton.classList.remove('active');
         }
         if (!e.target.closest('.dropdown')) {
             document.querySelectorAll('.dropdown-button').forEach(button => {
@@ -30,6 +51,9 @@ function manageDropdownMenu() {
         document.querySelectorAll('.dropdown.active').forEach(dropdown => {
             if (dropdown === currentDropdown) return
             dropdown.classList.remove('active');
+        })
+        document.querySelectorAll('.dropdown-button.opened').forEach(dropdownButton => {
+            dropdownButton.classList.remove('opened');
         })
 
         //moving display window
