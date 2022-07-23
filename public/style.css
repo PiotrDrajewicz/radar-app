@@ -10,6 +10,10 @@ body {
     /* background-color: rgb(255, 0, 0); */
 }
 
+#main-container {
+    display: flex;
+}
+
 #map {
     /* height: 650px; */
     height: 86.25vh;
@@ -645,15 +649,170 @@ body {
 
 }
 
-@media (max-width: 1700px) {
+@media (max-width: 1450px) {
 
     #map {
-        width: 60%;
+        /* width: 55%; */
+        flex-shrink: 4;
     }
 
-    /* #filters-div {
-        height: 84vh;
-        width: 100px;
-    } */
+    #filters-div {
+        /* height: 84vh; */
+        /* width: 100px; */
+        margin-right: 30px;
+    }
+
+    .filters-title {
+        font-size: 15px;
+        color: yellow;
+    }
+
+    .table-header {
+        /* font-size: 13px; */
+    }
+
+    #banned-airlines-display {
+        margin-right: -20px;
+    }
+
+    #airline-filter-buttons {
+        margin-right: -20px;
+    }
+
+    #type-airline-input-switch {
+        margin-right: -20px;
+    }
+
+    #hide-show-button {
+        /* margin-right: 40px; */
+        margin-left: 308px;
+    }
+
+}
+
+@media (max-width: 1200px) {
+
+    .filters-title {
+        /* font-size: 13px; */
+        color: green;
+    }
+
+    #banned-airlines-display {
+        margin-right: -20px;
+    }
+
+    #airline-filter-buttons {
+        margin-right: -20px;
+    }
+
+    #type-airline-input-switch {
+        margin-right: -20px;
+    }
+
+    #hide-show-button {
+        /* margin-right: 40px; */
+        /* margin-left: 307px; */
+        margin-left: 68.5%;
+    }
+
+}
+
+@media (max-width: 820px) {
+
+    .filters-title {
+        font-size: 20px;
+        color: red;
+    }
+
+    #main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #map {
+        width: 99%;
+        height: 60vh;
+    }
+
+    .table-grid {
+        grid-template-columns: repeat(5, 98px);
+    }
+
+    #hide-show-button {
+        margin-left: 385px;
+    }
+
+    .data-area {
+        margin-top: 1rem;
+        margin-left: 8rem;
+    }
+
+    #filters-div {
+        height: 32rem;
+        /* margin-left: 7rem; */
+    }
+
+    #table-div {
+        /* margin-left: 8rem; */
+    }
+
+    #banned-airlines-display {
+        margin-right: 0;
+    }
+
+    #airline-filter-buttons {
+        margin-right: 0;
+    }
+
+
+}
+
+@media (max-width: 600px) {
+
+    .filters-title {
+        font-size: 15px;
+        color: orange;
+    }
+
+    #main-container {
+        /* flex-direction: column; */
+        /* align-items: center; */
+    }
+
+    #map {
+        width: 95%;
+        height: 80vh;
+    }
+
+    .table-grid {
+        grid-template-columns: repeat(5, 85px);
+    }
+
+    #hide-show-button {
+        margin-left: 321px;
+    }
+
+    .data-area {
+        /* margin-top: 1rem; */
+        margin-left: 3.5rem;
+    }
+
+    #filters-div {
+        height: 32rem;
+        width: 26.5rem;
+    }
+
+    #banned-airlines-display {
+        margin-right: 0;
+    }
+
+    #airline-filter-buttons {
+        margin-right: 0;
+    }
+
+    .checkbox-label {
+        /* margin-right: -20px; */
+        /* margin-left: 200px; */
+    }
 
 }
