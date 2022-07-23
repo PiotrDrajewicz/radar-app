@@ -544,6 +544,10 @@ body {
     padding-top: .75rem;
 }
 
+.not-a-number {
+    color: red;
+}
+
 #table-div.default {
     transform: translateY(3px);
     opacity: 1;

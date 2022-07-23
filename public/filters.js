@@ -92,14 +92,35 @@ function updateHeightText() {
     const minHeightText = document.getElementById('min-height-value');
     const maxHeightText = document.getElementById('max-height-value');
     applyHeightButton.addEventListener('click', () => {
-        minHeightText.textContent = minHeightInput.value;
-        maxHeightText.textContent = maxHeightInput.value;
-        if (maxHeightInput.value === '') {
-            maxHeightText.textContent = 'ထ';
+        const convertedMax = Number(maxHeightInput.value);
+        const convertedMin = Number(minHeightInput.value);
+
+        //displaying text for min alt
+        if (isNaN(convertedMin)) {
+            minHeightText.classList.add('not-a-number');
+            minHeightText.textContent = '[not a number]';
+        } else {
+            minHeightText.classList.remove('not-a-number');
+            if (convertedMin === 0) {
+                minHeightText.textContent = 'ထ';
+            } else {
+                minHeightText.textContent = minHeightInput.value;
+            }
         }
-        if (minHeightInput.value === '') {
-            minHeightText.textContent = 'ထ';
+
+        //displaying text for max alt
+        if (isNaN(convertedMax)) {
+            maxHeightText.classList.add('not-a-number');
+            maxHeightText.textContent = '[not a number]';
+        } else {
+            maxHeightText.classList.remove('not-a-number');
+            if (convertedMax === 0) {
+                maxHeightText.textContent = 'ထ';
+            } else {
+                maxHeightText.textContent = maxHeightInput.value;
+            }
         }
+
     })
 }
 
