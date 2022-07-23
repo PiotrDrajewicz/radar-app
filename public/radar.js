@@ -22,12 +22,13 @@ window.addEventListener('load', () => { //run function when page is loaded
 	const airlines = [];
 	const bannedTypes = [];
 	const bannedAirlines = [];
+	const planesObjects = []; //it was lower
 	// const typeDropdown = document.querySelector('#type-dropdown');
 
 	createPlaneTypeElements(airplanesTypes, bannedTypes);
 	// console.log(airplanesTypes);
 
-	createAirlineElements(airlines, bannedAirlines);
+	createAirlineElements(airlines, bannedAirlines, planesObjects);
 
 	manageNavbar();
 
@@ -87,7 +88,7 @@ window.addEventListener('load', () => { //run function when page is loaded
 					let isTypeAirlineFilterOn;
 					let isAltitudeFilterOn;
 					let currentRow = false;
-					const planesObjects = [];
+					// const planesObjects = []; //it was uncommented
 
 					function createObjects(allPlanes) {
 						return new Promise(resolve => {

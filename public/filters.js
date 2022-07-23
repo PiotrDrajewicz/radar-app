@@ -47,15 +47,18 @@ function createPlaneTypeElements(airplanesTypes, bannedTypes) {
         });
 }
 
-function createAirlineElements(airlines, bannedAirlines) {
+function createAirlineElements(airlines, bannedAirlines, planesObjects) {
+    console.log('objs in filters', planesObjects);
     const airlinesDropdownMenu = document.getElementById('airline-dropdown-menu');
     fetchData('./airlineIcao.json')
         .then(data => {
+            // console.log(data);
             data.forEach(airline => {
                 //creating airline element in dropdown menu
                 const bannedAirlinesDisplay = document.getElementById('banned-airlines-display');
                 const bannedAirlinesPlaceholder = document.getElementById('banned-airlines-placeholder');
                 const airlineIcaoCode = airline.icaoCode;
+                // console.log(airline.icaoCode);
                 airlines.push(airlineIcaoCode);
                 const airlineElement = document.createElement('p');
                 airlineElement.setAttribute('id', airlineIcaoCode);
