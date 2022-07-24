@@ -166,362 +166,34 @@ class Plane {
                 //         console.log('data', data);
                 //     })
 
-                //would be better if this was in separete function but its here for now 
-                //     console.log(plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed)
-                let tableCellAltitude;
-                let tableCellSpeed;
-                let tableRow;
-                // let tableDiv;
-                // let tableRows;
-
-                if (!plane.inTable) {
-                    //creating table position for plane
-                    // tableDiv = document.getElementById('table-div');
-                    // tableRows = document.querySelector('.table-rows');
-                    tableRow = document.createElement('div');
-                    tableRow.classList.add('table-row');
-                    tableRow.classList.add('table-grid');
-                    tableRow.setAttribute('id', plane.icao);
-
-                    const tableCellType = document.createElement('p');
-                    tableCellType.textContent = plane.planeType;
-                    tableCellType.classList.add('table-cell');
-
-                    const tableCellAirline = document.createElement('p');
-                    tableCellAirline.textContent = plane.airlineCode;
-                    tableCellAirline.classList.add('table-cell');
-
-                    const tableCellRegistration = document.createElement('p');
-                    // tableCellRegistration.textContent = plane.airlineCode;
-                    tableCellRegistration.textContent = plane.icao; //placeholder
-                    tableCellRegistration.classList.add('table-cell');
-
-                    tableCellAltitude = document.createElement('p');
-                    tableCellAltitude.textContent = plane.baroAltitude;
-                    tableCellAltitude.classList.add('table-cell');
-                    tableCellAltitude.classList.add('altitude-cell');
-
-                    tableCellSpeed = document.createElement('p');
-                    tableCellSpeed.textContent = plane.groundSpeed;
-                    tableCellSpeed.classList.add('table-cell');
-                    tableCellSpeed.classList.add('speed-cell');
-
-                    tableRow.appendChild(tableCellType);
-                    tableRow.appendChild(tableCellAirline);
-                    tableRow.appendChild(tableCellRegistration);
-                    tableRow.appendChild(tableCellAltitude);
-                    tableRow.appendChild(tableCellSpeed);
-                    tableRows.appendChild(tableRow);
-                    tableDiv.appendChild(tableRows);
-
-                    //adding vertical rate indicator if needed
-                    if (plane.verticalRate < 0) {
-                        tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
-                    }
-                    if (plane.verticalRate > 0) {
-                        tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
-                    }
-
-                    tableRowsArr.push(tableRow);
-                    plane.inTable = true;
-                } else {
-                    //updating plane's alt and spd in table
-                    const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
-                    planeToUpdate.children[3].textContent = plane.baroAltitude;
-                    planeToUpdate.children[4].textContent = plane.groundSpeed;
-
-                    //updating vertical rate indicator
-                    if (plane.verticalRate < 0) {
-                        planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
-                    }
-                    if (plane.verticalRate > 0) {
-                        planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
-                    }
-                }
-
-                tableRowsArr.map(row => {
-                    const icaoFromTable = row.getAttribute('id');
-                    const planeFound = planesObjects.find(plane => plane.icao === icaoFromTable);
-
-                    //removing row from table if plane is gone
-                    if (!planeFound) {
-                        row.remove();
-                    }
-                })
-
+                putPlaneIntoTable(plane, planesObjects);
             }
             )
             .then(() => {
-                //would be better if this was in separete function but its here for now
-
-                //type-airline filter
-                if (typeAirlineFilterState) {
-                    //filter is active
-                    // console.log('plane filter is active');
-                    // bannedTypes.push('A320');
-                    // bannedTypes.push('A321');
-                    // bannedTypes.push('B738');
-
-                    let tableRow = document.getElementById(plane.icao);
-
-                    //checking if plane (type) is banned
-                    const typesMatch = bannedTypes.map(type => {
-                        if (type == plane.planeType) {
-                            return true;
-                        }
-                    })
-
-                    //checking if plane (airline) is banned
-                    const airlinesMatch = bannedAirlines.map(airline => {
-                        if (airline == plane.airlineCode) {
-                            return true;
-                        }
-                    })
-
-                    if (typesMatch.includes(true) || airlinesMatch.includes(true)) {
-                        //plane is banned
-                        // console.log('zbanowany', plane.planeType);
-                        plane.banned = true;
-                        tableRow.classList.add('banned-plane');
-                        plane.popup._wrapper.classList.add('banned-popup');
-                        // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
-                    } else {
-                        //plane is not banned
-                        // console.log('nie zbanowany', plane.planeType);
-                        plane.banned = false;
-                        tableRow.classList.remove('banned-plane');
-                        plane.popup._wrapper.classList.remove('banned-popup');
-                    }
-
-                } else {
-                    //filter is not active
-                    // console.log('type-airline filter is not active');
-
-                    plane.banned = false;
-                    let tableRow = document.getElementById(plane.icao);
-                    tableRow.classList.remove('banned-plane');
-                    plane.popup._wrapper.classList.remove('banned-popup');
-                }
-
-                //altitude filter
-                if (altitudeFilterState) {
-                    //filter is active
-                    // console.log('altitude filter is active');
-                    let planeAlt = plane.baroAltitude;
-                    let tableRow = document.getElementById(plane.icao);
-                    let minAlt = document.getElementById('min-height').value;
-                    let maxAlt = document.getElementById('max-height').value;
-
-                    //min and max are provided
-                    if (minAlt !== '' && maxAlt !== '') {
-                        if (planeAlt >= parseInt(minAlt, 10) && planeAlt <= parseInt(maxAlt, 10)) {
-                            //plane is inside range
-                            plane.bannedAlt = false;
-                            tableRow.classList.remove('banned-plane-altitude');
-                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
-                        } else {
-                            //plane is outside range
-                            plane.bannedAlt = true;
-                            tableRow.classList.add('banned-plane-altitude');
-                            plane.popup._wrapper.classList.add('banned-popup-altitude');
-                        }
-                    }
-
-                    //nothing is provided
-                    if (minAlt === '' && maxAlt === '') {
-                        plane.bannedAlt = false;
-                        tableRow.classList.remove('banned-plane-altitude');
-                        plane.popup._wrapper.classList.remove('banned-popup-altitude');
-                    }
-
-                    //only min is provided
-                    if (minAlt !== '' && maxAlt === '') {
-                        if (planeAlt >= parseInt(minAlt, 10)) {
-                            //plane is inside range
-                            plane.bannedAlt = false;
-                            tableRow.classList.remove('banned-plane-altitude');
-                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
-                        } else {
-                            //plane is outside range
-                            plane.bannedAlt = true;
-                            tableRow.classList.add('banned-plane-altitude');
-                            plane.popup._wrapper.classList.add('banned-popup-altitude');
-                        }
-                    }
-
-                    //only max is provided
-                    if (minAlt === '' && maxAlt !== '') {
-                        if (planeAlt <= parseInt(maxAlt, 10)) {
-                            //plane is inside range
-                            plane.bannedAlt = false;
-                            tableRow.classList.remove('banned-plane-altitude');
-                            plane.popup._wrapper.classList.remove('banned-popup-altitude');
-                        } else {
-                            //plane is outside range
-                            plane.bannedAlt = true;
-                            tableRow.classList.add('banned-plane-altitude');
-                            plane.popup._wrapper.classList.add('banned-popup-altitude');
-                        }
-                    }
-
-
-                } else {
-                    //filter is not active
-                    // console.log('altitude filter is not active');
-
-                    let tableRow = document.getElementById(plane.icao);
-                    tableRow.classList.remove('banned-plane-altitude');
-                }
-
-                //hiding or showing banned planes
-                const showHideButton = document.getElementById('hide-show-button');
-                let tableRow = document.getElementById(plane.icao);
-                if (showHideButton.classList.contains('hide')) {
-                    //banned planes are shown
-                    tableRow.classList.remove('hide-banned-row');
-                    plane.popup._wrapper.style.opacity = 1;
-                    plane.icon._icon.style.opacity = 1;
-                }
-                if (showHideButton.classList.contains('show')) {
-                    //banned planes are hidden
-                    if (plane.banned || plane.bannedAlt) {
-                        //plane is banned
-                        tableRow.classList.add('hide-banned-row');
-                        plane.popup._wrapper.style.opacity = 0;
-                        plane.icon._icon.style.opacity = 0;
-                    } else {
-                        //plane is not banned
-                        tableRow.classList.remove('hide-banned-row');
-                        plane.popup._wrapper.style.opacity = 1;
-                        plane.icon._icon.style.opacity = 1;
-                    }
-                }
-
-
+                banPlane(plane, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState);
             })
             .then(() => {
-                //would be better if this was in separete function but its here for now
-
-                //highlighting - clicking on a table row
-                const planeRow = document.getElementById(plane.icao);
-                planeRow.addEventListener('click', (e) => {
-                    const planeRowsArr = [...document.querySelectorAll('.table-row')];
-                    const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
-                    const selectedRow = e.target.parentElement;
-                    const connectedPopup = plane.popup._wrapper;
-
-                    //selecting/deselecting specific row and popup
-                    selectedRow.classList.toggle('row-selected');
-                    connectedPopup.classList.toggle('popup-selected');
-
-                    //separating clicked row and popup
-                    const clickedRowIndex = planeRowsArr.indexOf(selectedRow);
-                    planeRowsArr.splice(clickedRowIndex, 1);
-                    const connectedPopupIndex = planePopupsArr.indexOf(connectedPopup);
-                    planePopupsArr.splice(connectedPopupIndex, 1);
-
-                    //clearing all other rows and popups
-                    planeRowsArr.map(row => {
-                        row.classList.remove('row-selected');
-                    })
-                    planePopupsArr.map(popup => {
-                        popup.classList.remove('popup-selected');
-                    })
-                })
-
-                //highlighting - clicking on a map popup
-                const planePopup = plane.popup._wrapper;
-                planePopup.addEventListener('click', (e) => {
-                    const planeRowsArr = [...document.querySelectorAll('.table-row')];
-                    const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
-                    const selectedPopup = e.target.closest('.leaflet-popup-content-wrapper');
-                    const connectedRow = document.getElementById(plane.icao);
-
-                    //selecting/deselecting specific row and popup
-                    selectedPopup.classList.toggle('popup-selected');
-                    connectedRow.classList.toggle('row-selected');
-
-                    //separating clicked row and popup
-                    const clickedPopupIndex = planePopupsArr.indexOf(selectedPopup);
-                    planePopupsArr.splice(clickedPopupIndex, 1);
-                    const connectedRowIndex = planeRowsArr.indexOf(connectedRow);
-                    planeRowsArr.splice(connectedRowIndex, 1);
-
-                    //clearing all other rows and popups
-                    planeRowsArr.map(row => {
-                        row.classList.remove('row-selected');
-                    })
-                    planePopupsArr.map(popup => {
-                        popup.classList.remove('popup-selected');
-                    })
-                })
-
+                highlightPlane(plane);
             })
             .then(() => {
-                //would be better if this was in separete function but its here for now
-
-                //adding vertical rate indicator to plane's popup
-                const altitudeLi = plane.popup._container.querySelector('ul').children[3];
-
-                if (plane.verticalRate < 0) {
-                    altitudeLi.innerHTML += '<i class="fa-solid fa-caret-down popup-vertical-icon"></i>';
-                }
-                if (plane.verticalRate > 0) {
-                    altitudeLi.innerHTML += '<i class="fa-solid fa-caret-up popup-vertical-icon"></i>'
-                }
-
+                addVerticalRateIndToPopup(plane);
             })
             .then(() => {
-                //would be better if this was in separete function but its here for now
-
-                if (!plane.airlineCode || (plane.airlineCode === plane.planeType)) {
-                    return;
-                } else {
-                    const popupUl = plane.popup._container.querySelector('ul');
-                    // plane.popup._container.querySelector('ul').children[5].style.pointerEvents = 'none';
-
-                    //adding small and big airline logo to popup
-                    popupUl.innerHTML += `<img class="airline-logo-small" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_50_15_s.png?proportions=keep">`;
-                    popupUl.innerHTML += `<img class="airline-logo-big" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_100_20_r.png?proportions=keep">`;
-
-                    const airlineLogoBig = plane.popup._container.querySelector('.airline-logo-big');
-
-                    //showing/hiding big airline logo
-                    plane.popup._container.addEventListener('mouseover', () => {
-                        airlineLogoBig.classList.add('show');
-                    })
-                    plane.popup._container.addEventListener('mouseout', () => {
-                        airlineLogoBig.classList.remove('show');
-                    })
-                }
-
+                addAirlineLogo(plane);
             })
 
     }
 
-    putPlaneIntoTable(plane) {
-        // console.log('nowa', plane.planeType, plane.airlineCode, plane.baroAltitude, plane.groundSpeed);
-    }
+    //those functions should probably be defined here and called in createIconPopup function in async await section
+    // putPlaneIntoTable(plane) {}
 
-    banPlane(plane) {
-        // console.log();
-    }
+    // banPlane(plane) {}
 
-    highlightPlane(plane) {
-        // const planeRow = document.getElementById(plane.icao);
-        // console.log(planeRow);
-        // planeRow.addEventListener('click', () => {
-        //     plane.popup._wrapper.style.backgroundColor = 'green';
-        // })
-    }
+    // highlightPlane(plane) {}
 
-    addVerticalRateIndToPopup(plane) {
-        // console.log();
-    }
+    // addVerticalRateIndToPopup(plane) {}
 
-    addAirlineLogo(plane) {
-        // console.log();
-    }
+    // addAirlineLogo(plane) {}
 
 }
 
@@ -540,16 +212,333 @@ function createIconPopup(allPlanes, planesObjects, boundariesPoints, bannedTypes
             //assigning plane type and airline
             await plane.assignIcaoTypeAndAirline(plane, planesObjects, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState);
             //putting plane into table - not in use
-            await plane.putPlaneIntoTable(plane);
+            // await plane.putPlaneIntoTable(plane);
             //banning plane - not in use
-            await plane.banPlane(plane);
+            // await plane.banPlane(plane);
             //highlighting plane when being clicked - not in use
-            await plane.highlightPlane(plane);
+            // await plane.highlightPlane(plane);
             //adding vertical rate indicator to popup - not in use
-            await plane.addVerticalRateIndToPopup(plane);
+            // await plane.addVerticalRateIndToPopup(plane);
             //adding small and big airline logo to popup - not in use
-            await plane.addAirlineLogo(plane);
+            // await plane.addAirlineLogo(plane);
 
         })();
+    })
+}
+
+function addAirlineLogo(plane) {
+    if (!plane.airlineCode || (plane.airlineCode === plane.planeType)) {
+        return;
+    } else {
+        const popupUl = plane.popup._container.querySelector('ul');
+        // plane.popup._container.querySelector('ul').children[5].style.pointerEvents = 'none';
+
+        //adding small and big airline logo to popup
+        popupUl.innerHTML += `<img class="airline-logo-small" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_50_15_s.png?proportions=keep">`;
+        popupUl.innerHTML += `<img class="airline-logo-big" src="https://content.airhex.com/content/logos/airlines_${plane.airlineCode}_100_20_r.png?proportions=keep">`;
+
+        const airlineLogoBig = plane.popup._container.querySelector('.airline-logo-big');
+
+        //showing/hiding big airline logo
+        plane.popup._container.addEventListener('mouseover', () => {
+            airlineLogoBig.classList.add('show');
+        })
+        plane.popup._container.addEventListener('mouseout', () => {
+            airlineLogoBig.classList.remove('show');
+        })
+    }
+}
+
+function addVerticalRateIndToPopup(plane) {
+    //adding vertical rate indicator to plane's popup
+    const altitudeLi = plane.popup._container.querySelector('ul').children[3];
+
+    if (plane.verticalRate < 0) {
+        altitudeLi.innerHTML += '<i class="fa-solid fa-caret-down popup-vertical-icon"></i>';
+    }
+    if (plane.verticalRate > 0) {
+        altitudeLi.innerHTML += '<i class="fa-solid fa-caret-up popup-vertical-icon"></i>'
+    }
+}
+
+function highlightPlane(plane) {
+    //highlighting - clicking on a table row
+    const planeRow = document.getElementById(plane.icao);
+    planeRow.addEventListener('click', (e) => {
+        const planeRowsArr = [...document.querySelectorAll('.table-row')];
+        const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
+        const selectedRow = e.target.parentElement;
+        const connectedPopup = plane.popup._wrapper;
+
+        //selecting/deselecting specific row and popup
+        selectedRow.classList.toggle('row-selected');
+        connectedPopup.classList.toggle('popup-selected');
+
+        //separating clicked row and popup
+        const clickedRowIndex = planeRowsArr.indexOf(selectedRow);
+        planeRowsArr.splice(clickedRowIndex, 1);
+        const connectedPopupIndex = planePopupsArr.indexOf(connectedPopup);
+        planePopupsArr.splice(connectedPopupIndex, 1);
+
+        //clearing all other rows and popups
+        planeRowsArr.map(row => {
+            row.classList.remove('row-selected');
+        })
+        planePopupsArr.map(popup => {
+            popup.classList.remove('popup-selected');
+        })
+    })
+
+    //highlighting - clicking on a map popup
+    const planePopup = plane.popup._wrapper;
+    planePopup.addEventListener('click', (e) => {
+        const planeRowsArr = [...document.querySelectorAll('.table-row')];
+        const planePopupsArr = [...document.querySelectorAll('.leaflet-popup-content-wrapper')];
+        const selectedPopup = e.target.closest('.leaflet-popup-content-wrapper');
+        const connectedRow = document.getElementById(plane.icao);
+
+        //selecting/deselecting specific row and popup
+        selectedPopup.classList.toggle('popup-selected');
+        connectedRow.classList.toggle('row-selected');
+
+        //separating clicked row and popup
+        const clickedPopupIndex = planePopupsArr.indexOf(selectedPopup);
+        planePopupsArr.splice(clickedPopupIndex, 1);
+        const connectedRowIndex = planeRowsArr.indexOf(connectedRow);
+        planeRowsArr.splice(connectedRowIndex, 1);
+
+        //clearing all other rows and popups
+        planeRowsArr.map(row => {
+            row.classList.remove('row-selected');
+        })
+        planePopupsArr.map(popup => {
+            popup.classList.remove('popup-selected');
+        })
+    })
+}
+
+function banPlane(plane, bannedTypes, bannedAirlines, typeAirlineFilterState, altitudeFilterState) {
+    //type-airline filter
+    if (typeAirlineFilterState) {
+        //filter is active
+        // console.log('plane filter is active');
+        // bannedTypes.push('A320');
+        // bannedTypes.push('A321');
+        // bannedTypes.push('B738');
+
+        let tableRow = document.getElementById(plane.icao);
+
+        //checking if plane (type) is banned
+        const typesMatch = bannedTypes.map(type => {
+            if (type == plane.planeType) {
+                return true;
+            }
+        })
+
+        //checking if plane (airline) is banned
+        const airlinesMatch = bannedAirlines.map(airline => {
+            if (airline == plane.airlineCode) {
+                return true;
+            }
+        })
+
+        if (typesMatch.includes(true) || airlinesMatch.includes(true)) {
+            //plane is banned
+            // console.log('zbanowany', plane.planeType);
+            plane.banned = true;
+            tableRow.classList.add('banned-plane');
+            plane.popup._wrapper.classList.add('banned-popup');
+            // plane.icon._icon.style.border = '1px solid rgb(255, 176, 176)';
+        } else {
+            //plane is not banned
+            // console.log('nie zbanowany', plane.planeType);
+            plane.banned = false;
+            tableRow.classList.remove('banned-plane');
+            plane.popup._wrapper.classList.remove('banned-popup');
+        }
+
+    } else {
+        //filter is not active
+        // console.log('type-airline filter is not active');
+
+        plane.banned = false;
+        let tableRow = document.getElementById(plane.icao);
+        tableRow.classList.remove('banned-plane');
+        plane.popup._wrapper.classList.remove('banned-popup');
+    }
+
+    //altitude filter
+    if (altitudeFilterState) {
+        //filter is active
+        // console.log('altitude filter is active');
+        let planeAlt = plane.baroAltitude;
+        let tableRow = document.getElementById(plane.icao);
+        let minAlt = document.getElementById('min-height').value;
+        let maxAlt = document.getElementById('max-height').value;
+
+        //min and max are provided
+        if (minAlt !== '' && maxAlt !== '') {
+            if (planeAlt >= parseInt(minAlt, 10) && planeAlt <= parseInt(maxAlt, 10)) {
+                //plane is inside range
+                plane.bannedAlt = false;
+                tableRow.classList.remove('banned-plane-altitude');
+                plane.popup._wrapper.classList.remove('banned-popup-altitude');
+            } else {
+                //plane is outside range
+                plane.bannedAlt = true;
+                tableRow.classList.add('banned-plane-altitude');
+                plane.popup._wrapper.classList.add('banned-popup-altitude');
+            }
+        }
+
+        //nothing is provided
+        if (minAlt === '' && maxAlt === '') {
+            plane.bannedAlt = false;
+            tableRow.classList.remove('banned-plane-altitude');
+            plane.popup._wrapper.classList.remove('banned-popup-altitude');
+        }
+
+        //only min is provided
+        if (minAlt !== '' && maxAlt === '') {
+            if (planeAlt >= parseInt(minAlt, 10)) {
+                //plane is inside range
+                plane.bannedAlt = false;
+                tableRow.classList.remove('banned-plane-altitude');
+                plane.popup._wrapper.classList.remove('banned-popup-altitude');
+            } else {
+                //plane is outside range
+                plane.bannedAlt = true;
+                tableRow.classList.add('banned-plane-altitude');
+                plane.popup._wrapper.classList.add('banned-popup-altitude');
+            }
+        }
+
+        //only max is provided
+        if (minAlt === '' && maxAlt !== '') {
+            if (planeAlt <= parseInt(maxAlt, 10)) {
+                //plane is inside range
+                plane.bannedAlt = false;
+                tableRow.classList.remove('banned-plane-altitude');
+                plane.popup._wrapper.classList.remove('banned-popup-altitude');
+            } else {
+                //plane is outside range
+                plane.bannedAlt = true;
+                tableRow.classList.add('banned-plane-altitude');
+                plane.popup._wrapper.classList.add('banned-popup-altitude');
+            }
+        }
+
+
+    } else {
+        //filter is not active
+        // console.log('altitude filter is not active');
+
+        let tableRow = document.getElementById(plane.icao);
+        tableRow.classList.remove('banned-plane-altitude');
+    }
+
+    //hiding or showing banned planes
+    const showHideButton = document.getElementById('hide-show-button');
+    let tableRow = document.getElementById(plane.icao);
+    if (showHideButton.classList.contains('hide')) {
+        //banned planes are shown
+        tableRow.classList.remove('hide-banned-row');
+        plane.popup._wrapper.style.opacity = 1;
+        plane.icon._icon.style.opacity = 1;
+    }
+    if (showHideButton.classList.contains('show')) {
+        //banned planes are hidden
+        if (plane.banned || plane.bannedAlt) {
+            //plane is banned
+            tableRow.classList.add('hide-banned-row');
+            plane.popup._wrapper.style.opacity = 0;
+            plane.icon._icon.style.opacity = 0;
+        } else {
+            //plane is not banned
+            tableRow.classList.remove('hide-banned-row');
+            plane.popup._wrapper.style.opacity = 1;
+            plane.icon._icon.style.opacity = 1;
+        }
+    }
+}
+
+function putPlaneIntoTable(plane, planesObjects) {
+    let tableCellAltitude;
+    let tableCellSpeed;
+    let tableRow;
+
+    if (!plane.inTable) {
+        //creating table position for plane
+        // tableDiv = document.getElementById('table-div');
+        // tableRows = document.querySelector('.table-rows');
+        tableRow = document.createElement('div');
+        tableRow.classList.add('table-row');
+        tableRow.classList.add('table-grid');
+        tableRow.setAttribute('id', plane.icao);
+
+        const tableCellType = document.createElement('p');
+        tableCellType.textContent = plane.planeType;
+        tableCellType.classList.add('table-cell');
+
+        const tableCellAirline = document.createElement('p');
+        tableCellAirline.textContent = plane.airlineCode;
+        tableCellAirline.classList.add('table-cell');
+
+        const tableCellRegistration = document.createElement('p');
+        // tableCellRegistration.textContent = plane.airlineCode;
+        tableCellRegistration.textContent = plane.icao; //placeholder
+        tableCellRegistration.classList.add('table-cell');
+
+        tableCellAltitude = document.createElement('p');
+        tableCellAltitude.textContent = plane.baroAltitude;
+        tableCellAltitude.classList.add('table-cell');
+        tableCellAltitude.classList.add('altitude-cell');
+
+        tableCellSpeed = document.createElement('p');
+        tableCellSpeed.textContent = plane.groundSpeed;
+        tableCellSpeed.classList.add('table-cell');
+        tableCellSpeed.classList.add('speed-cell');
+
+        tableRow.appendChild(tableCellType);
+        tableRow.appendChild(tableCellAirline);
+        tableRow.appendChild(tableCellRegistration);
+        tableRow.appendChild(tableCellAltitude);
+        tableRow.appendChild(tableCellSpeed);
+        tableRows.appendChild(tableRow);
+        tableDiv.appendChild(tableRows);
+
+        //adding vertical rate indicator if needed
+        if (plane.verticalRate < 0) {
+            tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
+        }
+        if (plane.verticalRate > 0) {
+            tableCellAltitude.innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
+        }
+
+        tableRowsArr.push(tableRow);
+        plane.inTable = true;
+    } else {
+        //updating plane's alt and spd in table
+        const planeToUpdate = tableRowsArr.find(row => row.getAttribute('id') === plane.icao);
+        planeToUpdate.children[3].textContent = plane.baroAltitude;
+        planeToUpdate.children[4].textContent = plane.groundSpeed;
+
+        //updating vertical rate indicator
+        if (plane.verticalRate < 0) {
+            planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-down vertical-icon"></i>';
+        }
+        if (plane.verticalRate > 0) {
+            planeToUpdate.children[3].innerHTML += '<i class="fa-solid fa-caret-up vertical-icon"></i>';
+        }
+    }
+
+    tableRowsArr.map(row => {
+        const icaoFromTable = row.getAttribute('id');
+        const planeFound = planesObjects.find(plane => plane.icao === icaoFromTable);
+
+        //removing row from table if plane is gone
+        if (!planeFound) {
+            row.remove();
+        }
     })
 }
