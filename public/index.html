@@ -1,120 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-        crossorigin="" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Titillium+Web:wght@300&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-        crossorigin=""></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Titillium+Web:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
     <link rel="stylesheet" href="./style.css" />
     <title>Radar app</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <button id="work-btn">API</button>
     <div id="main-container">
-        <div id="map"></div>
-        <div class="data-area">
-            <nav id="navbar">
-                <ul id="nav-list">
-                    <li><a class="nav-link table-link nav-link-active">Table</a></li>
-                    <li><a class="nav-link filters-link">Filters</a></li>
-                    <button id="hide-show-button" class="hide">Hide banned</button>
-                </ul>
-            </nav>
-            <section id="filters-div">
-                <div class="filter-header">
-                    <h3 class="filters-title">Choose plane type and airline to block</h3>
-                    <label class="checkbox-label"><input type="checkbox" name="on-off" id="type-airline-input-switch"
-                            class="filter-switch" value="on-off">
-                        <span id="type-airline-filter-switch" class="checkbox-custom"></span>on/off</label>
-                </div>
+      <div id="map"></div>
+      <div class="data-area">
+        <nav id="navbar">
+          <ul id="nav-list">
+            <li><a class="nav-link table-link nav-link-active">Table</a></li>
+            <li><a class="nav-link filters-link">Filters</a></li>
+            <button id="hide-show-button" class="hide">Hide banned</button>
+          </ul>
+        </nav>
+        <section id="filters-div">
+          <div class="filter-header">
+            <h3 class="filters-title">
+              Choose plane type and airline to block
+            </h3>
+            <label class="checkbox-label"
+              ><input
+                type="checkbox"
+                name="on-off"
+                id="type-airline-input-switch"
+                class="filter-switch"
+                value="on-off"
+              />
+              <span
+                id="type-airline-filter-switch"
+                class="checkbox-custom"
+              ></span
+              >on/off</label
+            >
+          </div>
 
-                <!-- <span><label><input type="checkbox" name="on-off" class="filter-switch"
+          <!-- <span><label><input type="checkbox" name="on-off" class="filter-switch"
                             value="on-off">on/off</label></span> -->
 
-                <!-- <label for="type-dropdown" id="type-dropdown-label">Type</label>
+          <!-- <label for="type-dropdown" id="type-dropdown-label">Type</label>
                 <select name="type-dropdown" class="input-field" id="type-dropdown-field"
                     placeholder="Choose plane type">
                     <option value="" disabled selected hidden>Choose plane type</option>
                 </select> -->
 
-                <div id="dropdowns-div">
-                    <div id="type-dropdown" class="dropdown">
-                        <div id="airline-filter-buttons" class="filter-buttons">
-                            <button type="button" id="type-dropdown-button" class="dropdown-button">Plane type</button>
-                            <button id="reset-type-button" class="reset-filter-button"><i
-                                    class="fa-solid fa-trash-can"></i></button>
-                        </div>
-                        <div id="type-dropdown-menu" class="dropdown-menu">
-                        </div>
-                        <div id="banned-types-display" class="banned-display">
-                            <p id="banned-types-placeholder" class="banned-placeholder">Banned types</p>
+          <div id="dropdowns-div">
+            <div id="type-dropdown" class="dropdown">
+              <div id="airline-filter-buttons" class="filter-buttons">
+                <button
+                  type="button"
+                  id="type-dropdown-button"
+                  class="dropdown-button"
+                >
+                  Plane type
+                </button>
+                <button id="reset-type-button" class="reset-filter-button">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+              <div id="type-dropdown-menu" class="dropdown-menu"></div>
+              <div id="banned-types-display" class="banned-display">
+                <p id="banned-types-placeholder" class="banned-placeholder">
+                  Banned types
+                </p>
+              </div>
+            </div>
 
+            <div id="airline-dropdown" class="dropdown">
+              <div class="filter-buttons">
+                <button id="reset-airline-button" class="reset-filter-button">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+                <button id="airline-dropdown-button" class="dropdown-button">
+                  Airline
+                </button>
+              </div>
+              <div id="airline-dropdown-menu" class="dropdown-menu"></div>
+              <div id="banned-airlines-display" class="banned-display">
+                <p id="banned-airlines-placeholder" class="banned-placeholder">
+                  Banned airlines
+                </p>
+              </div>
+            </div>
+          </div>
 
-                        </div>
-                    </div>
-
-                    <div id="airline-dropdown" class="dropdown">
-                        <div class="filter-buttons">
-                            <button id="reset-airline-button" class="reset-filter-button"><i
-                                    class="fa-solid fa-trash-can"></i></button>
-                            <button id="airline-dropdown-button" class="dropdown-button">Airline</button>
-                        </div>
-                        <div id="airline-dropdown-menu" class="dropdown-menu">
-                        </div>
-                        <div id="banned-airlines-display" class="banned-display">
-                            <p id="banned-airlines-placeholder" class="banned-placeholder">Banned airlines</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-header">
-                    <h3 id="altitude-title" class="filters-title">Choose altitude range to display [ft]</h3>
-                    <label id="altitude-checkbox-label" class="checkbox-label"><input type="checkbox" name="on-off"
-                            id="altitude-input-switch" class="filter-switch" value="on-off">
-                        <span id="altitude-filter-switch" class="checkbox-custom"></span>on/off</label>
-                </div>
-                <div id="altitude-filter">
-                    <input type="text" id="min-height" name="min-height" class="input-window"
-                        placeholder="min-altitude">
-                    <p>-</p>
-                    <input type="text" id="max-height" name="max-height" class="input-window"
-                        placeholder="max-altitude">
-                </div>
-                <button id="apply-height-button">Apply</button>
-                <h5 id="altitude-description">Planes between <span id="min-height-value">(min)</span> - <span
-                        id="max-height-value">(max)</span> ft are being shown</h5>
-
-            </section>
-            <section id="table-div" class="default">
-                <div class="table-headers table-grid">
-                    <p class="table-header">Type</p>
-                    <p class="table-header">Airline</p>
-                    <p class="table-header">Reg (icao)</p>
-                    <p class="table-header">Altitude</p>
-                    <p class="table-header speed-cell">Speed</p>
-                </div>
-                <div class="table-rows">
-                </div>
-            </section>
-        </div>
+          <div class="filter-header">
+            <h3 id="altitude-title" class="filters-title">
+              Choose altitude range to display [ft]
+            </h3>
+            <label id="altitude-checkbox-label" class="checkbox-label"
+              ><input
+                type="checkbox"
+                name="on-off"
+                id="altitude-input-switch"
+                class="filter-switch"
+                value="on-off"
+              />
+              <span id="altitude-filter-switch" class="checkbox-custom"></span
+              >on/off</label
+            >
+          </div>
+          <div id="altitude-filter">
+            <input
+              type="text"
+              id="min-height"
+              name="min-height"
+              class="input-window"
+              placeholder="min-altitude"
+            />
+            <p>-</p>
+            <input
+              type="text"
+              id="max-height"
+              name="max-height"
+              class="input-window"
+              placeholder="max-altitude"
+            />
+          </div>
+          <button id="apply-height-button">Apply</button>
+          <h5 id="altitude-description">
+            Planes between <span id="min-height-value">(min)</span> -
+            <span id="max-height-value">(max)</span> ft are being shown
+          </h5>
+        </section>
+        <section id="table-div" class="default">
+          <div class="table-headers table-grid">
+            <p class="table-header">Type</p>
+            <p class="table-header">Airline</p>
+            <p class="table-header">Reg (icao)</p>
+            <p class="table-header">Altitude [ft]</p>
+            <p class="table-header speed-cell">Speed [kt]</p>
+          </div>
+          <div class="table-rows"></div>
+        </section>
+      </div>
     </div>
 
     <script type="module" src="radar.js"></script>
     <script src="leaflet.rotatedMarker.js"></script>
-</body>
-
+  </body>
 </html>
