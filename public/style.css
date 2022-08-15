@@ -82,7 +82,7 @@ body {
 }
 
 .table-row {
-  background-color: var(--button-background);
+  /* background-color: var(--button-background); */
 }
 
 /* removed !important from banned popups - seems to be working without this */
@@ -688,6 +688,7 @@ body {
 
 .table-header,
 .table-cell {
+  background-color: var(--button-background);
   border: 1px solid black;
   border-right: none;
   margin-top: 0;
