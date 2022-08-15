@@ -466,6 +466,8 @@ function banPlane(
     let minAlt = document.getElementById("min-height").value;
     let maxAlt = document.getElementById("max-height").value;
 
+    // console.log(minAlt, typeof minAlt, maxAlt, typeof maxAlt);
+
     //min and max are provided
     if (minAlt !== "" && maxAlt !== "") {
       if (
@@ -526,6 +528,7 @@ function banPlane(
 
     let tableRow = document.getElementById(plane.icao);
     tableRow.classList.remove("banned-plane-altitude");
+    plane.popup._wrapper.classList.remove("banned-popup-altitude");
   }
 
   //hiding or showing banned planes
